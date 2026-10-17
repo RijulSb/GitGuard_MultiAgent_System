@@ -1,0 +1,13 @@
+[protocols.008-the-pros] The Pros
+
+
+We'll concentrate on the pros of the Smart version of the HTTP protocol.
+
+The simplicity of having a single URL for all types of access and having the server prompt only when authentication is needed makes things very easy for the end user.
+Being able to authenticate with a username and password is also a big advantage over SSH, since users don't have to generate SSH keys locally and upload their public key to the server before being able to interact with it.
+For less sophisticated users, or users on systems where SSH is less common, this is a major advantage in usability.
+It is also a very fast and efficient protocol, similar to the SSH one.
+
+You can also serve your repositories read-only over HTTPS, which means you can encrypt the content transfer; or you can go so far as to make the clients use specific signed SSL certificates.
+
+Another nice thing is that HTTP and HTTPS are such commonly used protocols that corporate firewalls are often set up to allow traffic through their ports.

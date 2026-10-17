@@ -1,0 +1,6 @@
+[advanced-merging.012-other-types-of-merges] Other Types of Merges
+
+
+So far we've covered the normal merge of two branches, normally handled with what is called the "recursive" strategy of merging.
+There are other ways to merge branches together however.
+Let's cover a few of them quickly.

@@ -1,0 +1,40 @@
+[5-scripting.006-basic-usage] Basic Usage
+
+
+The most basic thing you can do is a simple GET request on an endpoint that doesn't require authentication.
+This could be a user or read-only information on an open source project.
+For example, if we want to know more about a user named "schacon", we can run something like this:
+
+$ curl https://api.github.com/users/schacon
+{
+"login": "schacon",
+"id": 70,
+"avatar_url": "https://avatars.githubusercontent.com/u/70",
+# …
+"name": "Scott Chacon",
+"company": "GitHub",
+"following": 19,
+"created_at": "2008-01-27T17:19:28Z",
+"updated_at": "2014-06-10T02:37:23Z"
+}
+
+There are tons of endpoints like this to get information about organizations, projects, issues, commits -- just about anything you can publicly see on GitHub.
+You can even use the API to render arbitrary Markdown or find a .gitignore template.
+
+$ curl https://api.github.com/gitignore/templates/Java
+{
+"name": "Java",
+"source": "*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see https://www.java.com/en/download/help/error_hotspot.xml
+hserrpid*
+"
+}

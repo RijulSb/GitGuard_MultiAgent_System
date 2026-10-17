@@ -1,0 +1,123 @@
+{
+  "request_id": "exp5-q051",
+  "question": "What happens during the first clone of a Perforce repository using Git Fusion, and how does this differ from subsequent fetches?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 0.5,
+  "context_score": 1.0,
+  "tokens_used": 3849,
+  "total_duration_ms": 48097.48,
+  "final_response": "Not found in the book.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.1,
+      "status": "success",
+      "details": {
+        "clean_length": 128
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 10355.6,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "What happens during the first clone of a Perforce repository using Git Fusion, and how does this differ from subsequent fetches?"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 95.85,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 1,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 20.25,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.1,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 1.0
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 506.17,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 466
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 1495.33,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 347
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 6348.59,
+      "status": "success",
+      "details": {
+        "claims_a": 3,
+        "supported_a": 0,
+        "claims_b": 2,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "abstain",
+      "duration_ms": 29787.08,
+      "status": "abstained",
+      "details": {
+        "reason": "low_claim_ratio",
+        "context_score": 1.0,
+        "supported_claim_ratio": 0.5,
+        "revision_rounds": 2
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

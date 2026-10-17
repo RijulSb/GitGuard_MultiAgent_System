@@ -1,0 +1,125 @@
+{
+  "request_id": "day3-test-q05",
+  "question": "How does Git handle binary files differently from text files?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 0.6667,
+  "context_score": 0.7333,
+  "tokens_used": 4682,
+  "total_duration_ms": 22836.04,
+  "final_response": "Not found in the book.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.09,
+      "status": "success",
+      "details": {
+        "clean_length": 61
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 2.03,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "Git binary files",
+          "Git text files",
+          "Git handling of binary files"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 310.37,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 11.68,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.14,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.7333
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 7.35,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 1213
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 5797.26,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 330
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 1945.28,
+      "status": "success",
+      "details": {
+        "claims_a": 3,
+        "supported_a": 2,
+        "claims_b": 2,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "abstain",
+      "duration_ms": 14766.0,
+      "status": "abstained",
+      "details": {
+        "reason": "low_claim_ratio",
+        "context_score": 0.7333,
+        "supported_claim_ratio": 0.6667,
+        "revision_rounds": 2
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

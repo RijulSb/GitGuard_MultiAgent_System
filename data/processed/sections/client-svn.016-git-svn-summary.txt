@@ -1,0 +1,15 @@
+[client-svn.016-git-svn-summary] Git-Svn Summary
+
+
+The git svn tools are useful if you're stuck with a Subversion server, or are otherwise in a development environment that necessitates running a Subversion server.
+You should consider it crippled Git, however, or you'll hit issues in translation that may confuse you and your collaborators.
+To stay out of trouble, try to follow these guidelines:
+
+* Keep a linear Git history that doesn't contain merge commits made by git merge.
+Rebase any work you do outside of your mainline branch back onto it; don't merge it in.
+* Don't set up and collaborate on a separate Git server.
+Possibly have one to speed up clones for new developers, but don't push anything to it that doesn't have a git-svn-id entry.
+You may even want to add a pre-receive hook that checks each commit message for a git-svn-id and rejects pushes that contain commits without it.
+
+If you follow those guidelines, working with a Subversion server can be more bearable.
+However, if it's possible to move to a real Git server, doing so can gain your team a lot more.

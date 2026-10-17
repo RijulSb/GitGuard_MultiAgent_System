@@ -1,0 +1,58 @@
+[policy.003-enforcing-a-specific-commit-message-format] Enforcing a Specific Commit-Message Format
+
+
+Your first challenge is to enforce that each commit message adheres to a particular format.
+Just to have a target, assume that each message has to include a string that looks like "ref: 1234" because you want each commit to link to a work item in your ticketing system.
+You must look at each commit being pushed up, see if that string is in the commit message, and, if the string is absent from any of the commits, exit non-zero so the push is rejected.
+
+You can get a list of the SHA-1 values of all the commits that are being pushed by taking the $newrev and $oldrev values and passing them to a Git plumbing command called git rev-list.
+This is basically the git log command, but by default it prints out only the SHA-1 values and no other information.
+So, to get a list of all the commit SHA-1s introduced between one commit SHA-1 and another, you can run something like this:
+
+$ git rev-list 538c33..d14fc7
+d14fc7c847ab946ec39590d87783c69b031bdfb7
+9f585da4401b0a3999e84113824d15245c13f0be
+234071a1be950e2a8d078e6141f5cd20c1e61ad3
+dfa04c9ef3d5197182f13fb5b9b1fb7717d2222a
+17716ec0f1ff5c77eff40b7fe912f9f6cfd0e475
+
+You can take that output, loop through each of those commit SHA-1s, grab the message for it, and test that message against a regular expression that looks for a pattern.
+
+You have to figure out how to get the commit message from each of these commits to test.
+To get the raw commit data, you can use another plumbing command called git cat-file.
+We'll go over all these plumbing commands in detail in <<ch10-git-internals#ch10-git-internals>>; but for now, here's what that command gives you:
+
+$ git cat-file commit ca82a6
+tree cfda3bf379e4f8dba8717dee55aab78aef7f4daf
+parent 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+author Scott Chacon <schacon@gmail.com> 1205815931 -0700
+committer Scott Chacon <schacon@gmail.com> 1240030591 -0700
+
+Change the version number
+
+A simple way to get the commit message from a commit when you have the SHA-1 value is to go to the first blank line and take everything after that.
+You can do so with the sed command on Unix systems:
+
+$ git cat-file commit ca82a6 | sed '1,/^$/d'
+Change the version number
+
+You can use that incantation to grab the commit message from each commit that is trying to be pushed and exit if you see anything that doesn't match.
+To exit the script and reject the push, exit non-zero.
+The whole method looks like this:
+
+$regex = /\[ref: (\d+)\]/
+
+# enforced custom commit message format
+def checkmessageformat
+missed_revs = git rev-list #..#.split("\n")
+missed_revs.each do |rev|
+message = git cat-file commit # | sed '1,/^$/d'
+if !$regex.match(message)
+puts "[POLICY] Your message is not formatted correctly"
+exit 1
+end
+end
+end
+checkmessageformat
+
+Putting that in your update script will reject updates that contain commits that have messages that don't adhere to your rule.

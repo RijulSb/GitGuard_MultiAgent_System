@@ -1,0 +1,21 @@
+[advanced-merging.003-aborting-a-merge] Aborting a Merge
+
+
+We now have a few options.
+First, let's cover how to get out of this situation.
+If you perhaps weren't expecting conflicts and don't want to quite deal with the situation yet, you can simply back out of the merge with git merge --abort.
+
+$ git status -sb
+## master
+UU hello.rb
+
+$ git merge --abort
+
+$ git status -sb
+## master
+
+The git merge --abort option tries to revert back to your state before you ran the merge.
+The only cases where it may not be able to do this perfectly would be if you had unstashed, uncommitted changes in your working directory when you ran it, otherwise it should work fine.
+
+If for some reason you just want to start over, you can also run git reset --hard HEAD, and your repository will be back to the last committed state.
+Remember that any uncommitted work will be lost, so make sure you don't want any of your changes.

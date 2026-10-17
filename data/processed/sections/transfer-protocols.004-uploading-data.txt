@@ -1,0 +1,6 @@
+[transfer-protocols.004-uploading-data] Uploading Data
+
+
+(((git commands, send-pack)))(((git commands, receive-pack)))
+To upload data to a remote process, Git uses the send-pack and receive-pack processes.
+The send-pack process runs on the client and connects to a receive-pack process on the remote side.

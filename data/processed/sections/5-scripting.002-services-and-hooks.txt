@@ -1,0 +1,4 @@
+[5-scripting.002-services-and-hooks] Services and Hooks
+
+
+The Hooks and Services section of GitHub repository administration is the easiest way to have GitHub interact with external systems.

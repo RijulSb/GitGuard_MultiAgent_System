@@ -1,0 +1,12 @@
+[config.006-user-signingkey] user.signingkey
+
+
+(((GPG)))
+If you're making signed annotated tags (as discussed in <<ch07-git-tools#_signing>>), setting your GPG signing key as a configuration setting makes things easier.
+Set your key ID like so:
+
+$ git config --global user.signingkey <gpg-key-id>
+
+Now, you can sign tags without having to specify your key every time with the git tag command:
+
+$ git tag -s <tag-name>

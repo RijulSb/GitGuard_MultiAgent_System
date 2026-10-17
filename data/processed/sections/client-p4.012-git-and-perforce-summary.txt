@@ -1,0 +1,8 @@
+[client-p4.012-git-and-perforce-summary] Git and Perforce Summary
+
+
+Git-p4 makes it possible to use a Git workflow with a Perforce server, and it's pretty good at it.
+However, it's important to remember that Perforce is in charge of the source, and you're only using Git to work locally.
+Just be really careful about sharing Git commits; if you have a remote that other people use, don't push any commits that haven't already been submitted to the Perforce server.
+
+If you want to freely mix the use of Perforce and Git as clients for source control, and you can convince the server administrator to install it, Git Fusion makes using Git a first-class version-control client for a Perforce server.

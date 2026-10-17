@@ -1,0 +1,14 @@
+[config.002-basic-client-configuration] Basic Client Configuration
+
+
+The configuration options recognized by Git fall into two categories: client-side and server-side.
+The majority of the options are client-side -- configuring your personal working preferences.
+Many, many configuration options are supported, but a large fraction of them are useful only in certain edge cases; we'll cover just the most common and useful options here.
+If you want to see a list of all the options your version of Git recognizes, you can run:
+
+$ man git-config
+
+This command lists all the available options in quite a bit of detail.
+You can also find this reference material at https://git-scm.com/docs/git-config[^].
+
+For advanced use cases you may want to look up "Conditional includes" in the documentation mentioned above.

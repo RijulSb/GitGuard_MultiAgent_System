@@ -1,0 +1,62 @@
+[submodules.011-submodule-foreach] Submodule Foreach
+
+
+There is a foreach submodule command to run some arbitrary command in each submodule.
+This can be really helpful if you have a number of submodules in the same project.
+
+For example, let's say we want to start a new feature or do a bugfix and we have work going on in several submodules.
+We can easily stash all the work in all our submodules.
+
+$ git submodule foreach 'git stash'
+Entering 'CryptoLibrary'
+No local changes to save
+Entering 'DbConnector'
+Saved working directory and index state WIP on stable: 82d2ad3 Merge from origin/stable
+HEAD is now at 82d2ad3 Merge from origin/stable
+
+Then we can create a new branch and switch to it in all our submodules.
+
+$ git submodule foreach 'git checkout -b featureA'
+Entering 'CryptoLibrary'
+Switched to a new branch 'featureA'
+Entering 'DbConnector'
+Switched to a new branch 'featureA'
+
+You get the idea.
+One really useful thing you can do is produce a nice unified diff of what is changed in your main project and all your subprojects as well.
+
+$ git diff; git submodule foreach 'git diff'
+Submodule DbConnector contains modified content
+diff --git a/src/main.c b/src/main.c
+index 210f1ae..1f0acdc 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -245,6 +245,8 @@ static int handle_alias(int argcp, const char **argv)
+
+commitpagerchoice();
+
++ url = urldecode(urlorig);
++
+/ build alias_argv /
+aliasargv = xmalloc(sizeof(aliasargv) (argc + 1));
+aliasargv[0] = aliasstring + 1;
+Entering 'DbConnector'
+diff --git a/src/db.c b/src/db.c
+index 1aaefb6..5297645 100644
+--- a/src/db.c
++++ b/src/db.c
+@@ -93,6 +93,11 @@ char urldecodemem(const char url, int len)
+return urldecodeinternal(&url, len, NULL, &out, 0);
+}
+
++char url_decode(const char url)
++{
++ return urldecodemem(url, strlen(url));
++}
++
+char urldecodeparameter_name(const char *query)
+{
+struct strbuf out = STRBUF_INIT;
+
+Here we can see that we're defining a function in a submodule and calling it in the main project.
+This is obviously a simplified example, but hopefully it gives you an idea of how this may be useful.

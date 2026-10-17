@@ -1,0 +1,21 @@
+[1-setting-up-account.002-ssh-access] SSH Access
+
+
+(((SSH keys, with GitHub)))
+As of right now, you're fully able to connect with Git repositories using the https:// protocol, authenticating with the username and password you just set up.
+However, to simply clone public projects, you don't even need to sign up - the account we just created comes into play when we fork projects and push to our forks a bit later.
+
+If you'd like to use SSH remotes, you'll need to configure a public key.
+If you don't already have one, see <<ch04-git-on-the-server#generatessh_key>>.
+Open up your account settings using the link at the top-right of the window:
+
+.The "Account settings" link
+
+Then select the "SSH keys" section along the left-hand side.
+
+.The "SSH keys" link
+
+From there, click the "Add an SSH key" button, give your key a name, paste the contents of your ~/.ssh/id_rsa.pub (or whatever you named it) public-key file into the text area, and click "Add key".
+
+Be sure to name your SSH key something you can remember.
+You can name each of your keys (e.g. "My Laptop" or "Work Account") so that if you need to revoke a key later, you can easily tell which one you're looking for.

@@ -1,0 +1,10 @@
+[client-p4.007-git-p4] Git-p4
+
+
+(((git commands, p4)))
+Git-p4 is a two-way bridge between Git and Perforce.
+It runs entirely inside your Git repository, so you won't need any kind of access to the Perforce server (other than user credentials, of course).
+Git-p4 isn't as flexible or complete a solution as Git Fusion, but it does allow you to do most of what you'd want to do without being invasive to the server environment.
+
+You'll need the p4 tool somewhere in your PATH to work with git-p4.
+As of this writing, it is freely available at https://www.perforce.com/downloads/helix-command-line-client-p4[^].

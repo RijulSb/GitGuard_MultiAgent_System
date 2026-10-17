@@ -1,0 +1,36 @@
+[attributes.008-export-subst] export-subst
+
+
+When exporting files for deployment you can apply `git log`'s formatting and keyword-expansion processing to selected portions of files marked with the export-subst` attribute.
+
+For instance, if you want to include a file named LASTCOMMIT in your project, and have metadata about the last commit automatically injected into it when git archive runs, you can for example set up your .gitattributes and LASTCOMMIT files like this:
+
+LAST_COMMIT export-subst
+
+$ echo 'Last commit date: $Format:%cd by %aN$' > LAST_COMMIT
+$ git add LAST_COMMIT .gitattributes
+$ git commit -am 'adding LAST_COMMIT file for archives'
+
+When you run git archive, the contents of the archived file will look like this:
+
+$ git archive HEAD | tar xCf ../deployment-testing -
+$ cat ../deployment-testing/LAST_COMMIT
+Last commit date: Tue Apr 21 08:38:48 2009 -0700 by Scott Chacon
+
+The substitutions can include for example the commit message and any git notes, and git log can do simple word wrapping:
+
+$ echo '$Format:Last commit: %h by %aN at %cd%n%+w(76,6,9)%B$' > LAST_COMMIT
+$ git commit -am 'export-subst uses git log'\''s custom formatter
+
+git archive uses git log'\''s pretty=format: processor
+directly, and strips the surrounding $Format: and $
+markup from the output.
+'
+$ git archive @ | tar xfO - LAST_COMMIT
+Last commit: 312ccc8 by Jim Hill at Fri May 8 09:14:04 2015 -0700
+export-subst uses git log's custom formatter
+
+git archive uses git log's pretty=format: processor directly, and
+strips the surrounding $Format: and $ markup from the output.
+
+The resulting archive is suitable for deployment work, but like any exported archive it isn't suitable for further development work.

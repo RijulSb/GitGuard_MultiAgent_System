@@ -1,0 +1,8 @@
+[hooks.003-client-side-hooks] Client-Side Hooks
+
+
+There are a lot of client-side hooks.
+This section splits them into committing-workflow hooks, email-workflow scripts, and everything else.
+
+It's important to note that client-side hooks are not copied when you clone a repository.
+If your intent with these scripts is to enforce a policy, you'll probably want to do that on the server side; see the example in <<ch08-customizing-git#anexamplegitenforced_policy>>.

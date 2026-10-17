@@ -1,0 +1,8 @@
+[reset.016-with-paths] With Paths
+
+
+The other way to run checkout is with a file path, which, like reset, does not move HEAD.
+It is just like git reset [branch] file in that it updates the index with that file at that commit, but it also overwrites the file in the working directory.
+It would be exactly like git reset --hard [branch] file (if reset would let you run that) -- it's not working-directory safe, and it does not move HEAD.
+
+Also, like git reset and git add, checkout will accept a --patch option to allow you to selectively revert file contents on a hunk-by-hunk basis.

@@ -1,0 +1,16 @@
+[reset.005-the-working-directory] The Working Directory
+
+
+Finally, you have your working directory (also commonly referred to as the "working tree").
+The other two trees store their content in an efficient but inconvenient manner, inside the .git folder.
+The working directory unpacks them into actual files, which makes it much easier for you to edit them.
+Think of the working directory as a sandbox, where you can try changes out before committing them to your staging area (index) and then to history.
+
+$ tree
+.
+├── README
+├── Rakefile
+└── lib
+└── simplegit.rb
+
+1 directory, 3 files

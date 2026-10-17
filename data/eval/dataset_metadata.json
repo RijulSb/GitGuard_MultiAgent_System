@@ -1,0 +1,11 @@
+{
+  "status": "locked",
+  "answerable_candidates": 60,
+  "unanswerable": 12,
+  "total": 72,
+  "seed": 42,
+  "deviation": "Configured for 60 candidate answerable questions for fast execution per user instruction; manual review required before locking.",
+  "locked": true,
+  "records": 72,
+  "answerable": 60
+}

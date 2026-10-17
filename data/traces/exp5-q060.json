@@ -1,0 +1,48 @@
+{
+  "request_id": "exp5-q060",
+  "question": "According to the text, how many configuration options are available for the server side of Git compared to the client side?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": null,
+  "tokens_used": 0,
+  "total_duration_ms": 42129.97,
+  "final_response": "Request timed out or exceeded token budget. Please try a simpler question.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.1,
+      "status": "success",
+      "details": {
+        "clean_length": 123
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 42125.84,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "According to the text, how many configuration options are available for the server side of Git compared to the client side?"
+        ]
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 42128.76,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_retrievers",
+        "tokens_used": 0
+      }
+    }
+  ]
+}

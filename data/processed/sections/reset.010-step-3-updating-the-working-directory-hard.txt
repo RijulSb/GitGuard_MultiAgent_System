@@ -1,0 +1,14 @@
+[reset.010-step-3-updating-the-working-directory-hard] Step 3: Updating the Working Directory (--hard)
+
+
+The third thing that reset will do is to make the working directory look like the index.
+If you use the --hard option, it will continue to this stage.
+
+.Hard reset
+
+So let's think about what just happened.
+You undid your last commit, the git add and git commit commands, and all the work you did in your working directory.
+
+It's important to note that this flag (--hard) is the only way to make the reset command dangerous, and one of the very few cases where Git will actually destroy data.
+Any other invocation of reset can be pretty easily undone, but the --hard option cannot, since it forcibly overwrites files in the working directory.
+In this particular case, we still have the v3 version of our file in a commit in our Git DB, and we could get it back by looking at our reflog, but if we had not committed it, Git still would have overwritten the file and it would be unrecoverable.

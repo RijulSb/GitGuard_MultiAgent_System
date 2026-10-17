@@ -1,0 +1,9 @@
+[client-p4.008-setting-up] Setting Up
+
+
+For example purposes, we'll be running the Perforce server from the Git Fusion OVA as shown above, but we'll bypass the Git Fusion server and go directly to the Perforce version control.
+
+In order to use the p4 command-line client (which git-p4 depends on), you'll need to set a couple of environment variables:
+
+$ export P4PORT=10.0.1.254:1666
+$ export P4USER=john

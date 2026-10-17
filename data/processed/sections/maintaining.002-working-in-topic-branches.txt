@@ -1,0 +1,17 @@
+[maintaining.002-working-in-topic-branches] Working in Topic Branches
+
+
+(((branches, topic)))
+When you're thinking of integrating new work, it's generally a good idea to try it out in a topic branch -- a temporary branch specifically made to try out that new work.
+This way, it's easy to tweak a patch individually and leave it if it's not working until you have time to come back to it.
+If you create a simple branch name based on the theme of the work you're going to try, such as ruby_client or something similarly descriptive, you can easily remember it if you have to abandon it for a while and come back later.
+The maintainer of the Git project tends to namespace these branches as well -- such as sc/ruby_client, where sc is short for the person who contributed the work.
+As you'll remember, you can create the branch based off your master branch like this:
+
+$ git branch sc/ruby_client master
+
+Or, if you want to also switch to it immediately, you can use the checkout -b option:
+
+$ git checkout -b sc/ruby_client master
+
+Now you're ready to add the contributed work that you received into this topic branch and determine if you want to merge it into your longer-term branches.

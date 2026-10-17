@@ -1,0 +1,56 @@
+[debugging.002-file-annotation] File Annotation
+
+
+If you track down a bug in your code and want to know when it was introduced and why, file annotation is often your best tool.
+It shows you what commit was the last to modify each line of any file.
+So if you see that a method in your code is buggy, you can annotate the file with git blame to determine which commit was responsible for the introduction of that line.
+
+The following example uses git blame to determine which commit and committer was responsible for lines in the top-level Linux kernel Makefile and, further, uses the -L option to restrict the output of the annotation to lines 69 through 82 of that file:
+
+$ git blame -L 69,82 Makefile
+b8b0618cf6fab (Cheng Renquan 2009-05-26 16:03:07 +0800 69) ifeq ("$(origin V)", "command line")
+b8b0618cf6fab (Cheng Renquan 2009-05-26 16:03:07 +0800 70) KBUILD_VERBOSE = $(V)
+^1da177e4c3f4 (Linus Torvalds 2005-04-16 15:20:36 -0700 71) endif
+^1da177e4c3f4 (Linus Torvalds 2005-04-16 15:20:36 -0700 72) ifndef KBUILD_VERBOSE
+^1da177e4c3f4 (Linus Torvalds 2005-04-16 15:20:36 -0700 73) KBUILD_VERBOSE = 0
+^1da177e4c3f4 (Linus Torvalds 2005-04-16 15:20:36 -0700 74) endif
+^1da177e4c3f4 (Linus Torvalds 2005-04-16 15:20:36 -0700 75)
+066b7ed955808 (Michal Marek 2014-07-04 14:29:30 +0200 76) ifeq ($(KBUILD_VERBOSE),1)
+066b7ed955808 (Michal Marek 2014-07-04 14:29:30 +0200 77) quiet =
+066b7ed955808 (Michal Marek 2014-07-04 14:29:30 +0200 78) Q =
+066b7ed955808 (Michal Marek 2014-07-04 14:29:30 +0200 79) else
+066b7ed955808 (Michal Marek 2014-07-04 14:29:30 +0200 80) quiet=quiet_
+066b7ed955808 (Michal Marek 2014-07-04 14:29:30 +0200 81) Q = @
+066b7ed955808 (Michal Marek 2014-07-04 14:29:30 +0200 82) endif
+
+Notice that the first field is the partial SHA-1 of the commit that last modified that line.
+The next two fields are values extracted from that commit -- the author name and the authored date of that commit -- so you can easily see who modified that line and when.
+After that come the line number and the content of the file.
+Also note the ^1da177e4c3f4 commit lines, where the ^ prefix designates lines that were introduced in the repository's initial commit and have remained unchanged ever since.
+This is a tad confusing, because now you've seen at least three different ways that Git uses the ^ to modify a commit SHA-1, but that is what it means here.
+
+Another cool thing about Git is that it doesn't track file renames explicitly.
+It records the snapshots and then tries to figure out what was renamed implicitly, after the fact.
+One of the interesting features of this is that you can ask it to figure out all sorts of code movement as well.
+If you pass -C to git blame, Git analyzes the file you're annotating and tries to figure out where snippets of code within it originally came from if they were copied from elsewhere.
+For example, say you are refactoring a file named GITServerHandler.m into multiple files, one of which is GITPackUpload.m.
+By blaming GITPackUpload.m with the -C option, you can see where sections of the code originally came from:
+
+$ git blame -C -L 141,153 GITPackUpload.m
+f344f58d GITServerHandler.m (Scott 2009-01-04 141)
+f344f58d GITServerHandler.m (Scott 2009-01-04 142) - (void) gatherObjectShasFromC
+f344f58d GITServerHandler.m (Scott 2009-01-04 143) {
+70befddd GITServerHandler.m (Scott 2009-03-22 144) //NSLog(@"GATHER COMMI
+ad11ac80 GITPackUpload.m (Scott 2009-03-24 145)
+ad11ac80 GITPackUpload.m (Scott 2009-03-24 146) NSString *parentSha;
+ad11ac80 GITPackUpload.m (Scott 2009-03-24 147) GITCommit *commit = [g
+ad11ac80 GITPackUpload.m (Scott 2009-03-24 148)
+ad11ac80 GITPackUpload.m (Scott 2009-03-24 149) //NSLog(@"GATHER COMMI
+ad11ac80 GITPackUpload.m (Scott 2009-03-24 150)
+56ef2caf GITServerHandler.m (Scott 2009-01-05 151) if(commit) {
+56ef2caf GITServerHandler.m (Scott 2009-01-05 152) [refDict setOb
+56ef2caf GITServerHandler.m (Scott 2009-01-05 153)
+
+This is really useful.
+Normally, you get as the original commit the commit where you copied the code over, because that is the first time you touched those lines in this file.
+Git tells you the original commit where you wrote those lines, even if it was in another file.

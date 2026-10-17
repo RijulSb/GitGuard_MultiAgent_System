@@ -1,0 +1,119 @@
+{
+  "request_id": "exp5-q036",
+  "question": "How does a Distributed Version Control System (DVCS) handle repository data on the client side compared to a centralized system, and what is the implication for server recovery?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": 0.8,
+  "tokens_used": 3653,
+  "total_duration_ms": 39996.2,
+  "final_response": "Request timed out or exceeded token budget.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.17,
+      "status": "success",
+      "details": {
+        "clean_length": 177
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 24222.01,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "How does a Distributed Version Control System (DVCS) handle repository data on the client side compared to a centralized system, and what is the implication for server recovery?"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 148.68,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 1,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 24.1,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.12,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.8
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 731.57,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 1084
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 15604.46,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 1006
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 39988.69,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_critic",
+        "tokens_used": 3653
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 39992.52,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_arbiter",
+        "tokens_used": 3653
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

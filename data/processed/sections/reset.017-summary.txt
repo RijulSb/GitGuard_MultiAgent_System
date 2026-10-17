@@ -1,0 +1,21 @@
+[reset.017-summary] Summary
+
+
+Hopefully now you understand and feel more comfortable with the reset command, but are probably still a little confused about how exactly it differs from checkout and could not possibly remember all the rules of the different invocations.
+
+Here's a cheat-sheet for which commands affect which trees.
+The "HEAD" column reads "REF" if that command moves the reference (branch) that HEAD points to, and "HEAD" if it moves HEAD itself.
+Pay especial attention to the 'WD Safe?' column -- if it says NO, take a second to think before running that command.
+
+[options="header", cols="3,1,1,1,1"]
+|================================
+| | HEAD | Index | Workdir | WD Safe?
+| Commit Level | | | |
+| reset --soft [commit] | REF | NO | NO | YES
+| reset [commit] | REF | YES | NO | YES
+| reset --hard [commit] | REF | YES | YES | NO
+| checkout <commit> | HEAD | YES | YES | YES
+| File Level | | | |
+| reset [commit] <paths> | NO | YES | NO | YES
+| checkout [commit] <paths> | NO | YES | YES | NO
+|================================

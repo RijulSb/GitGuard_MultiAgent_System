@@ -1,0 +1,78 @@
+[client-hg.004-workflow] Workflow
+
+
+Let's assume we've done some work and made some commits on the master branch, and you're ready to push it to the remote repository.
+Here's what our repository looks like right now:
+
+$ git log --oneline --graph --decorate
+* ba04a2a (HEAD, master) Update makefile
+* d25d16f Goodbye
+* ac7955c (origin/master, origin/branches/default, origin/HEAD, refs/hg/origin/branches/default, refs/hg/origin/bookmarks/master) Create a makefile
+* 65bb417 Create a standard 'hello, world' program
+
+Our master branch is two commits ahead of origin/master, but those two commits exist only on our local machine.
+Let's see if anyone else has been doing important work at the same time:
+
+$ git fetch
+From hg::/tmp/hello
+ac7955c..df85e87 master -> origin/master
+ac7955c..df85e87 branches/default -> origin/branches/default
+$ git log --oneline --graph --decorate --all
+* 7b07969 (refs/notes/hg) Notes for default
+* d4c1038 Notes for master
+* df85e87 (origin/master, origin/branches/default, origin/HEAD, refs/hg/origin/branches/default, refs/hg/origin/bookmarks/master) Add some documentation
+| * ba04a2a (HEAD, master) Update makefile
+| * d25d16f Goodbye
+|/
+* ac7955c Create a makefile
+* 65bb417 Create a standard 'hello, world' program
+
+Since we used the --all flag, we see the "notes" refs that are used internally by git-remote-hg, but we can ignore them.
+The rest is what we expected; origin/master has advanced by one commit, and our history has now diverged.
+Unlike the other systems we work with in this chapter, Mercurial is capable of handling merges, so we're not going to do anything fancy.
+
+$ git merge origin/master
+Auto-merging hello.c
+Merge made by the 'recursive' strategy.
+hello.c | 2 +-
+1 file changed, 1 insertion(+), 1 deletion(-)
+$ git log --oneline --graph --decorate
+* 0c64627 (HEAD, master) Merge remote-tracking branch 'origin/master'
+|\
+| * df85e87 (origin/master, origin/branches/default, origin/HEAD, refs/hg/origin/branches/default, refs/hg/origin/bookmarks/master) Add some documentation
+* | ba04a2a Update makefile
+* | d25d16f Goodbye
+|/
+* ac7955c Create a makefile
+* 65bb417 Create a standard 'hello, world' program
+
+Perfect.
+We run the tests and everything passes, so we're ready to share our work with the rest of the team:
+
+$ git push
+To hg::/tmp/hello
+df85e87..0c64627 master -> master
+
+That's it!
+If you take a look at the Mercurial repository, you'll see that this did what we'd expect:
+
+$ hg log -G --style compact
+o 5[tip]:4,2 dc8fa4f932b8 2014-08-14 19:33 -0700 ben
+|\ Merge remote-tracking branch 'origin/master'
+| |
+| o 4 64f27bcefc35 2014-08-14 19:27 -0700 ben
+| | Update makefile
+| |
+| o 3:1 4256fc29598f 2014-08-14 19:27 -0700 ben
+| | Goodbye
+| |
+@ | 2 7db0b4848b3c 2014-08-14 19:30 -0700 ben
+|/ Add some documentation
+|
+o 1 82e55d328c8c 2005-08-26 01:21 -0700 mpm
+| Create a makefile
+|
+o 0 0a04b987be5a 2005-08-26 01:20 -0700 mpm
+Create a standard 'hello, world' program
+
+The changeset numbered 2 was made by Mercurial, and the changesets numbered 3 and 4 were made by git-remote-hg, by pushing commits made with Git.

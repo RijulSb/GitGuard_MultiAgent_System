@@ -1,0 +1,15 @@
+[1-setting-up-account.003-your-avatar] Your Avatar
+
+
+Next, if you wish, you can replace the avatar that is generated for you with an image of your choosing.
+First go to the "Profile" tab (above the SSH Keys tab) and click "Upload new picture".
+
+.The "Profile" link
+
+We'll choose a copy of the Git logo that is on our hard drive and then we get a chance to crop it.
+
+.Crop your uploaded avatar
+
+Now anywhere you interact on the site, people will see your avatar next to your username.
+
+If you happen to have uploaded an avatar to the popular Gravatar service (often used for WordPress accounts), that avatar will be used by default and you don't need to do this step.

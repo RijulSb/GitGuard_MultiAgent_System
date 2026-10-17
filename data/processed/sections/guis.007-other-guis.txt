@@ -1,0 +1,6 @@
+[guis.007-other-guis] Other GUIs
+
+
+There are a number of other graphical Git clients, and they run the gamut from specialized, single-purpose tools all the way to apps that try to expose everything Git can do.
+The official Git website has a curated list of the most popular clients at https://git-scm.com/downloads/guis[^].
+A more comprehensive list is available on the Git wiki site, at https://archive.kernel.org/oldwiki/git.wiki.kernel.org/index.php/Interfaces,frontends,andtools.html#GraphicalInterfaces[^].

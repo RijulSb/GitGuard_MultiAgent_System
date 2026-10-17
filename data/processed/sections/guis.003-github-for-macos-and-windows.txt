@@ -1,0 +1,23 @@
+[guis.003-github-for-macos-and-windows] GitHub for macOS and Windows
+
+
+(((GitHub for macOS)))(((GitHub for Windows)))
+GitHub has created two workflow-oriented Git clients: one for Windows, and one for macOS.
+These clients are a good example of workflow-oriented tools – rather than expose all of Git's functionality, they instead focus on a curated set of commonly-used features that work well together.
+They look like this:
+
+.GitHub for macOS
+
+.GitHub for Windows
+
+They are designed to look and work very much alike, so we'll treat them like a single product in this chapter.
+We won't be doing a detailed rundown of these tools (they have their own documentation), but a quick tour of the "changes" view (which is where you'll spend most of your time) is in order.
+
+* On the left is the list of repositories the client is tracking; you can add a repository (either by cloning or attaching locally) by clicking the "+" icon at the top of this area.
+* In the center is a commit-input area, which lets you input a commit message, and select which files should be included.
+On Windows, the commit history is displayed directly below this; on macOS, it's on a separate tab.
+* On the right is a diff view, which shows what's changed in your working directory, or which changes were included in the selected commit.
+* The last thing to notice is the "Sync" button at the top-right, which is the primary way you interact over the network.
+
+You don't need a GitHub account to use these tools.
+While they're designed to highlight GitHub's service and recommended workflow, they will happily work with any repository, and do network operations with any Git host.

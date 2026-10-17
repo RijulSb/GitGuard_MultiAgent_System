@@ -1,0 +1,32 @@
+[tagging.002-listing-your-tags] Listing Your Tags
+
+
+Listing the existing tags in Git is straightforward.
+Just type git tag (with optional -l or --list):(((git commands, tag)))
+
+$ git tag
+v1.0
+v2.0
+
+This command lists the tags in alphabetical order; the order in which they are displayed has no real importance.
+
+You can also search for tags that match a particular pattern.
+The Git source repo, for instance, contains more than 500 tags.
+If you're interested only in looking at the 1.8.5 series, you can run this:
+
+$ git tag -l "v1.8.5*"
+v1.8.5
+v1.8.5-rc0
+v1.8.5-rc1
+v1.8.5-rc2
+v1.8.5-rc3
+v1.8.5.1
+v1.8.5.2
+v1.8.5.3
+v1.8.5.4
+v1.8.5.5
+
+.Listing tag wildcards requires -l or --list option
+If you want just the entire list of tags, running the command git tag implicitly assumes you want a listing and provides one; the use of -l or --list in this case is optional.
+
+If, however, you're supplying a wildcard pattern to match tag names, the use of -l or --list is mandatory.

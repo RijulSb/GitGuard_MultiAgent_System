@@ -1,0 +1,7 @@
+[protocols.011-the-pros] The Pros
+
+
+The pros of using SSH are many.
+First, SSH is relatively easy to set up -- SSH daemons are commonplace, many network admins have experience with them, and many OS distributions are set up with them or have tools to manage them.
+Next, access over SSH is secure -- all data transfer is encrypted and authenticated.
+Last, like the HTTPS, Git and Local protocols, SSH is efficient, making the data as compact as possible before transferring it.

@@ -1,0 +1,121 @@
+{
+  "request_id": "day3-test-q10",
+  "question": "What are the different Git workflows described in the book and what are their trade-offs?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": 0.8,
+  "tokens_used": 7246,
+  "total_duration_ms": 39175.39,
+  "final_response": "Request timed out or exceeded token budget.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.12,
+      "status": "success",
+      "details": {
+        "clean_length": 89
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 13115.29,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "What are the different Git workflows described in the book and what are their trade-offs?"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 114.78,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 1,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 20.98,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.14,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.8
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 9281.44,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 3,
+        "draft_len": 93
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 912.03,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 22
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 16209.97,
+      "status": "success",
+      "details": {
+        "claims_a": 0,
+        "supported_a": 0,
+        "claims_b": 0,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 39173.52,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_arbiter",
+        "tokens_used": 7246
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

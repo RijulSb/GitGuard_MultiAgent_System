@@ -1,0 +1,10 @@
+[3-maintaining.015-contributing] CONTRIBUTING
+
+
+The other special file that GitHub recognizes is the CONTRIBUTING file.
+If you have a file named CONTRIBUTING with any file extension, GitHub will show <<contribfile>> when anyone starts opening a Pull Request.
+
+.Opening a Pull Request when a CONTRIBUTING file exists
+
+The idea here is that you can specify specific things you want or don't want in a Pull Request sent to your project.
+This way people may actually read the guidelines before opening the Pull Request.

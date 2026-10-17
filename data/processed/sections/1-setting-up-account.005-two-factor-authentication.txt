@@ -1,0 +1,14 @@
+[1-setting-up-account.005-two-factor-authentication] Two Factor Authentication
+
+
+Finally, for extra security, you should definitely set up Two-factor Authentication or "2FA".
+Two-factor Authentication is an authentication mechanism that is becoming more and more popular recently to mitigate the risk of your account being compromised if your password is stolen somehow.
+Turning it on will make GitHub ask you for two different methods of authentication, so that if one of them is compromised, an attacker will not be able to access your account.
+
+You can find the Two-factor Authentication setup under the Security tab of your Account settings.
+
+.2FA in the Security Tab
+
+If you click on the "Set up two-factor authentication" button, it will take you to a configuration page where you can choose to use a phone app to generate your secondary code (a "time based one-time password"), or you can have GitHub send you a code via SMS each time you need to log in.
+
+After you choose which method you prefer and follow the instructions for setting up 2FA, your account will then be a little more secure and you will have to provide a code in addition to your password whenever you log into GitHub.

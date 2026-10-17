@@ -1,0 +1,23 @@
+[client-svn.012-svn-style-history] SVN Style History
+
+
+If you're used to Subversion and want to see your history in SVN output style, you can run git svn log to view your commit history in SVN formatting:
+
+$ git svn log
+r87 | schacon | 2014-05-02 16:07:37 -0700 (Sat, 02 May 2014) | 2 lines
+
+autogen change
+
+r86 | schacon | 2014-05-02 16:00:21 -0700 (Sat, 02 May 2014) | 2 lines
+
+Merge branch 'experiment'
+
+r85 | schacon | 2014-05-02 16:00:09 -0700 (Sat, 02 May 2014) | 2 lines
+
+updated the changelog
+
+You should know two important things about git svn log.
+First, it works offline, unlike the real svn log command, which asks the Subversion server for the data.
+Second, it only shows you commits that have been committed up to the Subversion server.
+Local Git commits that you haven't dcommited don't show up; neither do commits that people have made to the Subversion server in the meantime.
+It's more like the last known state of the commits on the Subversion server.

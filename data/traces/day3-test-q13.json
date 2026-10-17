@@ -1,0 +1,130 @@
+{
+  "request_id": "day3-test-q13",
+  "question": "How do I use git reset --hard to discard all local changes?",
+  "classification": "how-to",
+  "is_out_of_scope": false,
+  "abstained": false,
+  "risk_level": "HIGH",
+  "supported_claim_ratio": 0.8333,
+  "context_score": 0.6571,
+  "tokens_used": 5352,
+  "total_duration_ms": 327.63,
+  "final_response": "- Using `--hard` makes `git reset` dangerous because it overwrites the working directory to match the index, discarding any uncommitted changes and undoing the last commit, staged changes, and all local work[reset.010-step-3-updating-the-working-directory].\n\n- To discard all local changes, run `git reset --hard` in your terminal. This resets both the index and the working directory to match the repository’s HEAD, forcibly overwriting any modifications.\n\n[SAFETY WARNING] (HIGH RISK): The command(s) above (`git reset --hard`) are destructive and cannot be easily undone.\n**Safer alternative:** **Risky command detected:** `git reset --hard` (see [reset.010-step-3-updating-the-working-directory-hard]).\n\n**Safer workflow:**  \n1. If you only want to undo the last commit but keep the changes staged, run `git reset --soft HEAD~1`.  \n2. If you need to discard the changes entirely, first create a backup with `git stash push -m \"backup before hard reset\"` and then use `git reset --hard HEAD~1`.  \n3. To revert a single file to its last committed state, use `git checkout -- <file>` instead of a hard reset.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.1,
+      "status": "success",
+      "details": {
+        "clean_length": 59
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 3.43,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "how-to",
+        "is_out_of_scope": false,
+        "queries": [
+          "git reset --hard",
+          "discard local changes git reset",
+          "git reset hard Pro Git"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 283.37,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 13.33,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.17,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.6571
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 3.18,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 873
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 2.22,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 383
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 6.14,
+      "status": "success",
+      "details": {
+        "claims_a": 4,
+        "supported_a": 3,
+        "claims_b": 3,
+        "supported_b": 2
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "merge_and_verify",
+      "duration_ms": 13.67,
+      "status": "success",
+      "details": {
+        "supported_claim_ratio": 0.8333,
+        "revision_rounds": 2,
+        "context_score": 0.6571,
+        "verified_length": 456,
+        "abstained": false
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 2.16,
+      "status": "success",
+      "details": {
+        "risk_level": "HIGH",
+        "high_risk_found": [
+          "git reset --hard"
+        ],
+        "medium_risk_found": [],
+        "safer_alternative_generated": true
+      }
+    }
+  ]
+}

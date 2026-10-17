@@ -1,0 +1,24 @@
+[refs.004-remotes] Remotes
+
+
+The third type of reference that you'll see is a remote reference.
+If you add a remote and push to it, Git stores the value you last pushed to that remote for each branch in the refs/remotes directory.
+For instance, you can add a remote called origin and push your master branch to it:
+
+$ git remote add origin git@github.com:schacon/simplegit-progit.git
+$ git push origin master
+Counting objects: 11, done.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (7/7), 716 bytes, done.
+Total 7 (delta 2), reused 4 (delta 1)
+To git@github.com:schacon/simplegit-progit.git
+a11bef0..ca82a6d master -> master
+
+Then, you can see what the master branch on the origin remote was the last time you communicated with the server, by checking the refs/remotes/origin/master file:
+
+$ cat .git/refs/remotes/origin/master
+ca82a6dff817ec66f44342007202690a93763949
+
+Remote references differ from branches (refs/heads references) mainly in that they're considered read-only.
+You can git checkout to one, but Git won't symbolically reference HEAD to one, so you'll never update it with a commit command.
+Git manages them as bookmarks to the last known state of where those branches were on those servers.

@@ -1,0 +1,18 @@
+[client-svn.014-svn-server-information] SVN Server Information
+
+
+You can also get the same sort of information that svn info gives you by running git svn info:
+
+$ git svn info
+Path: .
+URL: https://schacon-test.googlecode.com/svn/trunk
+Repository Root: https://schacon-test.googlecode.com/svn
+Repository UUID: 4c93b258-373f-11de-be05-5f7a86268029
+Revision: 87
+Node Kind: directory
+Schedule: normal
+Last Changed Author: schacon
+Last Changed Rev: 87
+Last Changed Date: 2009-05-02 16:07:37 -0700 (Sat, 02 May 2009)
+
+This is like blame and log in that it runs offline and is up to date only as of the last time you communicated with the Subversion server.

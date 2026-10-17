@@ -1,0 +1,31 @@
+[contributing.001-contributing-to-a-project] Contributing to a Project
+
+
+(((contributing)))
+The main difficulty with describing how to contribute to a project are the numerous variations on how to do that.
+Because Git is very flexible, people can and do work together in many ways, and it's problematic to describe how you should contribute -- every project is a bit different.
+Some of the variables involved are active contributor count, chosen workflow, your commit access, and possibly the external contribution method.
+
+The first variable is active contributor count -- how many users are actively contributing code to this project, and how often?
+In many instances, you'll have two or three developers with a few commits a day, or possibly less for somewhat dormant projects.
+For larger companies or projects, the number of developers could be in the thousands, with hundreds or thousands of commits coming in each day.
+This is important because with more and more developers, you run into more issues with making sure your code applies cleanly or can be easily merged.
+Changes you submit may be rendered obsolete or severely broken by work that is merged in while you were working or while your changes were waiting to be approved or applied.
+How can you keep your code consistently up to date and your commits valid?
+
+The next variable is the workflow in use for the project.
+Is it centralized, with each developer having equal write access to the main codeline?
+Does the project have a maintainer or integration manager who checks all the patches?
+Are all the patches peer-reviewed and approved?
+Are you involved in that process?
+Is a lieutenant system in place, and do you have to submit your work to them first?
+
+The next variable is your commit access.
+The workflow required in order to contribute to a project is much different if you have write access to the project than if you don't.
+If you don't have write access, how does the project prefer to accept contributed work?
+Does it even have a policy?
+How much work are you contributing at a time?
+How often do you contribute?
+
+All these questions can affect how you contribute effectively to a project and what workflows are preferred or available to you.
+We'll cover aspects of each of these in a series of use cases, moving from simple to more complex; you should be able to construct the specific workflows you need in practice from these examples.

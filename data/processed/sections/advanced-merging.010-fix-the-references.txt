@@ -1,0 +1,19 @@
+[advanced-merging.010-fix-the-references] Fix the references
+
+
+If the unwanted merge commit only exists on your local repository, the easiest and best solution is to move the branches so that they point where you want them to.
+In most cases, if you follow the errant git merge with git reset --hard HEAD~, this will reset the branch pointers so they look like this:
+
+.History after git reset --hard HEAD~
+
+We covered reset back in <<ch07-git-tools#gitreset>>, so it shouldn't be too hard to figure out what's going on here.
+Here's a quick refresher: reset --hard usually goes through three steps:
+
+. Move the branch HEAD points to.
+In this case, we want to move master to where it was before the merge commit (C6).
+. Make the index look like HEAD.
+. Make the working directory look like the index.
+
+The downside of this approach is that it's rewriting history, which can be problematic with a shared repository.
+Check out <<ch03-git-branching#rebaseperil>> for more on what can happen; the short version is that if other people have the commits you're rewriting, you should probably avoid reset.
+This approach also won't work if any other commits have been created since the merge; moving the refs would effectively lose those changes.

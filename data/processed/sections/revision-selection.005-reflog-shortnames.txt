@@ -1,0 +1,64 @@
+[revision-selection.005-reflog-shortnames] RefLog Shortnames
+
+
+One of the things Git does in the background while you're working away is keep a "reflog" -- a log of where your HEAD and branch references have been for the last few months.
+
+You can see your reflog by using git reflog:
+
+$ git reflog
+734713b HEAD@: commit: Fix refs handling, add gc auto, update tests
+d921970 HEAD@: merge phedders/rdocs: Merge made by the 'recursive' strategy.
+1c002dd HEAD@: commit: Add some blame and merge stuff
+1c36188 HEAD@: rebase -i (squash): updating HEAD
+95df984 HEAD@: commit: # This is a combination of two commits.
+1c36188 HEAD@: rebase -i (squash): updating HEAD
+7e05da5 HEAD@: rebase -i (pick): updating HEAD
+
+Every time your branch tip is updated for any reason, Git stores that information for you in this temporary history.
+You can use your reflog data to refer to older commits as well.
+For example, if you want to see the fifth prior value of the HEAD of your repository, you can use the @ reference that you see in the reflog output:
+
+$ git show HEAD@
+
+You can also use this syntax to see where a branch was some specific amount of time ago.
+For instance, to see where your master branch was yesterday, you can type:
+
+$ git show master@
+
+That would show you where the tip of your master branch was yesterday.
+This technique only works for data that's still in your reflog, so you can't use it to look for commits older than a few months.
+
+To see reflog information formatted like the git log output, you can run git log -g:
+
+$ git log -g master
+commit 734713bc047d87bf7eac9674765ae793478c50d3
+Reflog: master@ (Scott Chacon <schacon@gmail.com>)
+Reflog message: commit: Fix refs handling, add gc auto, update tests
+Author: Scott Chacon <schacon@gmail.com>
+Date: Fri Jan 2 18:32:33 2009 -0800
+
+Fix refs handling, add gc auto, update tests
+
+commit d921970aadf03b3cf0e71becdaab3147ba71cdef
+Reflog: master@ (Scott Chacon <schacon@gmail.com>)
+Reflog message: merge phedders/rdocs: Merge made by recursive.
+Author: Scott Chacon <schacon@gmail.com>
+Date: Thu Dec 11 15:08:43 2008 -0800
+
+Merge commit 'phedders/rdocs'
+
+It's important to note that reflog information is strictly local -- it's a log only of what you've done in your repository.
+The references won't be the same on someone else's copy of the repository; also, right after you initially clone a repository, you'll have an empty reflog, as no activity has occurred yet in your repository.
+Running git show HEAD@ will show you the matching commit only if you cloned the project at least two months ago -- if you cloned it any more recently than that, you'll see only your first local commit.
+
+.Think of the reflog as Git's version of shell history
+If you have a UNIX or Linux background, you can think of the reflog as Git's version of shell history, which emphasizes that what's there is clearly relevant only for you and your "session", and has nothing to do with anyone else who might be working on the same machine.
+
+.Escaping braces in PowerShell
+
+When using PowerShell, braces like are special characters and must be escaped.
+You can escape them with a backtick ` or put the commit reference in quotes:
+
+$ git show HEAD@ # will NOT work
+$ git show HEAD@ # OK
+$ git show "HEAD@" # OK

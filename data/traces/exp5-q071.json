@@ -1,0 +1,48 @@
+{
+  "request_id": "exp5-q071",
+  "question": "How do I migrate a repository to Azure DevOps?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": null,
+  "tokens_used": 0,
+  "total_duration_ms": 29310.6,
+  "final_response": "Request timed out or exceeded token budget. Please try a simpler question.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.1,
+      "status": "success",
+      "details": {
+        "clean_length": 46
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 29305.09,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "How do I migrate a repository to Azure DevOps?"
+        ]
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 29308.92,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_retrievers",
+        "tokens_used": 0
+      }
+    }
+  ]
+}

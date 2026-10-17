@@ -1,0 +1,9 @@
+[5-scripting.009-octokit] Octokit
+
+
+Though we've been doing nearly everything through curl and simple HTTP requests in these examples, several open-source libraries exist that make this API available in a more idiomatic way.
+At the time of this writing, the supported languages include Go, Objective-C, Ruby, and .NET.
+Check out https://github.com/octokit[^] for more information on these, as they handle much of the HTTP for you.
+
+Hopefully these tools can help you customize and modify GitHub to work better for your specific workflows.
+For complete documentation on the entire API as well as guides for common tasks, check out https://docs.github.com/[^].

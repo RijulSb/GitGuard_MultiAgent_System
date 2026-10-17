@@ -1,0 +1,5 @@
+[reset.014-check-it-out] Check It Out
+
+
+Finally, you may wonder what the difference between checkout and reset is.
+Like reset, checkout manipulates the three trees, and it is a bit different depending on whether you give the command a file path or not.

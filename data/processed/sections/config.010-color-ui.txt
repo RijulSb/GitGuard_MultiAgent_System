@@ -1,0 +1,13 @@
+[config.010-color-ui] color.ui
+
+
+Git automatically colors most of its output, but there's a master switch if you don't like this behavior.
+To turn off all Git's colored terminal output, do this:
+
+$ git config --global color.ui false
+
+The default setting is auto, which colors output when it's going straight to a terminal, but omits the color-control codes when the output is redirected to a pipe or a file.
+
+You can also set it to always to ignore the difference between terminals and pipes.
+You'll rarely want this; in most scenarios, if you want color codes in your redirected output, you can instead pass a --color flag to the Git command to force it to use color codes.
+The default setting is almost always what you'll want.

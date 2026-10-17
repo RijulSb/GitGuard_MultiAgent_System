@@ -1,0 +1,68 @@
+[5-scripting.004-hooks] Hooks
+
+
+If you need something more specific or you want to integrate with a service or site that is not included in this list, you can instead use the more generic hooks system.
+GitHub repository hooks are pretty simple.
+You specify a URL and GitHub will post an HTTP payload to that URL on any event you want.
+
+Generally the way this works is you can setup a small web service to listen for a GitHub hook payload and then do something with the data when it is received.
+
+To enable a hook, you click the "Add webhook" button in <<serviceshooks>>.
+This will bring you to a page that looks like <<webhook>>.
+
+.Web hook configuration
+
+The configuration for a web hook is pretty simple.
+In most cases you simply enter a URL and a secret key and hit "Add webhook".
+There are a few options for which events you want GitHub to send you a payload for -- the default is to only get a payload for the push event, when someone pushes new code to any branch of your repository.
+
+Let's see a small example of a web service you may set up to handle a web hook.
+We'll use the Ruby web framework Sinatra since it's fairly concise and you should be able to easily see what we're doing.
+
+Let's say we want to get an email if a specific person pushes to a specific branch of our project modifying a specific file.
+We could fairly easily do that with code like this:
+
+require 'sinatra'
+require 'json'
+require 'mail'
+
+post '/payload' do
+push = JSON.parse(request.body.read) # parse the JSON
+
+# gather the data we're looking for
+pusher = push["pusher"]["name"]
+branch = push["ref"]
+
+# get a list of all the files touched
+files = push["commits"].map do |commit|
+commit['added'] + commit['modified'] + commit['removed']
+end
+files = files.flatten.uniq
+
+# check for our criteria
+if pusher == 'schacon' &&
+branch == 'ref/heads/special-branch' &&
+files.include?('special-file.txt')
+
+Mail.deliver do
+from 'tchacon@example.com'
+to 'tchacon@example.com'
+subject 'Scott Changed the File'
+body "ALARM"
+end
+end
+end
+
+Here we're taking the JSON payload that GitHub delivers us and looking up who pushed it, what branch they pushed to and what files were touched in all the commits that were pushed.
+Then we check that against our criteria and send an email if it matches.
+
+In order to develop and test something like this, you have a nice developer console in the same screen where you set the hook up.
+You can see the last few deliveries that GitHub has tried to make for that webhook.
+For each hook you can dig down into when it was delivered, if it was successful and the body and headers for both the request and the response.
+This makes it incredibly easy to test and debug your hooks.
+
+.Web hook debugging information
+
+The other great feature of this is that you can redeliver any of the payloads to test your service easily.
+
+For more information on how to write webhooks and all the different event types you can listen for, go to the GitHub Developer documentation at https://docs.github.com/en/webhooks-and-events/webhooks/about-webhooks[^].

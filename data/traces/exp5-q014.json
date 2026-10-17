@@ -1,0 +1,125 @@
+{
+  "request_id": "exp5-q014",
+  "question": "How do you configure Git to keep your local version of a specific file (e.g., database.xml) during a merge instead of creating a conflict?",
+  "classification": "how-to",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 0.5556,
+  "context_score": 1.0,
+  "tokens_used": 4703,
+  "total_duration_ms": 26602.38,
+  "final_response": "Not found in the book.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.15,
+      "status": "success",
+      "details": {
+        "clean_length": 138
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 2.25,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "how-to",
+        "is_out_of_scope": false,
+        "queries": [
+          "git merge keep local version of file",
+          "git merge -X ours database.xml",
+          "git attributes merge=ours"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 190.4,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 21.14,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.11,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 1.0
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 2.97,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 944
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 2.14,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 809
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 7437.03,
+      "status": "success",
+      "details": {
+        "claims_a": 6,
+        "supported_a": 4,
+        "claims_b": 6,
+        "supported_b": 2
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "abstain",
+      "duration_ms": 18957.1,
+      "status": "abstained",
+      "details": {
+        "reason": "low_claim_ratio",
+        "context_score": 1.0,
+        "supported_claim_ratio": 0.5556,
+        "revision_rounds": 2
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

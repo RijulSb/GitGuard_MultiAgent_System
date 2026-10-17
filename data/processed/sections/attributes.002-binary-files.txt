@@ -1,0 +1,7 @@
+[attributes.002-binary-files] Binary Files
+
+
+(((binary files)))
+One cool trick for which you can use Git attributes is telling Git which files are binary (in cases it otherwise may not be able to figure out) and giving Git special instructions about how to handle those files.
+For instance, some text files may be machine generated and not diffable, whereas some binary files can be diffed.
+You'll see how to tell Git which is which.

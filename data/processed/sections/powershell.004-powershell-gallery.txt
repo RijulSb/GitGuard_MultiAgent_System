@@ -1,0 +1,17 @@
+[powershell.004-powershell-gallery] PowerShell Gallery
+
+
+If you have at least PowerShell 5 or PowerShell 4 with PackageManagement installed, you can use the package manager to install posh-git for you.
+
+More information about PowerShell Gallery: https://learn.microsoft.com/en-us/powershell/scripting/gallery/overview[^].
+
+> Install-Module posh-git -Scope CurrentUser -Force
+> Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force # Newer beta version with PowerShell Core support
+
+If you want to install posh-git for all users, use -Scope AllUsers instead and execute the command from an elevated PowerShell console.
+If the second command fails with an error like Module 'PowerShellGet' was not installed by using Install-Module, you'll need to run another command first:
+
+> Install-Module PowerShellGet -Force -SkipPublisherCheck
+
+Then you can go back and try again.
+This happens, because the modules that ship with Windows PowerShell are signed with a different publishment certificate.

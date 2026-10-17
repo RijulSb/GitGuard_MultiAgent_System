@@ -1,0 +1,8 @@
+[distributed-workflows.005-patterns-for-managing-source-code-branches] Patterns for Managing Source Code Branches
+
+
+Martin Fowler has made a guide "Patterns for Managing Source Code Branches".
+This guide covers all the common Git workflows, and explains how/when to use them.
+There's also a section comparing high and low integration frequencies.
+
+https://martinfowler.com/articles/branching-patterns.html[^]

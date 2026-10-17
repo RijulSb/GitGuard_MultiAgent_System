@@ -1,0 +1,6 @@
+[transfer-protocols.010-protocols-summary] Protocols Summary
+
+
+This section contains a very basic overview of the transfer protocols.
+The protocol includes many other features, such as multi_ack or side-band capabilities, but covering them is outside the scope of this book.
+We've tried to give you a sense of the general back-and-forth between client and server; if you need more knowledge than this, you'll probably want to take a look at the Git source code.

@@ -1,0 +1,50 @@
+[policy.005-testing-it-out] Testing It Out
+
+
+If you run chmod u+x .git/hooks/update, which is the file into which you should have put all this code, and then try to push a commit with a non-compliant message, you get something like this:
+
+$ git push -f origin master
+Counting objects: 5, done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 323 bytes, done.
+Total 3 (delta 1), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+Enforcing Policies...
+(refs/heads/master) (8338c5) (c5b616)
+[POLICY] Your message is not formatted correctly
+error: hooks/update exited with error code 1
+error: hook declined to update refs/heads/master
+To git@gitserver:project.git
+! [remote rejected] master -> master (hook declined)
+error: failed to push some refs to 'git@gitserver:project.git'
+
+There are a couple of interesting things here.
+First, you see this where the hook starts running.
+
+Enforcing Policies...
+(refs/heads/master) (fb8c72) (c56860)
+
+Remember that you printed that out at the very beginning of your update script.
+Anything your script echoes to stdout will be transferred to the client.
+
+The next thing you'll notice is the error message.
+
+[POLICY] Your message is not formatted correctly
+error: hooks/update exited with error code 1
+error: hook declined to update refs/heads/master
+
+The first line was printed out by you, the other two were Git telling you that the update script exited non-zero and that is what is declining your push.
+Lastly, you have this:
+
+To git@gitserver:project.git
+! [remote rejected] master -> master (hook declined)
+error: failed to push some refs to 'git@gitserver:project.git'
+
+You'll see a remote rejected message for each reference that your hook declined, and it tells you that it was declined specifically because of a hook failure.
+
+Furthermore, if someone tries to edit a file they don't have access to and push a commit containing it, they will see something similar.
+For instance, if a documentation author tries to push a commit modifying something in the lib directory, they see:
+
+[POLICY] You do not have access to push to lib/test.rb
+
+From now on, as long as that update script is there and executable, your repository will never have a commit message without your pattern in it, and your users will be sandboxed.

@@ -1,0 +1,13 @@
+[guis.004-installation] Installation
+
+
+GitHub for Windows and macOS can be downloaded from https://desktop.github.com/[^].
+When the applications are first run, they walk you through all the first-time Git setup, such as configuring your name and email address, and both set up sane defaults for many common configuration options, such as credential caches and CRLF behavior.
+
+Both are "evergreen" – updates are downloaded and installed in the background while the applications are open.
+This helpfully includes a bundled version of Git, which means you probably won't have to worry about manually updating it again.
+On Windows, the client includes a shortcut to launch PowerShell with Posh-git, which we'll talk more about later in this chapter.
+
+The next step is to give the tool some repositories to work with.
+The client shows you a list of the repositories you have access to on GitHub, and can clone them in one step.
+If you already have a local repository, just drag its directory from the Finder or Windows Explorer into the GitHub client window, and it will be included in the list of repositories on the left.

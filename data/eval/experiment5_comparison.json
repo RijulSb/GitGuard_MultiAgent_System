@@ -1,0 +1,24 @@
+{
+  "baseline": {
+    "count": 72,
+    "faithfulness": 1.0,
+    "correctness": 0.9583,
+    "citation_accuracy": 1.0,
+    "unanswerable_refusal_rate": 1.0,
+    "false_refusal_rate": 0.0167,
+    "abstention_accuracy": 0.9861,
+    "latency_ms": 11267.0,
+    "tokens": 1562.5
+  },
+  "pipeline": {
+    "count": 72,
+    "faithfulness": 1.0,
+    "correctness": 0.4375,
+    "citation_accuracy": 0.9792,
+    "unanswerable_refusal_rate": 1.0,
+    "false_refusal_rate": 0.6333,
+    "abstention_accuracy": 0.4722,
+    "latency_ms": 32631.94,
+    "tokens": 3037.2
+  }
+}

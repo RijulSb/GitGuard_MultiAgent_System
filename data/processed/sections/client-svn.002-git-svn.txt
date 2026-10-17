@@ -1,0 +1,12 @@
+[client-svn.002-git-svn] git svn
+
+
+The base command in Git for all the Subversion bridging commands is git svn.
+It takes quite a few commands, so we'll show the most common while going through a few simple workflows.
+
+It's important to note that when you're using git svn, you're interacting with Subversion, which is a system that works very differently from Git.
+Although you can do local branching and merging, it's generally best to keep your history as linear as possible by rebasing your work, and avoiding doing things like simultaneously interacting with a Git remote repository.
+
+Don't rewrite your history and try to push again, and don't push to a parallel Git repository to collaborate with fellow Git developers at the same time.
+Subversion can have only a single linear history, and confusing it is very easy.
+If you're working with a team, and some are using SVN and others are using Git, make sure everyone is using the SVN server to collaborate – doing so will make your life easier.

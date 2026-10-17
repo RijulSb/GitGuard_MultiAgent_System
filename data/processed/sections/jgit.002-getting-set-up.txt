@@ -1,0 +1,20 @@
+[jgit.002-getting-set-up] Getting Set Up
+
+
+There are a number of ways to connect your project with JGit and start writing code against it.
+Probably the easiest is to use Maven – the integration is accomplished by adding the following snippet to the <dependencies> tag in your pom.xml file:
+
+<dependency>
+<groupId>org.eclipse.jgit</groupId>
+<artifactId>org.eclipse.jgit</artifactId>
+<version>3.5.0.201409260305-r</version>
+</dependency>
+
+The version will most likely have advanced by the time you read this; check https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit[^] for updated repository information.
+Once this step is done, Maven will automatically acquire and use the JGit libraries that you'll need.
+
+If you would rather manage the binary dependencies yourself, pre-built JGit binaries are available from https://projects.eclipse.org/projects/technology.jgit/downloads[^].
+You can build them into your project by running a command like this:
+
+javac -cp .:org.eclipse.jgit-3.5.0.201409260305-r.jar App.java
+java -cp .:org.eclipse.jgit-3.5.0.201409260305-r.jar App

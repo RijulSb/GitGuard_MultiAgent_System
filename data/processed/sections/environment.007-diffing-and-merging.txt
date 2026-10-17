@@ -1,0 +1,23 @@
+[environment.007-diffing-and-merging] Diffing and Merging
+
+
+GITDIFFOPTS is a bit of a misnomer.
+The only valid values are -u<n> or --unified=<n>, which controls the number of context lines shown in a git diff command.
+
+GITEXTERNALDIFF is used as an override for the diff.external configuration value.
+If it's set, Git will invoke this program when git diff is invoked.
+
+GITDIFFPATHCOUNTER and GITDIFFPATHTOTAL are useful from inside the program specified by GITEXTERNALDIFF or diff.external.
+The former represents which file in a series is being diffed (starting with 1), and the latter is the total number of files in the batch.
+
+GITMERGEVERBOSITY controls the output for the recursive merge strategy.
+The allowed values are as follows:
+
+* 0 outputs nothing, except possibly a single error message.
+* 1 shows only conflicts.
+* 2 also shows file changes.
+* 3 shows when files are skipped because they haven't changed.
+* 4 shows all paths as they are processed.
+* 5 and above show detailed debugging information.
+
+The default value is 2.

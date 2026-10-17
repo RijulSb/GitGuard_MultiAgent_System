@@ -1,0 +1,49 @@
+[2-contributing.016-keep-your-github-public-repository-up-to-date] Keep your GitHub public repository up-to-date
+
+
+Once you've forked a GitHub repository, your repository (your "fork") exists independently from the original.
+In particular, when the original repository has new commits, GitHub informs you by a message like:
+
+This branch is 5 commits behind progit:master.
+
+But your GitHub repository will never be automatically updated by GitHub; this is something that you must do yourself.
+Fortunately, this is very easy to do.
+
+One possibility to do this requires no configuration.
+For example, if you forked from https://github.com/progit/progit2.git, you can keep your master branch up-to-date like this:
+
+$ git checkout master <1>
+$ git pull https://github.com/progit/progit2.git <2>
+$ git push origin master <3>
+
+<1> If you were on another branch, return to master.
+<2> Fetch changes from https://github.com/progit/progit2.git and merge them into master.
+<3> Push your master branch to origin.
+
+This works, but it is a little tedious having to spell out the fetch URL every time.
+You can automate this work with a bit of configuration:
+
+$ git remote add progit https://github.com/progit/progit2.git <1>
+$ git fetch progit <2>
+$ git branch --set-upstream-to=progit/master master <3>
+$ git config --local remote.pushDefault origin <4>
+
+<1> Add the source repository and give it a name.
+Here, I have chosen to call it progit.
+<2> Get a reference on progit's branches, in particular master.
+<3> Set your master branch to fetch from the progit remote.
+<4> Define the default push repository to origin.
+
+Once this is done, the workflow becomes much simpler:
+
+$ git checkout master <1>
+$ git pull <2>
+$ git push <3>
+
+<1> If you were on another branch, return to master.
+<2> Fetch changes from progit and merge changes into master.
+<3> Push your master branch to origin.
+
+This approach can be useful, but it's not without downsides.
+Git will happily do this work for you silently, but it won't warn you if you make a commit to master, pull from progit, then push to origin -- all of those operations are valid with this setup.
+So you'll have to take care never to commit directly to master, since that branch effectively belongs to the upstream repository.

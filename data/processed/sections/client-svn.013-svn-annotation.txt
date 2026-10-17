@@ -1,0 +1,21 @@
+[client-svn.013-svn-annotation] SVN Annotation
+
+
+Much as the git svn log command simulates the svn log command offline, you can get the equivalent of svn annotate by running git svn blame [FILE].
+The output looks like this:
+
+$ git svn blame README.txt
+2 temporal Protocol Buffers - Google's data interchange format
+2 temporal Copyright 2008 Google Inc.
+2 temporal http://code.google.com/apis/protocolbuffers/
+2 temporal
+22 temporal C++ Installation - Unix
+22 temporal =======================
+2 temporal
+79 schacon Committing in git-svn.
+78 schacon
+2 temporal To build and install the C++ Protocol Buffer runtime and the Protocol
+2 temporal Buffer compiler (protoc) execute the following:
+2 temporal
+
+Again, it doesn't show commits that you did locally in Git or that have been pushed to Subversion in the meantime.

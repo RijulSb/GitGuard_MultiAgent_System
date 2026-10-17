@@ -1,0 +1,8 @@
+[undoing.004-undoing-things-with-git-restore] Undoing things with git restore
+
+
+Git version 2.23.0 introduced a new command: git restore.
+It's basically an alternative to git reset which we just covered.
+From Git version 2.23.0 onwards, Git will use git restore instead of git reset for many undo operations.
+
+Let's retrace our steps, and undo things with git restore instead of git reset.

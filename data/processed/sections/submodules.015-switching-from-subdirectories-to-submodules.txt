@@ -1,0 +1,48 @@
+[submodules.015-switching-from-subdirectories-to-submodules] Switching from subdirectories to submodules
+
+
+The other main caveat that many people run into involves switching from subdirectories to submodules.
+If you've been tracking files in your project and you want to move them out into a submodule, you must be careful or Git will get angry at you.
+Assume that you have files in a subdirectory of your project, and you want to switch it to a submodule.
+If you delete the subdirectory and then run submodule add, Git yells at you:
+
+$ rm -Rf CryptoLibrary/
+$ git submodule add https://github.com/chaconinc/CryptoLibrary
+'CryptoLibrary' already exists in the index
+
+You have to unstage the CryptoLibrary directory first.
+Then you can add the submodule:
+
+$ git rm -r CryptoLibrary
+$ git submodule add https://github.com/chaconinc/CryptoLibrary
+Cloning into 'CryptoLibrary'...
+remote: Counting objects: 11, done.
+remote: Compressing objects: 100% (10/10), done.
+remote: Total 11 (delta 0), reused 11 (delta 0)
+Unpacking objects: 100% (11/11), done.
+Checking connectivity... done.
+
+Now suppose you did that in a branch.
+If you try to switch back to a branch where those files are still in the actual tree rather than a submodule -- you get this error:
+
+$ git checkout master
+error: The following untracked working tree files would be overwritten by checkout:
+CryptoLibrary/Makefile
+CryptoLibrary/includes/crypto.h
+...
+Please move or remove them before you can switch branches.
+Aborting
+
+You can force it to switch with checkout -f, but be careful that you don't have unsaved changes in there as they could be overwritten with that command.
+
+$ git checkout -f master
+warning: unable to rmdir CryptoLibrary: Directory not empty
+Switched to branch 'master'
+
+Then, when you switch back, you get an empty CryptoLibrary directory for some reason and git submodule update may not fix it either.
+You may need to go into your submodule directory and run a git checkout . to get all your files back.
+You could run this in a submodule foreach script to run it for multiple submodules.
+
+It's important to note that submodules these days keep all their Git data in the top project's .git directory, so unlike much older versions of Git, destroying a submodule directory won't lose any commits or branches that you had.
+
+With these tools, submodules can be a fairly simple and effective method for developing on several related but still separate projects simultaneously.

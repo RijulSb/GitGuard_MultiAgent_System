@@ -1,0 +1,21 @@
+[reset.015-without-paths] Without Paths
+
+
+Running git checkout [branch] is pretty similar to running git reset --hard [branch] in that it updates all three trees for you to look like [branch], but there are two important differences.
+
+First, unlike reset --hard, checkout is working-directory safe; it will check to make sure it's not blowing away files that have changes to them.
+Actually, it's a bit smarter than that -- it tries to do a trivial merge in the working directory, so all of the files you haven't changed will be updated.
+reset --hard, on the other hand, will simply replace everything across the board without checking.
+
+The second important difference is how checkout updates HEAD.
+Whereas reset will move the branch that HEAD points to, checkout will move HEAD itself to point to another branch.
+
+For instance, say we have master and develop branches which point at different commits, and we're currently on develop (so HEAD points to it).
+If we run git reset master, develop itself will now point to the same commit that master does.
+If we instead run git checkout master, develop does not move, HEAD itself does.
+HEAD will now point to master.
+
+So, in both cases we're moving HEAD to point to commit A, but how we do so is very different.
+reset will move the branch HEAD points to, checkout moves HEAD itself.
+
+.git checkout and git reset

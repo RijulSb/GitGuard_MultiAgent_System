@@ -1,0 +1,227 @@
+project:
+  name: gitguard-rag
+  version: '1.0'
+  language: en
+  multimodal_input: false
+  web_search: false
+source:
+  name: progit2
+  repository: https://github.com/progit/progit2.git
+  commit: a013e3230a1207cfa5ae94d28ba7d2021063c337
+  subdirectory: book
+  rendered_reference: https://git-scm.com/book/en/v2
+  license: CC BY-NC-SA 3.0
+  include_only_english_book: true
+paths:
+  raw_data: data/raw
+  processed_data: data/processed
+  evaluation_data: data/eval
+  cache: data/cache
+  sections_file: data/processed/sections.jsonl
+  trace_dir: data/traces
+  scratch_dir: data/scratch
+models:
+  provider: groq
+  query_router:
+    id: openai/gpt-oss-20b
+    temperature: 0.0
+    max_tokens: 512
+  drafter_a:
+    id: qwen/qwen3.8-27b
+    temperature: 0.2
+    max_tokens: 2048
+  drafter_b:
+    id: openai/gpt-oss-20b
+    temperature: 0.1
+    max_tokens: 1536
+  critic_and_judge:
+    id: openai/gpt-oss-120b
+    temperature: 0.0
+    max_tokens: 2048
+  fallback:
+    id: openai/gpt-oss-20b
+    temperature: 0.0
+    max_tokens: 1024
+  embeddings:
+  - id: sentence-transformers/all-MiniLM-L6-v2
+    key: minilm_l6_v2
+  - id: BAAI/bge-small-en-v1.5
+    key: bge_small_en_v1_5
+  - id: BAAI/bge-base-en-v1.5
+    key: bge_base_en_v1_5
+  reranker:
+    id: BAAI/bge-reranker-base
+chunking:
+  default_strategy: parent_linked
+  strategies:
+    fixed:
+      chunk_tokens: 500
+      overlap_tokens: 50
+    heading_aware:
+      max_chunk_tokens: 500
+      overlap_tokens: 50
+      preserve_heading_path: true
+    parent_linked:
+      chunk_tokens: 250
+      overlap_tokens: 40
+      parent_section_required: true
+  tokenizer: cl100k_base
+  preserve_section_ids: true
+  preserve_headings: true
+retrieval:
+  default_embedding: bge_small_en_v1_5
+  vector_store: chromadb
+  vector_store_fallback: faiss
+  keyword_store: bm25
+  dense_top_k: 20
+  keyword_top_k: 20
+  merged_top_k: 20
+  rerank_top_k: 5
+  score_threshold: 0.35
+  hybrid:
+    enabled: true
+    dense_weight: 0.6
+    keyword_weight: 0.4
+  index_dir: data/processed/indexes
+agents:
+  max_total_seconds: 25
+  max_tokens_per_request: 12000
+  max_tool_calls_per_drafter: 3
+  max_revision_rounds: 2
+  min_supported_claim_ratio: 0.8
+  min_context_score: 0.35
+  required_citation_format: '[section_id]'
+  abstention_message: Not found in the book.
+  execution_order:
+  - manager
+  - query_analyst
+  - dense_retriever
+  - keyword_retriever
+  - reranker
+  - drafter_a
+  - drafter_b
+  - critic
+  - arbiter
+  - safety_guard
+safety:
+  enabled: true
+  risk_levels:
+    low: LOW
+    medium: MEDIUM
+    high: HIGH
+  high_risk_commands:
+  - git reset --hard
+  - git push --force
+  - git push -f
+  - git clean -fd
+  - git branch -D
+  - git checkout .
+  - git filter-branch
+  medium_risk_commands:
+  - git rebase
+  - git checkout
+  - git restore
+  warning_first_for: HIGH
+  require_safer_alternative: true
+  safer_alternative_requires_citation: true
+resilience:
+  retry:
+    max_attempts: 3
+    initial_delay_seconds: 1
+    max_delay_seconds: 8
+    exponential_backoff: true
+    retry_on:
+    - rate_limit
+    - timeout
+    - transient_server_error
+  request_timeout_seconds: 20
+  fallback_on_rate_limit: true
+  fallback_on_timeout: true
+cache:
+  enabled: true
+  directory: data/cache
+  namespace: gitguard-rag-v1
+  key_fields:
+  - model_id
+  - system_prompt
+  - user_prompt
+  - temperature
+  - max_tokens
+  persist_llm_responses: true
+  persist_embeddings: true
+  persist_retrieval_results: true
+observability:
+  trace_dir: data/traces
+  format: json
+  include:
+  - request_id
+  - agent
+  - tool
+  - started_at
+  - duration_ms
+  - input_tokens
+  - output_tokens
+  - model_id
+  - fallback_used
+  - citations
+  - risk_label
+  - abstained
+  log_level: INFO
+tools:
+  fetch_section:
+    primary: mcp_filesystem
+    fallback: local_file_reader
+    timeout_seconds: 3
+  check_git_command:
+    primary: mcp_git
+    fallback: git_help_scratch
+    timeout_seconds: 3
+  search_index:
+    primary: chromadb
+    fallback: faiss_bm25
+    timeout_seconds: 5
+mcp:
+  enabled: true
+  primary_first: true
+  failure_policy: fallback_and_log
+  filesystem_server_command: npx
+  filesystem_server_package: '@modelcontextprotocol/server-filesystem'
+  git_server_package: mcp-server-git
+evaluation:
+  dataset_path: data/eval/questions.jsonl
+  locked: true
+  ci_subset_path: data/eval/ci_30_questions.jsonl
+  metrics:
+  - recall_at_1
+  - recall_at_3
+  - recall_at_5
+  - recall_at_10
+  - mrr
+  - faithfulness
+  - answer_correctness
+  - citation_accuracy
+  - abstention_accuracy
+  - latency_ms
+  - tokens
+  retrieval_regression:
+    enabled: true
+    metric: recall_at_5
+    minimum_score: 0.85
+    fail_on_drop: true
+  experiments:
+  - chunking
+  - embeddings
+  - retrieval
+  - reranking
+  - baseline_vs_multi_agent
+service:
+  api_host: 0.0.0.0
+  api_port: 8000
+  api_prefix: /api/v1
+  health_path: /health
+  streamlit_port: 8501
+  request_timeout_seconds: 25
+secrets:
+  env_file: .env
+  groq_api_key_env: GROQ_API_KEY
+  huggingface_token_env: HUGGINGFACE_API_KEY

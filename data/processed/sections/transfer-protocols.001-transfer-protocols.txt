@@ -1,0 +1,5 @@
+[transfer-protocols.001-transfer-protocols] Transfer Protocols
+
+
+Git can transfer data between two repositories in two major ways: the "dumb" protocol and the "smart" protocol.
+This section will quickly cover how these two main protocols operate.

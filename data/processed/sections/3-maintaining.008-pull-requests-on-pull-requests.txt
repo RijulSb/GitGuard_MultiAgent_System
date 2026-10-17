@@ -1,0 +1,14 @@
+[3-maintaining.008-pull-requests-on-pull-requests] Pull Requests on Pull Requests
+
+
+Not only can you open Pull Requests that target the main or master branch, you can actually open a Pull Request targeting any branch in the network.
+In fact, you can even target another Pull Request.
+
+If you see a Pull Request that is moving in the right direction and you have an idea for a change that depends on it or you're not sure is a good idea, or you just don't have push access to the target branch, you can open a Pull Request directly to it.
+
+When you go to open a Pull Request, there is a box at the top of the page that specifies which branch you're requesting to pull to and which you're requesting to pull from.
+If you hit the "Edit" button at the right of that box you can change not only the branches but also which fork.
+
+.Manually change the Pull Request target fork and branch
+
+Here you can fairly easily specify to merge your new branch into another Pull Request or another fork of the project.

@@ -1,0 +1,50 @@
+[client-p4.011-branching] Branching
+
+
+If your Perforce project has multiple branches, you're not out of luck; git-p4 can handle that in a way that makes it feel like Git.
+Let's say your Perforce depot is laid out like this:
+
+└── project
+├── main
+└── dev
+
+And let's say you have a dev branch, which has a view spec that looks like this:
+
+Git-p4 can automatically detect that situation and do the right thing:
+
+$ git p4 clone --detect-branches //depot/project@all
+Importing from //depot/project@all into project
+Initialized empty Git repository in /private/tmp/project/.git/
+Importing revision 20 (50%)
+Importing new branch project/dev
+
+Resuming with change 20
+Importing revision 22 (100%)
+Updated branches: main dev
+$ cd project; git log --oneline --all --graph --decorate
+* eae77ae (HEAD, p4/master, p4/HEAD, master) main
+| * 10d55fb (p4/project/dev) dev
+| * a43cfae Populate //depot/project/main/... //depot/project/dev/....
+|/
+* 2b83451 Project init
+
+Note the "@all" specifier in the depot path; that tells git-p4 to clone not just the latest changeset for that subtree, but all changesets that have ever touched those paths.
+This is closer to Git's concept of a clone, but if you're working on a project with a long history, it could take a while.
+
+The --detect-branches flag tells git-p4 to use Perforce's branch specs to map the branches to Git refs.
+If these mappings aren't present on the Perforce server (which is a perfectly valid way to use Perforce), you can tell git-p4 what the branch mappings are, and you get the same result:
+
+$ git init project
+Initialized empty Git repository in /tmp/project/.git/
+$ cd project
+$ git config git-p4.branchList main:dev
+$ git clone --detect-branches //depot/project@all .
+
+Setting the git-p4.branchList configuration variable to main:dev tells git-p4 that "main" and "dev" are both branches, and the second one is a child of the first one.
+
+If we now git checkout -b dev p4/project/dev and make some commits, git-p4 is smart enough to target the right branch when we do git p4 submit.
+Unfortunately, git-p4 can't mix shallow clones and multiple branches; if you have a huge project and want to work on more than one branch, you'll have to git p4 clone once for each branch you want to submit to.
+
+For creating or integrating branches, you'll have to use a Perforce client.
+Git-p4 can only sync and submit to existing branches, and it can only do it one linear changeset at a time.
+If you merge two branches in Git and try to submit the new changeset, all that will be recorded is a bunch of file changes; the metadata about which branches are involved in the integration will be lost.

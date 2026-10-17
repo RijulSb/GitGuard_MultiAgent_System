@@ -1,0 +1,124 @@
+{
+  "request_id": "sanity-q006",
+  "question": "What is the purpose of the -M switch when using the git format-patch command?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 1.0,
+  "context_score": 0.8,
+  "tokens_used": 4795,
+  "total_duration_ms": 10743.04,
+  "final_response": "The `-M` switch for `git format-patch` tells Git to look for renames. [contributing.006-public-project-over-email]",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.09,
+      "status": "success",
+      "details": {
+        "clean_length": 77
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 10575.39,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "What is the purpose of the -M switch when using the git format-patch command?"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 143.51,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 1,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 15.85,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.18,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.8
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 2.67,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 149
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 1.75,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 121
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 3.66,
+      "status": "success",
+      "details": {
+        "claims_a": 0,
+        "supported_a": 0,
+        "claims_b": 0,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "abstain",
+      "duration_ms": 1.93,
+      "status": "abstained",
+      "details": {
+        "supported_claim_ratio": 1.0,
+        "revision_rounds": 0,
+        "context_score": 0.8,
+        "verified_length": 114,
+        "abstained": true
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

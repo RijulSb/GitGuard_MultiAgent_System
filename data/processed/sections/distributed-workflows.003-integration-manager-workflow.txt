@@ -1,0 +1,24 @@
+[distributed-workflows.003-integration-manager-workflow] Integration-Manager Workflow
+
+
+(((workflows, integration manager)))
+Because Git allows you to have multiple remote repositories, it's possible to have a workflow where each developer has write access to their own public repository and read access to everyone else's.
+This scenario often includes a canonical repository that represents the "official" project.
+To contribute to that project, you create your own public clone of the project and push your changes to it.
+Then, you can send a request to the maintainer of the main project to pull in your changes.
+The maintainer can then add your repository as a remote, test your changes locally, merge them into their branch, and push back to their repository.
+The process works as follows (see <<wfdiag_b>>):
+
+1. The project maintainer pushes to their public repository.
+2. A contributor clones that repository and makes changes.
+3. The contributor pushes to their own public copy.
+4. The contributor sends the maintainer an email asking them to pull changes.
+5. The maintainer adds the contributor's repository as a remote and merges locally.
+6. The maintainer pushes merged changes to the main repository.
+
+.Integration-manager workflow
+
+(((forking)))
+This is a very common workflow with hub-based tools like GitHub or GitLab, where it's easy to fork a project and push your changes into your fork for everyone to see.
+One of the main advantages of this approach is that you can continue to work, and the maintainer of the main repository can pull in your changes at any time.
+Contributors don't have to wait for the project to incorporate their changes -- each party can work at their own pace.

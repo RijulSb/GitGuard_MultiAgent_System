@@ -1,0 +1,91 @@
+[submodules.007-working-on-a-submodule] Working on a Submodule
+
+
+It's quite likely that if you're using submodules, you're doing so because you really want to work on the code in the submodule at the same time as you're working on the code in the main project (or across several submodules).
+Otherwise you would probably instead be using a simpler dependency management system (such as Maven or Rubygems).
+
+So now let's go through an example of making changes to the submodule at the same time as the main project and committing and publishing those changes at the same time.
+
+So far, when we've run the git submodule update command to fetch changes from the submodule repositories, Git would get the changes and update the files in the subdirectory but will leave the sub-repository in what's called a "detached HEAD" state.
+This means that there is no local working branch (like master, for example) tracking changes.
+With no working branch tracking changes, that means even if you commit changes to the submodule, those changes will quite possibly be lost the next time you run git submodule update.
+You have to do some extra steps if you want changes in a submodule to be tracked.
+
+In order to set up your submodule to be easier to go in and hack on, you need to do two things.
+You need to go into each submodule and check out a branch to work on.
+Then you need to tell Git what to do if you have made changes and later git submodule update --remote pulls in new work from upstream.
+The options are that you can merge them into your local work, or you can try to rebase your local work on top of the new changes.
+
+First of all, let's go into our submodule directory and check out a branch.
+
+$ cd DbConnector/
+$ git checkout stable
+Switched to branch 'stable'
+
+Let's try updating our submodule with the "merge" option.
+To specify it manually, we can just add the --merge option to our update call.
+Here we'll see that there was a change on the server for this submodule and it gets merged in.
+
+$ cd ..
+$ git submodule update --remote --merge
+remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 4 (delta 2), reused 4 (delta 2)
+Unpacking objects: 100% (4/4), done.
+From https://github.com/chaconinc/DbConnector
+c87d55d..92c7337 stable -> origin/stable
+Updating c87d55d..92c7337
+Fast-forward
+src/main.c | 1 +
+1 file changed, 1 insertion(+)
+Submodule path 'DbConnector': merged in '92c7337b30ef9e0893e758dac2459d07362ab5ea'
+
+If we go into the DbConnector directory, we have the new changes already merged into our local stable branch.
+Now let's see what happens when we make our own local change to the library and someone else pushes another change to the upstream at the same time.
+
+$ cd DbConnector/
+$ vim src/db.c
+$ git commit -am 'Unicode support'
+[stable f906e16] Unicode support
+1 file changed, 1 insertion(+)
+
+Now if we update our submodule we can see what happens when we have made a local change and upstream also has a change we need to incorporate.
+
+$ cd ..
+$ git submodule update --remote --rebase
+First, rewinding head to replay your work on top of it...
+Applying: Unicode support
+Submodule path 'DbConnector': rebased into '5d60ef9bbebf5a0c1c1050f242ceeb54ad58da94'
+
+If you forget the --rebase or --merge, Git will just update the submodule to whatever is on the server and reset your project to a detached HEAD state.
+
+$ git submodule update --remote
+Submodule path 'DbConnector': checked out '5d60ef9bbebf5a0c1c1050f242ceeb54ad58da94'
+
+If this happens, don't worry, you can simply go back into the directory and check out your branch again (which will still contain your work) and merge or rebase origin/stable (or whatever remote branch you want) manually.
+
+If you haven't committed your changes in your submodule and you run a submodule update that would cause issues, Git will fetch the changes but not overwrite unsaved work in your submodule directory.
+
+$ git submodule update --remote
+remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 0), reused 4 (delta 0)
+Unpacking objects: 100% (4/4), done.
+From https://github.com/chaconinc/DbConnector
+5d60ef9..c75e92a stable -> origin/stable
+error: Your local changes to the following files would be overwritten by checkout:
+scripts/setup.sh
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+Unable to checkout 'c75e92a2b3855c9e5b66f915308390d9db204aca' in submodule path 'DbConnector'
+
+If you made changes that conflict with something changed upstream, Git will let you know when you run the update.
+
+$ git submodule update --remote --merge
+Auto-merging scripts/setup.sh
+CONFLICT (content): Merge conflict in scripts/setup.sh
+Recorded preimage for 'scripts/setup.sh'
+Automatic merge failed; fix conflicts and then commit the result.
+Unable to merge 'c75e92a2b3855c9e5b66f915308390d9db204aca' in submodule path 'DbConnector'
+
+You can go into the submodule directory and fix the conflict just as you normally would.

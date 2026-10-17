@@ -1,0 +1,24 @@
+[transfer-protocols.009-http-s] HTTP(S)
+
+
+The handshake for a fetch operation takes two HTTP requests.
+The first is a GET to the same endpoint used in the dumb protocol:
+
+=> GET $GIT_URL/info/refs?service=git-upload-pack
+001e# service=git-upload-pack
+00e7ca82a6dff817ec66f44342007202690a93763949 HEAD□multi_ack thin-pack \
+side-band side-band-64k ofs-delta shallow no-progress include-tag \
+multiackdetailed no-done symref=HEAD:refs/heads/master \
+agent=git/2:2.1.1+github-607-gfba4028
+003fca82a6dff817ec66f44342007202690a93763949 refs/heads/master
+0000
+
+This is very similar to invoking git-upload-pack over an SSH connection, but the second exchange is performed as a separate request:
+
+=> POST $GIT_URL/git-upload-pack HTTP/1.0
+0032want 0a53e9ddeaddad63ad106860237bbf53411d11a7
+0032have 441b40d833fdfa93eb2908e52742248faf0ee993
+0000
+
+Again, this is the same format as above.
+The response to this request indicates success or failure, and includes the packfile.

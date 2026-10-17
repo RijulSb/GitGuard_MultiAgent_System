@@ -1,0 +1,4 @@
+[submodules.004-working-on-a-project-with-submodules] Working on a Project with Submodules
+
+
+Now we have a copy of a project with submodules in it and will collaborate with our teammates on both the main project and the submodule project.

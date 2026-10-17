@@ -1,0 +1,28 @@
+[advanced-merging.007-merge-log] Merge Log
+
+
+Another useful tool when resolving merge conflicts is git log.
+This can help you get context on what may have contributed to the conflicts.
+Reviewing a little bit of history to remember why two lines of development were touching the same area of code can be really helpful sometimes.
+
+To get a full list of all of the unique commits that were included in either branch involved in this merge, we can use the "triple dot" syntax that we learned in <<ch07-git-tools#tripledot>>.
+
+$ git log --oneline --left-right HEAD...MERGE_HEAD
+< f1270f7 Update README
+< 9af9d3b Create README
+< 694971d Update phrase to 'hola world'
+> e3eb223 Add more tests
+> 7cff591 Create initial testing script
+> c3ffff1 Change text to 'hello mundo'
+
+That's a nice list of the six total commits involved, as well as which line of development each commit was on.
+
+We can further simplify this though to give us much more specific context.
+If we add the --merge option to git log, it will only show the commits in either side of the merge that touch a file that's currently conflicted.
+
+$ git log --oneline --left-right --merge
+< 694971d Update phrase to 'hola world'
+> c3ffff1 Change text to 'hello mundo'
+
+If you run that with the -p option instead, you get just the diffs to the file that ended up in conflict.
+This can be really helpful in quickly giving you the context you need to help understand why something conflicts and how to more intelligently resolve it.

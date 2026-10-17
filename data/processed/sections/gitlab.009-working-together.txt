@@ -1,0 +1,19 @@
+[gitlab.009-working-together] Working Together
+
+
+The simplest way of working together on a GitLab project is by giving each user direct push access to the Git repository.
+You can add a user to a project by going to the "Members" section of that project's settings, and associating the new user with an access level (the different access levels are discussed a bit in <<gitlabgroups_section>>).
+By giving a user an access level of "Developer" or above, that user can push commits and branches directly to the repository.
+
+Another, more decoupled way of collaboration is by using merge requests.
+This feature enables any user that can see a project to contribute to it in a controlled way.
+Users with direct access can simply create a branch, push commits to it, and open a merge request from their branch back into master or any other branch.
+Users who don't have push permissions for a repository can "fork" it to create their own copy, push commits to their copy, and open a merge request from their fork back to the main project.
+This model allows the owner to be in full control of what goes into the repository and when, while allowing contributions from untrusted users.
+
+Merge requests and issues are the main units of long-lived discussion in GitLab.
+Each merge request allows a line-by-line discussion of the proposed change (which supports a lightweight kind of code review), as well as a general overall discussion thread.
+Both can be assigned to users, or organized into milestones.
+
+This section is focused mainly on the Git-related features of GitLab, but as a mature project, it provides many other features to help your team work together, such as project wikis and system maintenance tools.
+One benefit to GitLab is that, once the server is set up and running, you'll rarely need to tweak a configuration file or access the server via SSH; most administration and general usage can be done through the in-browser interface.

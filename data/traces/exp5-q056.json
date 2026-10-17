@@ -1,0 +1,123 @@
+{
+  "request_id": "exp5-q056",
+  "question": "What does the integer value of the `help.autocorrect` configuration represent, and how long is the delay if it is set to 50?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": 0.6,
+  "tokens_used": 3630,
+  "total_duration_ms": 48308.38,
+  "final_response": "Request timed out or exceeded token budget.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.1,
+      "status": "success",
+      "details": {
+        "clean_length": 124
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 1984.42,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "help.autocorrect configuration Pro Git",
+          "help.autocorrect delay Pro Git",
+          "help.autocorrect integer value Pro Git"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 262.52,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 15.51,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.12,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.6
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 1804.71,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 192
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 5245.66,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 196
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 40801.85,
+      "status": "success",
+      "details": {
+        "claims_a": 2,
+        "supported_a": 0,
+        "claims_b": 0,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 48306.66,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_arbiter",
+        "tokens_used": 3630
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

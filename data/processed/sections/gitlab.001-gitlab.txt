@@ -1,0 +1,8 @@
+[gitlab.001-gitlab] GitLab
+
+
+(((serving repositories, GitLab)))(((GitLab)))
+GitWeb is pretty simplistic though.
+If you're looking for a modern, fully featured Git server, there are several open source solutions out there that you can install instead.
+As GitLab is one of the popular ones, we'll cover installing and using it as an example.
+This is harder than the GitWeb option and will require more maintenance, but it is a fully featured option.

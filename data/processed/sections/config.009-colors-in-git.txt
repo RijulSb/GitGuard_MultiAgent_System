@@ -1,0 +1,6 @@
+[config.009-colors-in-git] Colors in Git
+
+
+(((color)))
+Git fully supports colored terminal output, which greatly aids in visually parsing command output quickly and easily.
+A number of options can help you set the coloring to your preference.

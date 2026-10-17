@@ -1,0 +1,16 @@
+[reset.008-step-1-move-head] Step 1: Move HEAD
+
+
+The first thing reset will do is move what HEAD points to.
+This isn't the same as changing HEAD itself (which is what checkout does); reset moves the branch that HEAD is pointing to.
+This means if HEAD is set to the master branch (i.e. you're currently on the master branch), running git reset 9e5e6a4 will start by making master point to 9e5e6a4.
+
+.Soft reset
+
+No matter what form of reset with a commit you invoke, this is the first thing it will always try to do.
+With reset --soft, it will simply stop there.
+
+Now take a second to look at that diagram and realize what happened: it essentially undid the last git commit command.
+When you run git commit, Git creates a new commit and moves the branch that HEAD points to up to it.
+When you reset back to HEAD~ (the parent of HEAD), you are moving the branch back to where it was, without changing the index or working directory.
+You could now update the index and run git commit again to accomplish what git commit --amend would have done (see <<gitamend>>).

@@ -1,0 +1,17 @@
+[protocols.010-the-ssh-protocol] The SSH Protocol
+
+
+(((protocols, SSH)))
+A common transport protocol for Git when self-hosting is over SSH.
+This is because SSH access to servers is already set up in most places -- and if it isn't, it's easy to do.
+SSH is also an authenticated network protocol and, because it's ubiquitous, it's generally easy to set up and use.
+
+To clone a Git repository over SSH, you can specify an ssh:// URL like this:
+
+$ git clone ssh://[user@]server/project.git
+
+Or you can use the shorter scp-like syntax for the SSH protocol:
+
+$ git clone [user@]server:project.git
+
+In both cases above, if you don't specify the optional username, Git assumes the user you're currently logged in as.

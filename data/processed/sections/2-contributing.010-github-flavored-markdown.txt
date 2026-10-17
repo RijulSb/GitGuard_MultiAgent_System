@@ -1,0 +1,13 @@
+[2-contributing.010-github-flavored-markdown] GitHub Flavored Markdown
+
+
+Linking to other Issues is just the beginning of interesting things you can do with almost any text box on GitHub.
+In Issue and Pull Request descriptions, comments, code comments and more, you can use what is called "GitHub Flavored Markdown".
+Markdown is like writing in plain text but which is rendered richly.
+
+See <<examplemarkdown>> for an example of how comments or text can be written and then rendered using Markdown.
+
+.An example of GitHub Flavored Markdown as written and as rendered
+
+The GitHub flavor of Markdown adds more things you can do beyond the basic Markdown syntax.
+These can all be really useful when creating useful Pull Request or Issue comments or descriptions.

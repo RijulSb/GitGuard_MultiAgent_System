@@ -1,0 +1,39 @@
+[client-svn.005-committing-back-to-subversion] Committing Back to Subversion
+
+
+Now that you have a working directory, you can do some work on the project and push your commits back upstream, using Git effectively as an SVN client.
+If you edit one of the files and commit it, you have a commit that exists in Git locally that doesn't exist on the Subversion server:
+
+$ git commit -am 'Adding git-svn instructions to the README'
+[master 4af61fd] Adding git-svn instructions to the README
+1 file changed, 5 insertions(+)
+
+Next, you need to push your change upstream.
+Notice how this changes the way you work with Subversion – you can do several commits offline and then push them all at once to the Subversion server.
+To push to a Subversion server, you run the git svn dcommit command:
+
+$ git svn dcommit
+Committing to file:///tmp/test-svn/trunk ...
+M README.txt
+Committed r77
+M README.txt
+r77 = 95e0222ba6399739834380eb10afcd73e0670bc5 (refs/remotes/origin/trunk)
+No changes between 4af61fd05045e07598c553167e0f31c84fd6ffe1 and refs/remotes/origin/trunk
+Resetting to the latest refs/remotes/origin/trunk
+
+This takes all the commits you've made on top of the Subversion server code, does a Subversion commit for each, and then rewrites your local Git commit to include a unique identifier.
+This is important because it means that all the SHA-1 checksums for your commits change.
+Partly for this reason, working with Git-based remote versions of your projects concurrently with a Subversion server isn't a good idea.
+If you look at the last commit, you can see the new git-svn-id that was added:
+
+$ git log -1
+commit 95e0222ba6399739834380eb10afcd73e0670bc5
+Author: ben <ben@0b684db3-b064-4277-89d1-21af03df0a68>
+Date: Thu Jul 24 03:08:36 2014 +0000
+
+Adding git-svn instructions to the README
+
+git-svn-id: file:///tmp/test-svn/trunk@77 0b684db3-b064-4277-89d1-21af03df0a68
+
+Notice that the SHA-1 checksum that originally started with 4af61fd when you committed now begins with 95e0222.
+If you want to push to both a Git server and a Subversion server, you have to push (dcommit) to the Subversion server first, because that action changes your commit data.

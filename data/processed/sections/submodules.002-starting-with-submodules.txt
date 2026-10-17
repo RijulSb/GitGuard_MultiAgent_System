@@ -1,0 +1,92 @@
+[submodules.002-starting-with-submodules] Starting with Submodules
+
+
+We'll walk through developing a simple project that has been split up into a main project and a few sub-projects.
+
+Let's start by adding an existing Git repository as a submodule of the repository that we're working on.
+To add a new submodule you use the git submodule add command with the absolute or relative URL of the project you would like to start tracking.
+In this example, we'll add a library called "DbConnector".
+
+$ git submodule add https://github.com/chaconinc/DbConnector
+Cloning into 'DbConnector'...
+remote: Counting objects: 11, done.
+remote: Compressing objects: 100% (10/10), done.
+remote: Total 11 (delta 0), reused 11 (delta 0)
+Unpacking objects: 100% (11/11), done.
+Checking connectivity... done.
+
+By default, submodules will add the subproject into a directory named the same as the repository, in this case "DbConnector".
+You can add a different path at the end of the command if you want it to go elsewhere.
+
+If you run git status at this point, you'll notice a few things.
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+(use "git reset HEAD <file>..." to unstage)
+
+new file: .gitmodules
+new file: DbConnector
+
+First you should notice the new .gitmodules file.
+This is a configuration file that stores the mapping between the project's URL and the local subdirectory you've pulled it into:
+
+[submodule "DbConnector"]
+path = DbConnector
+url = https://github.com/chaconinc/DbConnector
+
+If you have multiple submodules, you'll have multiple entries in this file.
+It's important to note that this file is version-controlled with your other files, like your .gitignore file.
+It's pushed and pulled with the rest of your project.
+This is how other people who clone this project know where to get the submodule projects from.
+
+Since the URL in the .gitmodules file is what other people will first try to clone/fetch from, make sure to use a URL that they can access if possible.
+For example, if you use a different URL to push to than others would to pull from, use the one that others have access to.
+You can overwrite this value locally with git config submodule.DbConnector.url PRIVATE_URL for your own use.
+When applicable, a relative URL can be helpful.
+
+The other listing in the git status output is the project folder entry.
+If you run git diff on that, you see something interesting:
+
+$ git diff --cached DbConnector
+diff --git a/DbConnector b/DbConnector
+new file mode 160000
+index 0000000..c3f01dc
+--- /dev/null
++++ b/DbConnector
+@@ -0,0 +1 @@
++Subproject commit c3f01dc8862123d317dd46284b05b6892c7b29bc
+
+Although DbConnector is a subdirectory in your working directory, Git sees it as a submodule and doesn't track its contents when you're not in that directory.
+Instead, Git sees it as a particular commit from that repository.
+
+If you want a little nicer diff output, you can pass the --submodule option to git diff.
+
+$ git diff --cached --submodule
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..71fc376
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "DbConnector"]
++ path = DbConnector
++ url = https://github.com/chaconinc/DbConnector
+Submodule DbConnector 0000000...c3f01dc (new submodule)
+
+When you commit, you see something like this:
+
+$ git commit -am 'Add DbConnector module'
+[master fb9093c] Add DbConnector module
+2 files changed, 4 insertions(+)
+create mode 100644 .gitmodules
+create mode 160000 DbConnector
+
+Notice the 160000 mode for the DbConnector entry.
+That is a special mode in Git that basically means you're recording a commit as a directory entry rather than a subdirectory or a file.
+
+Lastly, push these changes:
+
+$ git push origin master

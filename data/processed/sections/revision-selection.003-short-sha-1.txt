@@ -1,0 +1,65 @@
+[revision-selection.003-short-sha-1] Short SHA-1
+
+
+Git is smart enough to figure out what commit you're referring to if you provide the first few characters of the SHA-1 hash, as long as that partial hash is at least four characters long and unambiguous; that is, no other object in the object database can have a hash that begins with the same prefix.
+
+For example, to examine a specific commit where you know you added certain functionality, you might first run the git log command to locate the commit:
+
+$ git log
+commit 734713bc047d87bf7eac9674765ae793478c50d3
+Author: Scott Chacon <schacon@gmail.com>
+Date: Fri Jan 2 18:32:33 2009 -0800
+
+Fix refs handling, add gc auto, update tests
+
+commit d921970aadf03b3cf0e71becdaab3147ba71cdef
+Merge: 1c002dd... 35cfb2b...
+Author: Scott Chacon <schacon@gmail.com>
+Date: Thu Dec 11 15:08:43 2008 -0800
+
+Merge commit 'phedders/rdocs'
+
+commit 1c002dd4b536e7479fe34593e72e6c6c1819e53b
+Author: Scott Chacon <schacon@gmail.com>
+Date: Thu Dec 11 14:58:32 2008 -0800
+
+Add some blame and merge stuff
+
+In this case, say you're interested in the commit whose hash begins with 1c002dd....
+You can inspect that commit with any of the following variations of git show (assuming the shorter versions are unambiguous):
+
+$ git show 1c002dd4b536e7479fe34593e72e6c6c1819e53b
+$ git show 1c002dd4b536e7479f
+$ git show 1c002d
+
+Git can figure out a short, unique abbreviation for your SHA-1 values.
+If you pass --abbrev-commit to the git log command, the output will use shorter values but keep them unique; it defaults to using seven characters but makes them longer if necessary to keep the SHA-1 unambiguous:
+
+$ git log --abbrev-commit --pretty=oneline
+ca82a6d Change the version number
+085bb3b Remove unnecessary test code
+a11bef0 Initial commit
+
+Generally, eight to ten characters are more than enough to be unique within a project.
+For example, as of February 2019, the Linux kernel (which is a fairly sizable project) has over 875,000 commits and almost seven million objects in its object database, with no two objects whose SHA-1s are identical in the first 12 characters.
+
+.A SHORT NOTE ABOUT SHA-1
+
+A lot of people become concerned at some point that they will, by random happenstance, have two distinct objects in their repository that hash to the same SHA-1 value.
+What then?
+
+If you do happen to commit an object that hashes to the same SHA-1 value as a previous different object in your repository, Git will see the previous object already in your Git database, assume it was already written and simply reuse it.
+If you try to check out that object again at some point, you'll always get the data of the first object.
+
+However, you should be aware of how ridiculously unlikely this scenario is.
+The SHA-1 digest is 20 bytes or 160 bits.
+The number of randomly hashed objects needed to ensure a 50% probability of a single collision is about 2^80^ (the formula for determining collision probability is p = (n(n-1)/2) * (1/2^160)).
+2^80^ is 1.2 x 10^24^ or 1 million billion billion.
+That's 1,200 times the number of grains of sand on the earth.
+
+Here's an example to give you an idea of what it would take to get a SHA-1 collision.
+If all 6.5 billion humans on Earth were programming, and every second, each one was producing code that was the equivalent of the entire Linux kernel history (6.5 million Git objects) and pushing it into one enormous Git repository, it would take roughly 2 years until that repository contained enough objects to have a 50% probability of a single SHA-1 object collision.
+Thus, an organic SHA-1 collision is less likely than every member of your programming team being attacked and killed by wolves in unrelated incidents on the same night.
+
+If you dedicate several thousands of dollars' worth of computing power to it, it is possible to synthesize two files with the same hash, as proven on https://shattered.io/[^] in February 2017.
+Git is moving towards using SHA256 as the default hashing algorithm, which is much more resilient to collision attacks, and has code in place to help mitigate this attack (although it cannot completely eliminate it).

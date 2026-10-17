@@ -1,0 +1,11 @@
+[config.019-receive-denydeletes] receive.denyDeletes
+
+
+One of the workarounds to the denyNonFastForwards policy is for the user to delete the branch and then push it back up with the new reference.
+To avoid this, set receive.denyDeletes to true:
+
+$ git config --system receive.denyDeletes true
+
+This denies any deletion of branches or tags -- no user can do it.
+To remove remote branches, you must remove the ref files from the server manually.
+There are also more interesting ways to do this on a per-user basis via ACLs, as you'll learn in <<ch08-customizing-git#anexamplegitenforced_policy>>.

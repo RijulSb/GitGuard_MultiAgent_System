@@ -1,0 +1,13 @@
+[powershell.006-from-source] From Source
+
+
+Just download a posh-git release from https://github.com/dahlbyk/posh-git/releases[^], and uncompress it.
+Then import the module using the full path to the posh-git.psd1 file:
+
+> Import-Module <path-to-uncompress-folder>\src\posh-git.psd1
+> Add-PoshGitToProfile -AllHosts
+
+This will add the proper line to your profile.ps1 file, and posh-git will be active the next time you open PowerShell.
+
+For a description of the Git status summary information displayed in the prompt see: https://github.com/dahlbyk/posh-git/blob/master/README.md#git-status-summary-information[^]
+For more details on how to customize your posh-git prompt see: https://github.com/dahlbyk/posh-git/blob/master/README.md#customization-variables[^].

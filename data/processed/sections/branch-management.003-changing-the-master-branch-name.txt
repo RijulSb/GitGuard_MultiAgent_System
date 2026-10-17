@@ -1,0 +1,43 @@
+[branch-management.003-changing-the-master-branch-name] Changing the master branch name
+
+
+Changing the name of a branch like master/main/mainline/default will break the integrations, services, helper utilities and build/release scripts that your repository uses.
+Before you do this, make sure you consult with your collaborators.
+Also, make sure you do a thorough search through your repo and update any references to the old branch name in your code and scripts.
+
+Rename your local master branch into main with the following command:
+
+$ git branch --move master main
+
+There's no local master branch anymore, because it's renamed to the main branch.
+
+To let others see the new main branch, you need to push it to the remote.
+This makes the renamed branch available on the remote.
+
+$ git push --set-upstream origin main
+
+Now we end up with the following state:
+
+$ git branch --all
+* main
+remotes/origin/HEAD -> origin/master
+remotes/origin/main
+remotes/origin/master
+
+Your local master branch is gone, as it's replaced with the main branch.
+The main branch is present on the remote.
+However, the old master branch is still present on the remote.
+Other collaborators will continue to use the master branch as the base of their work, until you make some further changes.
+
+Now you have a few more tasks in front of you to complete the transition:
+
+* Any projects that depend on this one will need to update their code and/or configuration.
+* Update any test-runner configuration files.
+* Adjust build and release scripts.
+* Redirect settings on your repo host for things like the repo's default branch, merge rules, and other things that match branch names.
+* Update references to the old branch in documentation.
+* Close or merge any pull requests that target the old branch.
+
+After you've done all these tasks, and are certain the main branch performs just as the master branch, you can delete the master branch:
+
+$ git push origin --delete master

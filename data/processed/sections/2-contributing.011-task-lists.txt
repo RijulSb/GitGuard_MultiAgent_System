@@ -1,0 +1,28 @@
+[2-contributing.011-task-lists] Task Lists
+
+
+The first really useful GitHub specific Markdown feature, especially for use in Pull Requests, is the Task List.
+A task list is a list of checkboxes of things you want to get done.
+Putting them into an Issue or Pull Request normally indicates things that you want to get done before you consider the item complete.
+
+You can create a task list like this:
+
+- [X] Write the code
+- [ ] Write all the tests
+- [ ] Document the code
+
+If we include this in the description of our Pull Request or Issue, we'll see it rendered like <<egtask_lists>>.
+
+.Task lists rendered in a Markdown comment
+
+This is often used in Pull Requests to indicate what all you would like to get done on the branch before the Pull Request will be ready to merge.
+The really cool part is that you can simply click the checkboxes to update the comment -- you don't have to edit the Markdown directly to check tasks off.
+
+What's more, GitHub will look for task lists in your Issues and Pull Requests and show them as metadata on the pages that list them out.
+For example, if you have a Pull Request with tasks and you look at the overview page of all Pull Requests, you can see how far done it is.
+This helps people break down Pull Requests into subtasks and helps other people track the progress of the branch.
+You can see an example of this in <<tasklist_progress>>.
+
+.Task list summary in the Pull Request list
+
+These are incredibly useful when you open a Pull Request early and use it to track your progress through the implementation of the feature.

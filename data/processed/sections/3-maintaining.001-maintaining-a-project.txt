@@ -1,0 +1,4 @@
+[3-maintaining.001-maintaining-a-project] Maintaining a Project
+
+
+Now that we're comfortable contributing to a project, let's look at the other side: creating, maintaining and administering your own project.

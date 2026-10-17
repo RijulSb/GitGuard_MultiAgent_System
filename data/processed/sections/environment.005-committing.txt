@@ -1,0 +1,19 @@
+[environment.005-committing] Committing
+
+
+The final creation of a Git commit object is usually done by git-commit-tree, which uses these environment variables as its primary source of information, falling back to configuration values only if these aren't present.
+
+GITAUTHORNAME is the human-readable name in the "author" field.
+
+GITAUTHOREMAIL is the email for the "author" field.
+
+GITAUTHORDATE is the timestamp used for the "author" field.
+
+GITCOMMITTERNAME sets the human name for the "committer" field.
+
+GITCOMMITTEREMAIL is the email address for the "committer" field.
+
+GITCOMMITTERDATE is used for the timestamp in the "committer" field.
+
+EMAIL is the fallback email address in case the user.email configuration value isn't set.
+If this isn't set, Git falls back to the system user and host names.

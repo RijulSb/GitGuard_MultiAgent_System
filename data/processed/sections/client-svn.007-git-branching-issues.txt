@@ -1,0 +1,28 @@
+[client-svn.007-git-branching-issues] Git Branching Issues
+
+
+When you've become comfortable with a Git workflow, you'll likely create topic branches, do work on them, and then merge them in.
+If you're pushing to a Subversion server via git svn, you may want to rebase your work onto a single branch each time instead of merging branches together.
+The reason to prefer rebasing is that Subversion has a linear history and doesn't deal with merges like Git does, so git svn follows only the first parent when converting the snapshots into Subversion commits.
+
+Suppose your history looks like the following: you created an experiment branch, did two commits, and then merged them back into master.
+When you dcommit, you see output like this:
+
+$ git svn dcommit
+Committing to file:///tmp/test-svn/trunk ...
+M CHANGES.txt
+Committed r89
+M CHANGES.txt
+r89 = 89d492c884ea7c834353563d5d913c6adf933981 (refs/remotes/origin/trunk)
+M COPYING.txt
+M INSTALL.txt
+Committed r90
+M INSTALL.txt
+M COPYING.txt
+r90 = cb522197870e61467473391799148f6721bcf9a0 (refs/remotes/origin/trunk)
+No changes between 71af502c214ba13123992338569f4669877f55fd and refs/remotes/origin/trunk
+Resetting to the latest refs/remotes/origin/trunk
+
+Running dcommit on a branch with merged history works fine, except that when you look at your Git project history, it hasn't rewritten either of the commits you made on the experiment branch – instead, all those changes appear in the SVN version of the single merge commit.
+
+When someone else clones that work, all they see is the merge commit with all the work squashed into it, as though you ran git merge --squash; they don't see the commit data about where it came from or when it was committed.

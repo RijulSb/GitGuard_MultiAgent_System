@@ -1,0 +1,6 @@
+[guis.006-summary] Summary
+
+
+These tools are very well-suited for the workflow they're designed for.
+Developers and non-developers alike can be collaborating on a project within minutes, and many of the best practices for this kind of workflow are baked into the tools.
+However, if your workflow is different, or you want more control over how and when network operations are done, we recommend you use another client or the command line.

@@ -1,0 +1,13 @@
+[1-setting-up-account.004-your-email-addresses] Your Email Addresses
+
+
+The way that GitHub maps your Git commits to your user is by email address.
+If you use multiple email addresses in your commits and you want GitHub to link them up properly, you need to add all the email addresses you have used to the Emails section of the admin section.
+
+.Add all your email addresses
+
+In <<addemail_addresses>> we can see some of the different states that are possible.
+The top address is verified and set as the primary address, meaning that is where you'll get any notifications and receipts.
+The second address is verified and so can be set as the primary if you wish to switch them.
+The final address is unverified, meaning that you can't make it your primary address.
+If GitHub sees any of these in commit messages in any repository on the site, it will be linked to your user now.

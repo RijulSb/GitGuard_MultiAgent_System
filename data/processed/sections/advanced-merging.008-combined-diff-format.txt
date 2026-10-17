@@ -1,0 +1,82 @@
+[advanced-merging.008-combined-diff-format] Combined Diff Format
+
+
+Since Git stages any merge results that are successful, when you run git diff while in a conflicted merge state, you only get what is currently still in conflict.
+This can be helpful to see what you still have to resolve.
+
+When you run git diff directly after a merge conflict, it will give you information in a rather unique diff output format.
+
+$ git diff
+diff --cc hello.rb
+index 0399cd5,59727f0..0000000
+--- a/hello.rb
++++ b/hello.rb
+@@@ -1,7 -1,7 +1,11 @@@
+#! /usr/bin/env ruby
+
+def hello
+++<<<<<<< HEAD
++ puts 'hola world'
+++=======
++ puts 'hello mundo'
+++>>>>>>> mundo
+end
+
+hello()
+
+The format is called "Combined Diff" and gives you two columns of data next to each line.
+The first column shows you if that line is different (added or removed) between the "ours" branch and the file in your working directory and the second column does the same between the "theirs" branch and your working directory copy.
+
+So in that example you can see that the <<<<<<< and >>>>>>> lines are in the working copy but were not in either side of the merge.
+This makes sense because the merge tool stuck them in there for our context, but we're expected to remove them.
+
+If we resolve the conflict and run git diff again, we'll see the same thing, but it's a little more useful.
+
+$ vim hello.rb
+$ git diff
+diff --cc hello.rb
+index 0399cd5,59727f0..0000000
+--- a/hello.rb
++++ b/hello.rb
+@@@ -1,7 -1,7 +1,7 @@@
+#! /usr/bin/env ruby
+
+def hello
+- puts 'hola world'
+- puts 'hello mundo'
+++ puts 'hola mundo'
+end
+
+hello()
+
+This shows us that "hola world" was in our side but not in the working copy, that "hello mundo" was in their side but not in the working copy and finally that "hola mundo" was not in either side but is now in the working copy.
+This can be useful to review before committing the resolution.
+
+You can also get this from the git log for any merge to see how something was resolved after the fact.
+Git will output this format if you run git show on a merge commit, or if you add a --cc option to a git log -p (which by default only shows patches for non-merge commits).
+
+$ git log --cc -p -1
+commit 14f41939956d80b9e17bb8721354c33f8d5b5a79
+Merge: f1270f7 e3eb223
+Author: Scott Chacon <schacon@gmail.com>
+Date: Fri Sep 19 18:14:49 2014 +0200
+
+Merge branch 'mundo'
+
+Conflicts:
+hello.rb
+
+diff --cc hello.rb
+index 0399cd5,59727f0..e1d0799
+--- a/hello.rb
++++ b/hello.rb
+@@@ -1,7 -1,7 +1,7 @@@
+#! /usr/bin/env ruby
+
+def hello
+- puts 'hola world'
+- puts 'hello mundo'
+++ puts 'hola mundo'
+end
+
+hello()

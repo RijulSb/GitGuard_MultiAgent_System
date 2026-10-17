@@ -1,0 +1,26 @@
+[client-p4.009-getting-started] Getting Started
+
+
+As with anything in Git, the first command is to clone:
+
+$ git p4 clone //depot/www/live www-shallow
+Importing from //depot/www/live into www-shallow
+Initialized empty Git repository in /private/tmp/www-shallow/.git/
+Doing initial import of //depot/www/live/ from revision #head into refs/remotes/p4/master
+
+This creates what in Git terms is a "shallow" clone; only the very latest Perforce revision is imported into Git; remember, Perforce isn't designed to give every revision to every user.
+This is enough to use Git as a Perforce client, but for other purposes it's not enough.
+
+Once it's finished, we have a fully-functional Git repository:
+
+$ cd myproject
+$ git log --oneline --all --graph --decorate
+* 70eaf78 (HEAD, p4/master, p4/HEAD, master) Initial import of //depot/www/live/ from the state at revision #head
+
+Note how there's a "p4" remote for the Perforce server, but everything else looks like a standard clone.
+Actually, that's a bit misleading; there isn't actually a remote there.
+
+$ git remote -v
+
+No remotes exist in this repository at all.
+Git-p4 has created some refs to represent the state of the server, and they look like remote refs to git log, but they're not managed by Git itself, and you can't push to them.

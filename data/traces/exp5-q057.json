@@ -1,0 +1,123 @@
+{
+  "request_id": "exp5-q057",
+  "question": "How do you use the `git rebase` command to replay the changes from a `client` branch onto the `master` branch, excluding the changes that are specific to the `server` branch?",
+  "classification": "how-to",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": 0.7,
+  "tokens_used": 4136,
+  "total_duration_ms": 103191.54,
+  "final_response": "Request timed out or exceeded token budget.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.12,
+      "status": "success",
+      "details": {
+        "clean_length": 174
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 1519.98,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "how-to",
+        "is_out_of_scope": false,
+        "queries": [
+          "git rebase --onto",
+          "git rebase interactive exclude commits",
+          "git rebase client onto master excluding server"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 198.48,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 24.4,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.1,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.7
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 1988.92,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 537
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 3838.06,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 395
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 97621.58,
+      "status": "success",
+      "details": {
+        "claims_a": 0,
+        "supported_a": 0,
+        "claims_b": 3,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 103190.35,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_arbiter",
+        "tokens_used": 4136
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

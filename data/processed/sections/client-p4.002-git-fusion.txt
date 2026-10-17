@@ -1,0 +1,5 @@
+[client-p4.002-git-fusion] Git Fusion
+
+
+(((Perforce, Git Fusion)))
+Perforce provides a product called Git Fusion (available at https://www.perforce.com/manuals/git-fusion/[^]), which synchronizes a Perforce server with Git repositories on the server side.

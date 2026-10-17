@@ -1,0 +1,4 @@
+[submodules.010-submodule-tips] Submodule Tips
+
+
+There are a few things you can do to make working with submodules a little easier.

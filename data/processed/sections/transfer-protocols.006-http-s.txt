@@ -1,0 +1,22 @@
+[transfer-protocols.006-http-s] HTTP(S)
+
+
+This process is mostly the same over HTTP, though the handshaking is a bit different.
+The connection is initiated with this request:
+
+=> GET http://server/simplegit-progit.git/info/refs?service=git-receive-pack
+001f# service=git-receive-pack
+00ab6c5f0e45abd7832bf23074a333f739977c9e8188 refs/heads/master□report-status \
+delete-refs side-band-64k quiet ofs-delta \
+agent=git/2:2.1.1~vmg-bitmaps-bugaloo-608-g116744e
+0000
+
+That's the end of the first client-server exchange.
+The client then makes another request, this time a POST, with the data that send-pack provides.
+
+=> POST http://server/simplegit-progit.git/git-receive-pack
+
+The POST request includes the send-pack output and the packfile as its payload.
+The server then indicates success or failure with its HTTP response.
+
+Keep in mind the HTTP protocol may further wrap this data inside a chunked transfer encoding.

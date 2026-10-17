@@ -1,0 +1,125 @@
+{
+  "request_id": "day3-test-q04",
+  "question": "What is a detached HEAD state in Git?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 0.4286,
+  "context_score": 1.0,
+  "tokens_used": 4002,
+  "total_duration_ms": 396.37,
+  "final_response": "Not found in the book.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.09,
+      "status": "success",
+      "details": {
+        "clean_length": 37
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 1.81,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "detached HEAD state",
+          "detached HEAD explanation",
+          "detached HEAD in Git"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 358.13,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 12.22,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.15,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 1.0
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 2.91,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 599
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 2.36,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 878
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 4.45,
+      "status": "success",
+      "details": {
+        "claims_a": 4,
+        "supported_a": 2,
+        "claims_b": 4,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "abstain",
+      "duration_ms": 12.14,
+      "status": "abstained",
+      "details": {
+        "reason": "low_claim_ratio",
+        "context_score": 1.0,
+        "supported_claim_ratio": 0.4286,
+        "revision_rounds": 2
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

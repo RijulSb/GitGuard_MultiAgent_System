@@ -1,0 +1,12 @@
+[refspec.003-deleting-references] Deleting References
+
+
+You can also use the refspec to delete references from the remote server by running something like this:
+
+$ git push origin :topic
+
+Because the refspec is <src>:<dst>, by leaving off the <src> part, this basically says to make the topic branch on the remote nothing, which deletes it.
+
+Or you can use the newer syntax (available since Git v1.7.0):
+
+$ git push origin --delete topic

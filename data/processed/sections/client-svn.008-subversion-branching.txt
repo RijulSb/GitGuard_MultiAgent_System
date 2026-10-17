@@ -1,0 +1,5 @@
+[client-svn.008-subversion-branching] Subversion Branching
+
+
+Branching in Subversion isn't the same as branching in Git; if you can avoid using it much, that's probably best.
+However, you can create and commit to branches in Subversion using git svn.

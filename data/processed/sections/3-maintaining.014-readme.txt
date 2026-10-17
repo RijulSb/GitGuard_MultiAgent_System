@@ -1,0 +1,17 @@
+[3-maintaining.014-readme] README
+
+
+The first is the README file, which can be of nearly any format that GitHub recognizes as prose.
+For example, it could be README, README.md, README.asciidoc, etc.
+If GitHub sees a README file in your source, it will render it on the landing page of the project.
+
+Many teams use this file to hold all the relevant project information for someone who might be new to the repository or project.
+This generally includes things like:
+
+* What the project is for
+* How to configure and install it
+* An example of how to use it or get it running
+* The license that the project is offered under
+* How to contribute to it
+
+Since GitHub will render this file, you can embed images or links in it for added ease of understanding.

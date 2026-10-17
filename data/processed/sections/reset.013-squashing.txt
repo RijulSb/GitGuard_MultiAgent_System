@@ -1,0 +1,24 @@
+[reset.013-squashing] Squashing
+
+
+Let's look at how to do something interesting with this newfound power -- squashing commits.
+
+Say you have a series of commits with messages like "oops.", "WIP" and "forgot this file".
+You can use reset to quickly and easily squash them into a single commit that makes you look really smart.
+<<_squashing>> shows another way to do this, but in this example it's simpler to use reset.
+
+Let's say you have a project where the first commit has one file, the second commit added a new file and changed the first, and the third commit changed the first file again.
+The second commit was a work in progress and you want to squash it down.
+
+.Git repository
+
+You can run git reset --soft HEAD~2 to move the HEAD branch back to an older commit (the most recent commit you want to keep):
+
+.Moving HEAD with soft reset
+
+And then simply run git commit again:
+
+.Git repository with squashed commit
+
+Now you can see that your reachable history, the history you would push, now looks like you had one commit with file-a.txt v1, then a second that both modified file-a.txt to v3 and added file-b.txt.
+The commit with the v2 version of the file is no longer in the history.

@@ -1,0 +1,6 @@
+strategy: parent_linked
+embedding: bge_small_en_v1_5
+mode: hybrid
+reranker: false
+recall_at_5: 0.9833333333333333
+mrr: 0.9116666666666667

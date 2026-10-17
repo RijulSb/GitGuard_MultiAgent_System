@@ -1,0 +1,24 @@
+[attributes.009-merge-strategies] Merge Strategies
+
+
+(((merging, strategies)))
+You can also use Git attributes to tell Git to use different merge strategies for specific files in your project.
+One very useful option is to tell Git to not try to merge specific files when they have conflicts, but rather to use your side of the merge over someone else's.
+
+This is helpful if a branch in your project has diverged or is specialized, but you want to be able to merge changes back in from it, and you want to ignore certain files.
+Say you have a database settings file called database.xml that is different in two branches, and you want to merge in your other branch without messing up the database file.
+You can set up an attribute like this:
+
+database.xml merge=ours
+
+And then define a dummy ours merge strategy with:
+
+$ git config --global merge.ours.driver true
+
+If you merge in the other branch, instead of having merge conflicts with the database.xml file, you see something like this:
+
+$ git merge topic
+Auto-merging database.xml
+Merge made by recursive.
+
+In this case, database.xml stays at whatever version you originally had.

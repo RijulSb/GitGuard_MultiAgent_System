@@ -1,0 +1,15 @@
+[client-svn.009-creating-a-new-svn-branch] Creating a New SVN Branch
+
+
+To create a new branch in Subversion, you run git svn branch [new-branch]:
+
+$ git svn branch opera
+Copying file:///tmp/test-svn/trunk at r90 to file:///tmp/test-svn/branches/opera...
+Found possible branch point: file:///tmp/test-svn/trunk => file:///tmp/test-svn/branches/opera, 90
+Found branch parent: (refs/remotes/origin/opera) cb522197870e61467473391799148f6721bcf9a0
+Following parent with do_switch
+Successfully followed parent
+r91 = f1b64a3855d3c8dd84ee0ef10fa89d27f1584302 (refs/remotes/origin/opera)
+
+This does the equivalent of the svn copy trunk branches/opera command in Subversion and operates on the Subversion server.
+It's important to note that it doesn't check you out into that branch; if you commit at this point, that commit will go to trunk on the server, not opera.

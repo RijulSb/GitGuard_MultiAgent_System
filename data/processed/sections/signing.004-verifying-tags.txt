@@ -1,0 +1,26 @@
+[signing.004-verifying-tags] Verifying Tags
+
+
+To verify a signed tag, you use git tag -v <tag-name>.
+This command uses GPG to verify the signature.
+You need the signer's public key in your keyring for this to work properly:
+
+$ git tag -v v1.4.2.1
+object 883653babd8ee7ea23e6a5c392bb739348b1eb61
+type commit
+tag v1.4.2.1
+tagger Junio C Hamano <junkio@cox.net> 1158138501 -0700
+
+GIT 1.4.2.1
+
+Minor fixes since 1.4.2, including git-mv and git-http with alternates.
+gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A
+gpg: Good signature from "Junio C Hamano <junkio@cox.net>"
+gpg: aka "[jpeg image of size 1513]"
+Primary key fingerprint: 3565 2A26 2040 E066 C9A7 4A7D C0C6 D9A4 F311 9B9A
+
+If you don't have the signer's public key, you get something like this instead:
+
+gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A
+gpg: Can't check signature: public key not found
+error: could not verify the tag 'v1.4.2.1'

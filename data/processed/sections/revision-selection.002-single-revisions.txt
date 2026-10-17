@@ -1,0 +1,5 @@
+[revision-selection.002-single-revisions] Single Revisions
+
+
+You can obviously refer to any single commit by its full, 40-character SHA-1 hash, but there are more human-friendly ways to refer to commits as well.
+This section outlines the various ways you can refer to any commit.

@@ -1,0 +1,5 @@
+[client-svn.011-subversion-commands] Subversion Commands
+
+
+The git svn toolset provides a number of commands to help ease the transition to Git by providing some functionality that's similar to what you had in Subversion.
+Here are a few commands that give you what Subversion used to.

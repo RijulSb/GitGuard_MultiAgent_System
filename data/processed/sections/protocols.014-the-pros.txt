@@ -1,0 +1,6 @@
+[protocols.014-the-pros] The Pros
+
+
+The Git protocol is often the fastest network transfer protocol available.
+If you're serving a lot of traffic for a public project or serving a very large project that doesn't require user authentication for read access, it's likely that you'll want to set up a Git daemon to serve your project.
+It uses the same data-transfer mechanism as the SSH protocol but without the encryption and authentication overhead.

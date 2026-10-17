@@ -1,0 +1,6 @@
+[transfer-protocols.007-downloading-data] Downloading Data
+
+
+(((git commands, fetch-pack)))(((git commands, upload-pack)))
+When you download data, the fetch-pack and upload-pack processes are involved.
+The client initiates a fetch-pack process that connects to an upload-pack process on the remote side to negotiate what data will be transferred down.

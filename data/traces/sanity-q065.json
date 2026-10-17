@@ -1,0 +1,48 @@
+{
+  "request_id": "sanity-q065",
+  "question": "How do I recover a deleted GitHub repository?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": null,
+  "tokens_used": 0,
+  "total_duration_ms": 40622.26,
+  "final_response": "Request timed out or exceeded token budget. Please try a simpler question.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.09,
+      "status": "success",
+      "details": {
+        "clean_length": 45
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 40616.99,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "How do I recover a deleted GitHub repository?"
+        ]
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 40621.12,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_retrievers",
+        "tokens_used": 0
+      }
+    }
+  ]
+}

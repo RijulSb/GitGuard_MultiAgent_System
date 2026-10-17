@@ -1,0 +1,7 @@
+[import-p4.002-perforce-git-fusion] Perforce Git Fusion
+
+
+Git Fusion makes this process fairly painless.
+Just configure your project settings, user mappings, and branches using a configuration file (as discussed in <<p4git_fusion>>), and clone the repository.
+Git Fusion leaves you with what looks like a native Git repository, which is then ready to push to a native Git host if you desire.
+You could even use Perforce as your Git host if you like.

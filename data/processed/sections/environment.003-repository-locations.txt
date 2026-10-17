@@ -1,0 +1,20 @@
+[environment.003-repository-locations] Repository Locations
+
+
+Git uses several environment variables to determine how it interfaces with the current repository.
+
+GIT_DIR is the location of the .git folder.
+If this isn't specified, Git walks up the directory tree until it gets to ~ or /, looking for a .git directory at every step.
+
+GITCEILINGDIRECTORIES controls the behavior of searching for a .git directory.
+If you access directories that are slow to load (such as those on a tape drive, or across a slow network connection), you may want to have Git stop trying earlier than it might otherwise, especially if Git is invoked when building your shell prompt.
+
+GITWORKTREE is the location of the root of the working directory for a non-bare repository.
+If --git-dir or GITDIR is specified but none of --work-tree, GITWORK_TREE or core.worktree is specified, the current working directory is regarded as the top level of your working tree.
+
+GITINDEXFILE is the path to the index file (non-bare repositories only).
+
+GITOBJECTDIRECTORY can be used to specify the location of the directory that usually resides at .git/objects.
+
+GITALTERNATEOBJECTDIRECTORIES is a colon-separated list (formatted like /dir/one:/dir/two:…) which tells Git where to check for objects if they aren't in GITOBJECT_DIRECTORY.
+If you happen to have a lot of projects with large files that have the exact same contents, this can be used to avoid storing too many copies of them.

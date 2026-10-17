@@ -1,0 +1,10 @@
+[config.003-core-editor] core.editor
+
+
+((($EDITOR)))((($VISUAL, see $EDITOR)))
+By default, Git uses whatever you've set as your default text editor via one of the shell environment variables VISUAL or EDITOR, or else falls back to the vi editor to create and edit your commit and tag messages.
+To change that default to something else, you can use the core.editor setting:
+
+$ git config --global core.editor emacs
+
+Now, no matter what is set as your default shell editor, Git will fire up Emacs to edit messages.

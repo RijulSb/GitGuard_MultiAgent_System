@@ -1,0 +1,57 @@
+[remote-branches.002-pushing] Pushing
+
+
+(((pushing)))
+When you want to share a branch with the world, you need to push it up to a remote to which you have write access.
+Your local branches aren't automatically synchronized to the remotes you write to -- you have to explicitly push the branches you want to share.
+That way, you can use private branches for work you don't want to share, and push up only the topic branches you want to collaborate on.
+
+If you have a branch named serverfix that you want to work on with others, you can push it up the same way you pushed your first branch.
+Run git push <remote> <branch>:(((git commands, push)))
+
+$ git push origin serverfix
+Counting objects: 24, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (24/24), 1.91 KiB | 0 bytes/s, done.
+Total 24 (delta 2), reused 0 (delta 0)
+To https://github.com/schacon/simplegit
+* [new branch] serverfix -> serverfix
+
+This is a bit of a shortcut.
+Git automatically expands the serverfix branchname out to refs/heads/serverfix:refs/heads/serverfix, which means, "Take my serverfix local branch and push it to update the remote's serverfix branch."
+We'll go over the refs/heads/ part in detail in <<ch10-git-internals#ch10-git-internals>>, but you can generally leave it off.
+You can also do git push origin serverfix:serverfix, which does the same thing -- it says, "Take my serverfix and make it the remote's serverfix."
+You can use this format to push a local branch into a remote branch that is named differently.
+If you didn't want it to be called serverfix on the remote, you could instead run git push origin serverfix:awesomebranch to push your local serverfix branch to the awesomebranch branch on the remote project.
+
+.Don't type your password every time
+If you're using an HTTPS URL to push over, the Git server will ask you for your username and password for authentication.
+By default it will prompt you on the terminal for this information so the server can tell if you're allowed to push.
+
+If you don't want to type it every single time you push, you can set up a "credential cache".
+The simplest is just to keep it in memory for a few minutes, which you can easily set up by running git config --global credential.helper cache.
+
+For more information on the various credential caching options available, see <<ch07-git-tools#credentialcaching>>.
+
+The next time one of your collaborators fetches from the server, they will get a reference to where the server's version of serverfix is under the remote branch origin/serverfix:
+
+$ git fetch origin
+remote: Counting objects: 7, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From https://github.com/schacon/simplegit
+* [new branch] serverfix -> origin/serverfix
+
+It's important to note that when you do a fetch that brings down new remote-tracking branches, you don't automatically have local, editable copies of them.
+In other words, in this case, you don't have a new serverfix branch -- you have only an origin/serverfix pointer that you can't modify.
+
+To merge this work into your current working branch, you can run git merge origin/serverfix.
+If you want your own serverfix branch that you can work on, you can base it off your remote-tracking branch:
+
+$ git checkout -b serverfix origin/serverfix
+Branch serverfix set up to track remote branch serverfix from origin.
+Switched to a new branch 'serverfix'
+
+This gives you a local branch that you can work on that starts where origin/serverfix is.

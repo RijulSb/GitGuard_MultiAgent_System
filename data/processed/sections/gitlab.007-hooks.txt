@@ -1,0 +1,6 @@
+[gitlab.007-hooks] Hooks
+
+
+GitLab includes support for hooks, both at a project or system level.
+For either of these, the GitLab server will perform an HTTP POST with some descriptive JSON whenever relevant events occur.
+This is a great way to connect your Git repositories and GitLab instance to the rest of your development automation, such as CI servers, chat rooms, or deployment tools.

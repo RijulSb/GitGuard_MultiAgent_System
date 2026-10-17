@@ -1,0 +1,64 @@
+[5-scripting.008-changing-the-status-of-a-pull-request] Changing the Status of a Pull Request
+
+
+There is one final example we'll look at since it's really useful if you're working with Pull Requests.
+Each commit can have one or more statuses associated with it and there is an API to add and query that status.
+
+Most of the Continuous Integration and testing services make use of this API to react to pushes by testing the code that was pushed, and then report back if that commit has passed all the tests.
+You could also use this to check if the commit message is properly formatted, if the submitter followed all your contribution guidelines, if the commit was validly signed -- any number of things.
+
+Let's say you set up a webhook on your repository that hits a small web service that checks for a Signed-off-by string in the commit message.
+
+require 'httparty'
+require 'sinatra'
+require 'json'
+
+post '/payload' do
+push = JSON.parse(request.body.read) # parse the JSON
+reponame = push['repository']['fullname']
+
+# look through each commit message
+push["commits"].each do |commit|
+
+# look for a Signed-off-by string
+if /Signed-off-by/.match commit['message']
+state = 'success'
+description = 'Successfully signed off!'
+else
+state = 'failure'
+description = 'No signoff found.'
+end
+
+# post status to GitHub
+sha = commit["id"]
+statusurl = "https://api.github.com/repos/#/statuses/#"
+
+status = {
+"state" => state,
+"description" => description,
+"target_url" => "http://example.com/how-to-signoff",
+"context" => "validate/signoff"
+}
+HTTParty.post(status_url,
+:body => status.to_json,
+:headers => {
+'Content-Type' => 'application/json',
+'User-Agent' => 'tonychacon/signoff',
+'Authorization' => "token #" }
+)
+end
+end
+
+Hopefully this is fairly simple to follow.
+In this web hook handler we look through each commit that was just pushed, we look for the string 'Signed-off-by' in the commit message and finally we POST via HTTP to the /repos/<user>/<repo>/statuses/<commit_sha> API endpoint with the status.
+
+In this case you can send a state ('success', 'failure', 'error'), a description of what happened, a target URL the user can go to for more information and a "context" in case there are multiple statuses for a single commit.
+For example, a testing service may provide a status and a validation service like this may also provide a status -- the "context" field is how they're differentiated.
+
+If someone opens a new Pull Request on GitHub and this hook is set up, you may see something like <<commitstatus>>.
+
+.Commit status via the API
+
+You can now see a little green check mark next to the commit that has a "Signed-off-by" string in the message and a red cross through the one where the author forgot to sign off.
+You can also see that the Pull Request takes the status of the last commit on the branch and warns you if it is a failure.
+This is really useful if you're using this API for test results so you don't accidentally merge something where the last commit is failing tests.

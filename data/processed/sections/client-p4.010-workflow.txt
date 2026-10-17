@@ -1,0 +1,192 @@
+[client-p4.010-workflow] Workflow
+
+
+Okay, let's do some work.
+Let's assume you've made some progress on a very important feature, and you're ready to show it to the rest of your team.
+
+$ git log --oneline --all --graph --decorate
+* 018467c (HEAD, master) Change page title
+* c0fb617 Update link
+* 70eaf78 (p4/master, p4/HEAD) Initial import of //depot/www/live/ from the state at revision #head
+
+We've made two new commits that we're ready to submit to the Perforce server.
+Let's check if anyone else was working today:
+
+$ git p4 sync
+git p4 sync
+Performing incremental import into refs/remotes/p4/master git branch
+Depot paths: //depot/www/live/
+Import destination: refs/remotes/p4/master
+Importing revision 12142 (100%)
+$ git log --oneline --all --graph --decorate
+* 75cd059 (p4/master, p4/HEAD) Update copyright
+| * 018467c (HEAD, master) Change page title
+| * c0fb617 Update link
+|/
+* 70eaf78 Initial import of //depot/www/live/ from the state at revision #head
+
+Looks like they were, and master and p4/master have diverged.
+Perforce's branching system is nothing like Git's, so submitting merge commits doesn't make any sense.
+Git-p4 recommends that you rebase your commits, and even comes with a shortcut to do so:
+
+$ git p4 rebase
+Performing incremental import into refs/remotes/p4/master git branch
+Depot paths: //depot/www/live/
+No changes to import!
+Rebasing the current branch onto remotes/p4/master
+First, rewinding head to replay your work on top of it...
+Applying: Update link
+Applying: Change page title
+index.html | 2 +-
+1 file changed, 1 insertion(+), 1 deletion(-)
+
+You can probably tell from the output, but git p4 rebase is a shortcut for git p4 sync followed by git rebase p4/master.
+It's a bit smarter than that, especially when working with multiple branches, but this is a good approximation.
+
+Now our history is linear again, and we're ready to contribute our changes back to Perforce.
+The git p4 submit command will try to create a new Perforce revision for every Git commit between p4/master and master.
+Running it drops us into our favorite editor, and the contents of the file look something like this:
+
+# A Perforce Change Specification.
+#
+# Change: The change number. 'new' on a new changelist.
+# Date: The date this specification was last modified.
+# Client: The client on which the changelist was created. Read-only.
+# User: The user who created the changelist.
+# Status: Either 'pending' or 'submitted'. Read-only.
+# Type: Either 'public' or 'restricted'. Default is 'public'.
+# Description: Comments about the changelist. Required.
+# Jobs: What opened jobs are to be closed by this changelist.
+# You may delete jobs from this list. (New changelists only.)
+# Files: What opened files from the default changelist are to be added
+# to this changelist. You may delete files from this list.
+# (New changelists only.)
+
+Change: new
+
+Client: johnbens-mbp8487
+
+User: john
+
+Status: new
+
+Description:
+Update link
+
+Files:
+
+######## git author ben@straub.cc does not match your p4 account.
+######## Use option --preserve-user to modify authorship.
+######## Variable git-p4.skipUserNameCheck hides this message.
+######## everything below this line is just the diff #######
+--- //depot/www/live/index.html 2014-08-31 18:26:05.000000000 0000
++++ /Users/ben/johnbens-mbp8487/johnbens-mbp8487/depot/www/live/index.html 2014-08-31 18:26:05.000000000 0000
+@@ -60,7 +60,7 @@
+</td>
+<td valign=top>
+Source and documentation for
+-<a href="http://www.perforce.com/jam/jam.html">
++<a href="jam.html">
+Jam/MR</a>,
+a software build tool.
+</td>
+
+This is mostly the same content you'd see by running p4 submit, except the stuff at the end which git-p4 has helpfully included.
+Git-p4 tries to honor your Git and Perforce settings individually when it has to provide a name for a commit or changeset, but in some cases you want to override it.
+For example, if the Git commit you're importing was written by a contributor who doesn't have a Perforce user account, you may still want the resulting changeset to look like they wrote it (and not you).
+
+Git-p4 has helpfully imported the message from the Git commit as the content for this Perforce changeset, so all we have to do is save and quit, twice (once for each commit).
+The resulting shell output will look something like this:
+
+$ git p4 submit
+Perforce checkout for depot path //depot/www/live/ located at /Users/ben/johnbens-mbp8487/johnbens-mbp8487/depot/www/live/
+Synchronizing p4 checkout...
+... - file(s) up-to-date.
+Applying dbac45b Update link
+Change 12143 created with 1 open file(s).
+Submitting change 12143.
+Locking 1 files ...
+edit //depot/www/live/index.html#5
+Change 12143 submitted.
+Applying 905ec6a Change page title
+Change 12144 created with 1 open file(s).
+Submitting change 12144.
+Locking 1 files ...
+edit //depot/www/live/index.html#6
+Change 12144 submitted.
+All commits applied!
+Performing incremental import into refs/remotes/p4/master git branch
+Depot paths: //depot/www/live/
+Import destination: refs/remotes/p4/master
+Importing revision 12144 (100%)
+Rebasing the current branch onto remotes/p4/master
+First, rewinding head to replay your work on top of it...
+$ git log --oneline --all --graph --decorate
+* 775a46f (HEAD, p4/master, p4/HEAD, master) Change page title
+* 05f1ade Update link
+* 75cd059 Update copyright
+* 70eaf78 Initial import of //depot/www/live/ from the state at revision #head
+
+The result is as though we just did a git push, which is the closest analogy to what actually did happen.
+
+Note that during this process every Git commit is turned into a Perforce changeset; if you want to squash them down into a single changeset, you can do that with an interactive rebase before running git p4 submit.
+Also note that the SHA-1 hashes of all the commits that were submitted as changesets have changed; this is because git-p4 adds a line to the end of each commit it converts:
+
+$ git log -1
+commit 775a46f630d8b46535fc9983cf3ebe6b9aa53145
+Author: John Doe <john@example.com>
+Date: Sun Aug 31 10:31:44 2014 -0800
+
+Change page title
+
+[git-p4: depot-paths = "//depot/www/live/": change = 12144]
+
+What happens if you try to submit a merge commit?
+Let's give it a try.
+Here's the situation we've gotten ourselves into:
+
+$ git log --oneline --all --graph --decorate
+* 3be6fd8 (HEAD, master) Correct email address
+* 1dcbf21 Merge remote-tracking branch 'p4/master'
+|\
+| * c4689fc (p4/master, p4/HEAD) Grammar fix
+* | cbacd0a Table borders: yes please
+* | b4959b6 Trademark
+|/
+* 775a46f Change page title
+* 05f1ade Update link
+* 75cd059 Update copyright
+* 70eaf78 Initial import of //depot/www/live/ from the state at revision #head
+
+The Git and Perforce history diverge after 775a46f.
+The Git side has two commits, then a merge commit with the Perforce head, then another commit.
+We're going to try to submit these on top of a single changeset on the Perforce side.
+Let's see what would happen if we tried to submit now:
+
+$ git p4 submit -n
+Perforce checkout for depot path //depot/www/live/ located at /Users/ben/johnbens-mbp8487/johnbens-mbp8487/depot/www/live/
+Would synchronize p4 checkout in /Users/ben/johnbens-mbp8487/johnbens-mbp8487/depot/www/live/
+Would apply
+b4959b6 Trademark
+cbacd0a Table borders: yes please
+3be6fd8 Correct email address
+
+The -n flag is short for --dry-run, which tries to report what would happen if the submit command were run for real.
+In this case, it looks like we'd be creating three Perforce changesets, which correspond to the three non-merge commits that don't yet exist on the Perforce server.
+That sounds like exactly what we want, let's see how it turns out:
+
+$ git p4 submit
+[…]
+$ git log --oneline --all --graph --decorate
+* dadbd89 (HEAD, p4/master, p4/HEAD, master) Correct email address
+* 1b79a80 Table borders: yes please
+* 0097235 Trademark
+* c4689fc Grammar fix
+* 775a46f Change page title
+* 05f1ade Update link
+* 75cd059 Update copyright
+* 70eaf78 Initial import of //depot/www/live/ from the state at revision #head
+
+Our history became linear, just as though we had rebased before submitting (which is in fact exactly what happened).
+This means you can be free to create, work on, throw away, and merge branches on the Git side without fear that your history will somehow become incompatible with Perforce.
+If you can rebase it, you can contribute it to a Perforce server.

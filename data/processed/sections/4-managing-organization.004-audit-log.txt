@@ -1,0 +1,9 @@
+[4-managing-organization.004-audit-log] Audit Log
+
+
+Organizations also give owners access to all the information about what went on under the organization.
+You can go to the 'Audit Log' tab and see what events have happened at an organization level, who did them and where in the world they were done.
+
+.The Audit log
+
+You can also filter down to specific types of events, specific places or specific people.

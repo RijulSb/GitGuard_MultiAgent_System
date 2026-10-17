@@ -1,0 +1,14 @@
+[client-svn.001-git-and-subversion] Git and Subversion
+
+
+(((Subversion)))(((Interoperation with other VCSs, Subversion)))
+A large fraction of open source development projects and a good number of corporate projects use Subversion to manage their source code.
+It's been around for more than a decade, and for most of that time was the de facto VCS choice for open-source projects.
+It's also very similar in many ways to CVS, which was the big boy of the source-control world before that.
+
+(((git commands, svn)))(((git-svn)))
+One of Git's great features is a bidirectional bridge to Subversion called git svn.
+This tool allows you to use Git as a valid client to a Subversion server, so you can use all the local features of Git and then push to a Subversion server as if you were using Subversion locally.
+This means you can do local branching and merging, use the staging area, use rebasing and cherry-picking, and so on, while your collaborators continue to work in their dark and ancient ways.
+It's a good way to sneak Git into the corporate environment and help your fellow developers become more efficient while you lobby to get the infrastructure changed to support Git fully.
+The Subversion bridge is the gateway drug to the DVCS world.

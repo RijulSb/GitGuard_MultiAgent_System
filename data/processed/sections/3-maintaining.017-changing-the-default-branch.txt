@@ -1,0 +1,8 @@
+[3-maintaining.017-changing-the-default-branch] Changing the Default Branch
+
+
+If you are using a branch other than "master" as your default branch that you want people to open Pull Requests on or see by default, you can change that in your repository's settings page under the "Options" tab.
+
+.Change the default branch for a project
+
+Simply change the default branch in the dropdown and that will be the default for all major operations from then on, including which branch is checked out by default when someone clones the repository.

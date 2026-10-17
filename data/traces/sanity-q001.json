@@ -1,0 +1,124 @@
+{
+  "request_id": "sanity-q001",
+  "question": "Which Git command triggers the post-rewrite hook, but git filter-branch does not?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 1.0,
+  "context_score": 1.0,
+  "tokens_used": 3533,
+  "total_duration_ms": 19014.47,
+  "final_response": "The `git commit --amend` and `git rebase` commands trigger the post‑rewrite hook, but `git filter-branch` does not [hooks.006-other-client-hooks].",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 2.41,
+      "status": "success",
+      "details": {
+        "clean_length": 81
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 18279.47,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "Which Git command triggers the post-rewrite hook, but git filter-branch does not?"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 656.14,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 1,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 69.37,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.21,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 1.0
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 4.65,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 146
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 2.2,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 174
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 6.96,
+      "status": "success",
+      "details": {
+        "claims_a": 0,
+        "supported_a": 0,
+        "claims_b": 0,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "abstain",
+      "duration_ms": 2.09,
+      "status": "abstained",
+      "details": {
+        "supported_claim_ratio": 1.0,
+        "revision_rounds": 0,
+        "context_score": 1.0,
+        "verified_length": 146,
+        "abstained": true
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[advanced-merging.009-undoing-merges] Undoing Merges
+
+
+Now that you know how to create a merge commit, you'll probably make some by mistake.
+One of the great things about working with Git is that it's okay to make mistakes, because it's possible (and in many cases easy) to fix them.
+
+Merge commits are no different.
+Let's say you started work on a topic branch, accidentally merged it into master, and now your commit history looks like this:
+
+.Accidental merge commit
+
+There are two ways to approach this problem, depending on what your desired outcome is.

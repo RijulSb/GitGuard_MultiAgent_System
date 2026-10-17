@@ -1,0 +1,91 @@
+[policy.004-enforcing-a-user-based-acl-system] Enforcing a User-Based ACL System
+
+
+Suppose you want to add a mechanism that uses an access control list (ACL) that specifies which users are allowed to push changes to which parts of your projects.
+Some people have full access, and others can only push changes to certain subdirectories or specific files.
+To enforce this, you'll write those rules to a file named acl that lives in your bare Git repository on the server.
+You'll have the update hook look at those rules, see what files are being introduced for all the commits being pushed, and determine whether the user doing the push has access to update all those files.
+
+The first thing you'll do is write your ACL.
+Here you'll use a format very much like the CVS ACL mechanism: it uses a series of lines, where the first field is avail or unavail, the next field is a comma-delimited list of the users to which the rule applies, and the last field is the path to which the rule applies (blank meaning open access).
+All of these fields are delimited by a pipe (|) character.
+
+In this case, you have a couple of administrators, some documentation writers with access to the doc directory, and one developer who only has access to the lib and tests directories, and your ACL file looks like this:
+
+avail|nickh,pjhyett,defunkt,tpw
+avail|usinclair,cdickens,ebronte|doc
+avail|schacon|lib
+avail|schacon|tests
+
+You begin by reading this data into a structure that you can use.
+In this case, to keep the example simple, you'll only enforce the avail directives.
+Here is a method that gives you an associative array where the key is the user name and the value is an array of paths to which the user has write access:
+
+def getaclaccessdata(aclfile)
+# read in ACL data
+aclfile = File.read(aclfile).split("\n").reject
+access = {}
+acl_file.each do |line|
+avail, users, path = line.split('|')
+next unless avail == 'avail'
+users.split(',').each do |user|
+access[user] ||= []
+access[user] << path
+end
+end
+access
+end
+
+On the ACL file you looked at earlier, this getaclaccess_data method returns a data structure that looks like this:
+
+{"defunkt"=>[nil],
+"tpw"=>[nil],
+"nickh"=>[nil],
+"pjhyett"=>[nil],
+"schacon"=>["lib", "tests"],
+"cdickens"=>["doc"],
+"usinclair"=>["doc"],
+"ebronte"=>["doc"]}
+
+Now that you have the permissions sorted out, you need to determine what paths the commits being pushed have modified, so you can make sure the user who's pushing has access to all of them.
+
+You can pretty easily see what files have been modified in a single commit with the --name-only option to the git log command (mentioned briefly in <<ch02-git-basics-chapter#ch02-git-basics-chapter>>):
+
+$ git log -1 --name-only --pretty=format:'' 9f585d
+
+README
+lib/test.rb
+
+If you use the ACL structure returned from the getaclaccess_data method and check it against the listed files in each of the commits, you can determine whether the user has access to push all of their commits:
+
+# only allows certain users to modify certain subdirectories in a project
+def checkdirectoryperms
+access = getaclaccess_data('acl')
+
+# see if anyone is trying to push something they can't
+new_commits = git rev-list #..#.split("\n")
+new_commits.each do |rev|
+files_modified = git log -1 --name-only --pretty=format:'' #.split("\n")
+files_modified.each do |path|
+next if path.size == 0
+hasfileaccess = false
+access[$user].each do |access_path|
+if !access_path # user has access to everything
+|| (path.startwith? accesspath) # access to this path
+hasfileaccess = true
+end
+end
+if !hasfileaccess
+puts "[POLICY] You do not have access to push to #"
+exit 1
+end
+end
+end
+end
+
+checkdirectoryperms
+
+You get a list of new commits being pushed to your server with git rev-list.
+Then, for each of those commits, you find which files are modified and make sure the user who's pushing has access to all the paths being modified.
+
+Now your users can't push any commits with badly formed messages or with modified files outside of their designated paths.

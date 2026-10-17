@@ -1,0 +1,28 @@
+[environment.009-miscellaneous] Miscellaneous
+
+
+GIT_SSH, if specified, is a program that is invoked instead of ssh when Git tries to connect to an SSH host.
+It is invoked like $GIT_SSH [username@]host [-p <port>] <command>.
+Note that this isn't the easiest way to customize how ssh is invoked; it won't support extra command-line parameters.
+To support extra command-line parameters, you can use GITSSHCOMMAND, write a wrapper script and set GIT_SSH to point to it or use the ~/.ssh/config file.
+
+GITSSHCOMMAND sets the SSH command used when Git tries to connect to an SSH host.
+The command is interpreted by the shell, and extra command-line arguments can be used with ssh, such as GITSSHCOMMAND="ssh -i ~/.ssh/my_key" git clone git@example.com:my/repo.
+
+GIT_ASKPASS is an override for the core.askpass configuration value.
+This is the program invoked whenever Git needs to ask the user for credentials, which can expect a text prompt as a command-line argument, and should return the answer on stdout (see <<ch07-git-tools#credentialcaching>> for more on this subsystem).
+
+GIT_NAMESPACE controls access to namespaced refs, and is equivalent to the --namespace flag.
+This is mostly useful on the server side, where you may want to store multiple forks of a single repository in one repository, only keeping the refs separate.
+
+GIT_FLUSH can be used to force Git to use non-buffered I/O when writing incrementally to stdout.
+A value of 1 causes Git to flush more often, a value of 0 causes all output to be buffered.
+The default value (if this variable is not set) is to choose an appropriate buffering scheme depending on the activity and the output mode.
+
+GITREFLOGACTION lets you specify the descriptive text written to the reflog.
+Here's an example:
+
+$ GITREFLOGACTION="my action" git commit --allow-empty -m 'My message'
+[master 9e3d55a] My message
+$ git reflog -1
+9e3d55a HEAD@: my action: My message

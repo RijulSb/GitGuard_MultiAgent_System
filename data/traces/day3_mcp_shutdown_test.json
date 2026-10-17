@@ -1,0 +1,9 @@
+{
+  "test": "mcp_shutdown_fallback",
+  "tool": "fetch_section",
+  "target": "what-is-git.006-the-three-states",
+  "fallback_used": true,
+  "source": "fallback",
+  "bytes_read": 2140,
+  "status": "success"
+}

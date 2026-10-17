@@ -1,0 +1,11 @@
+[powershell.001-git-in-powershell] Git in PowerShell
+
+
+(((PowerShell)))(((tab completion, PowerShell)))(((shell prompts, PowerShell)))
+(((posh-git)))
+The legacy command-line terminal on Windows (cmd.exe) isn't really capable of a customized Git experience, but if you're using PowerShell, you're in luck.
+This also works if you're running PowerShell Core on Linux or macOS.
+A package called posh-git (https://github.com/dahlbyk/posh-git[^]) provides powerful tab-completion facilities, as well as an enhanced prompt to help you stay on top of your repository status.
+It looks like this:
+
+.PowerShell with Posh-git

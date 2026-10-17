@@ -1,0 +1,11 @@
+[submodules.012-useful-aliases] Useful Aliases
+
+
+You may want to set up some aliases for some of these commands as they can be quite long and you can't set configuration options for most of them to make them defaults.
+We covered setting up Git aliases in <<ch02-git-basics-chapter#gitaliases>>, but here is an example of what you may want to set up if you plan on working with submodules in Git a lot.
+
+$ git config alias.sdiff '!'"git diff && git submodule foreach 'git diff'"
+$ git config alias.spush 'push --recurse-submodules=on-demand'
+$ git config alias.supdate 'submodule update --remote --merge'
+
+This way you can simply run git supdate when you want to update your submodules, or git spush to push with submodule dependency checking.

@@ -1,0 +1,34 @@
+[branch-management.002-changing-a-branch-name] Changing a branch name
+
+
+Do not rename branches that are still in use by other collaborators.
+Do not rename a branch like master/main/mainline without having read the section <<changingmaster>>.
+
+Suppose you have a branch that is called bad-branch-name and you want to change it to corrected-branch-name, while keeping all history.
+You also want to change the branch name on the remote (GitHub, GitLab, other server).
+How do you do this?
+
+Rename the branch locally with the git branch --move command:
+
+$ git branch --move bad-branch-name corrected-branch-name
+
+This replaces your bad-branch-name with corrected-branch-name, but this change is only local for now.
+To let others see the corrected branch on the remote, push it:
+
+$ git push --set-upstream origin corrected-branch-name
+
+Now we'll take a brief look at where we are now:
+
+$ git branch --all
+* corrected-branch-name
+main
+remotes/origin/bad-branch-name
+remotes/origin/corrected-branch-name
+remotes/origin/main
+
+Notice that you're on the branch corrected-branch-name and it's available on the remote.
+However, the branch with the bad name is also still present there but you can delete it by executing the following command:
+
+$ git push origin --delete bad-branch-name
+
+Now the bad branch name is fully replaced with the corrected branch name.

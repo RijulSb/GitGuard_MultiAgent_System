@@ -1,0 +1,11 @@
+[libgit2.004-libgit2sharp] LibGit2Sharp
+
+
+(((.NET)))(((C#)))(((Mono)))
+If you're writing a .NET or Mono application, LibGit2Sharp (https://github.com/libgit2/libgit2sharp[^]) is what you're looking for.
+The bindings are written in C#, and great care has been taken to wrap the raw Libgit2 calls with native-feeling CLR APIs.
+Here's what our example program looks like:
+
+new Repository(@"C:\path\to\repo").Head.Tip.Message;
+
+For desktop Windows applications, there's even a NuGet package that will help you get started quickly.

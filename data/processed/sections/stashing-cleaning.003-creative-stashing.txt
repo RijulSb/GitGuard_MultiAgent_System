@@ -1,0 +1,56 @@
+[stashing-cleaning.003-creative-stashing] Creative Stashing
+
+
+There are a few stash variants that may also be helpful.
+The first option that is quite popular is the --keep-index option to the git stash command.
+This tells Git to not only include all staged content in the stash being created, but simultaneously leave it in the index.
+
+$ git status -s
+M index.html
+M lib/simplegit.rb
+
+$ git stash --keep-index
+Saved working directory and index state WIP on master: 1b65b17 added the index file
+HEAD is now at 1b65b17 added the index file
+
+$ git status -s
+M index.html
+
+Another common thing you may want to do with stash is to stash the untracked files as well as the tracked ones.
+By default, git stash will stash only modified and staged tracked files.
+If you specify --include-untracked or -u, Git will include untracked files in the stash being created.
+However, including untracked files in the stash will still not include explicitly ignored files; to additionally include ignored files, use --all (or just -a).
+
+$ git status -s
+M index.html
+M lib/simplegit.rb
+?? new-file.txt
+
+$ git stash -u
+Saved working directory and index state WIP on master: 1b65b17 added the index file
+HEAD is now at 1b65b17 added the index file
+
+$ git status -s
+$
+
+Finally, if you specify the --patch flag, Git will not stash everything that is modified but will instead prompt you interactively which of the changes you would like to stash and which you would like to keep in your working directory.
+
+$ git stash --patch
+diff --git a/lib/simplegit.rb b/lib/simplegit.rb
+index 66d332e..8bb5674 100644
+--- a/lib/simplegit.rb
++++ b/lib/simplegit.rb
+@@ -16,6 +16,10 @@ class SimpleGit
+return # 2>&1.chomp
+end
+end
++
++ def show(treeish = 'master')
++ command("git show #")
++ end
+
+end
+test
+Stash this hunk [y,n,q,a,d,/,e,?]? y
+
+Saved working directory and index state WIP on master: 1b65b17 added the index file

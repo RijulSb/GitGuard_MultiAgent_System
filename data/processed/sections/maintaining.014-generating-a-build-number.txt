@@ -1,0 +1,17 @@
+[maintaining.014-generating-a-build-number] Generating a Build Number
+
+
+(((build numbers)))(((git commands, describe)))
+Because Git doesn't have monotonically increasing numbers like 'v123' or the equivalent to go with each commit, if you want to have a human-readable name to go with a commit, you can run git describe on that commit.
+In response, Git generates a string consisting of the name of the most recent tag earlier than that commit, followed by the number of commits since that tag, followed finally by a partial SHA-1 value of the commit being described (prefixed with the letter "g" meaning Git):
+
+$ git describe master
+v1.6.2-rc1-20-g8c5b85c
+
+This way, you can export a snapshot or build and name it something understandable to people.
+In fact, if you build Git from source code cloned from the Git repository, git --version gives you something that looks like this.
+If you're describing a commit that you have directly tagged, it gives you simply the tag name.
+
+By default, the git describe command requires annotated tags (tags created with the -a or -s flag); if you want to take advantage of lightweight (non-annotated) tags as well, add the --tags option to the command.
+You can also use this string as the target of a git checkout or git show command, although it relies on the abbreviated SHA-1 value at the end, so it may not be valid forever.
+For instance, the Linux kernel recently jumped from 8 to 10 characters to ensure SHA-1 object uniqueness, so older git describe output names were invalidated.

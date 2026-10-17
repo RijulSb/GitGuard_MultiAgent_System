@@ -1,0 +1,51 @@
+[installing.005-installing-from-source] Installing from Source
+
+
+Some people may instead find it useful to install Git from source, because you'll get the most recent version.
+The binary installers tend to be a bit behind, though as Git has matured in recent years, this has made less of a difference.
+
+If you do want to install Git from source, you need to have the following libraries that Git depends on: autotools, curl, zlib, openssl, expat, and libiconv.
+For example, if you're on a system that has dnf (such as Fedora) or apt-get (such as a Debian-based system), you can use one of these commands to install the minimal dependencies for compiling and installing the Git binaries:
+
+$ sudo dnf install dh-autoreconf curl-devel expat-devel gettext-devel \
+openssl-devel perl-devel zlib-devel
+$ sudo apt-get install dh-autoreconf libcurl4-gnutls-dev libexpat1-dev \
+gettext libz-dev libssl-dev
+
+In order to be able to add the documentation in various formats (doc, html, info), these additional dependencies are required:
+
+$ sudo dnf install asciidoc xmlto docbook2X
+$ sudo apt-get install asciidoc xmlto docbook2x
+
+Users of RHEL and RHEL-derivatives like CentOS and Scientific Linux will have to https://docs.fedoraproject.org/en-US/epel/#howcaniusetheseextrapackages[enable the EPEL repository^] to download the docbook2X package.
+
+If you're using a Debian-based distribution (Debian/Ubuntu/Ubuntu-derivatives), you also need the install-info package:
+
+$ sudo apt-get install install-info
+
+If you're using a RPM-based distribution (Fedora/RHEL/RHEL-derivatives), you also need the getopt package (which is already installed on a Debian-based distro):
+
+$ sudo dnf install getopt
+
+Additionally, if you're using Fedora/RHEL/RHEL-derivatives, you need to do this:
+
+$ sudo ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2x-texi
+
+due to binary name differences.
+
+When you have all the necessary dependencies, you can go ahead and grab the latest tagged release tarball from several places.
+You can get it via the kernel.org site, at https://www.kernel.org/pub/software/scm/git[^], or the mirror on the GitHub website, at https://github.com/git/git/tags[^].
+It's generally a little clearer what the latest version is on the GitHub page, but the kernel.org page also has release signatures if you want to verify your download.
+
+Then, compile and install:
+
+$ tar -zxf git-2.8.0.tar.gz
+$ cd git-2.8.0
+$ make configure
+$ ./configure --prefix=/usr
+$ make all doc info
+$ sudo make install install-doc install-html install-info
+
+After this is done, you can also get Git via Git itself for updates:
+
+$ git clone https://git.kernel.org/pub/scm/git/git.git

@@ -1,0 +1,96 @@
+[attributes.004-diffing-binary-files] Diffing Binary Files
+
+
+You can also use the Git attributes functionality to effectively diff binary files.
+You do this by telling Git how to convert your binary data to a text format that can be compared via the normal diff.
+
+First, you'll use this technique to solve one of the most annoying problems known to humanity: version-controlling Microsoft Word documents.
+If you want to version-control Word documents, you can stick them in a Git repository and commit every once in a while; but what good does that do?
+If you run git diff normally, you only see something like this:
+
+$ git diff
+diff --git a/chapter1.docx b/chapter1.docx
+index 88839c4..4afcb7c 100644
+Binary files a/chapter1.docx and b/chapter1.docx differ
+
+You can't directly compare two versions unless you check them out and scan them manually, right?
+It turns out you can do this fairly well using Git attributes.
+Put the following line in your .gitattributes file:
+
+*.docx diff=word
+
+This tells Git that any file that matches this pattern (.docx) should use the "word" filter when you try to view a diff that contains changes.
+What is the "word" filter?
+You have to set it up.
+Here you'll configure Git to use the docx2txt program to convert Word documents into readable text files, which it will then diff properly.
+
+First, you'll need to install docx2txt; you can download it from https://sourceforge.net/projects/docx2txt[^].
+Follow the instructions in the INSTALL file to put it somewhere your shell can find it.
+Next, you'll write a wrapper script to convert output to the format Git expects.
+Create a file that's somewhere in your path called docx2txt, and add these contents:
+
+#!/bin/bash
+docx2txt.pl "$1" -
+
+Don't forget to chmod a+x that file.
+Finally, you can configure Git to use this script:
+
+$ git config diff.word.textconv docx2txt
+
+Now Git knows that if it tries to do a diff between two snapshots, and any of the files end in .docx, it should run those files through the "word" filter, which is defined as the docx2txt program.
+This effectively makes nice text-based versions of your Word files before attempting to diff them.
+
+Here's an example: Chapter 1 of this book was converted to Word format and committed in a Git repository.
+Then a new paragraph was added.
+Here's what git diff shows:
+
+$ git diff
+diff --git a/chapter1.docx b/chapter1.docx
+index 0b013ca..ba25db5 100644
+--- a/chapter1.docx
++++ b/chapter1.docx
+@@ -2,6 +2,7 @@
+This chapter will be about getting started with Git. We will begin at the beginning by explaining some background on version control tools, then move on to how to get Git running on your system and finally how to get it setup to start working with. At the end of this chapter you should understand why Git is around, why you should use it and you should be all setup to do so.
+1.1. About Version Control
+What is "version control", and why should you care? Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later. For the examples in this book you will use software source code as the files being version controlled, though in reality you can do this with nearly any type of file on a computer.
++Testing: 1, 2, 3.
+If you are a graphic or web designer and want to keep every version of an image or layout (which you would most certainly want to), a Version Control System (VCS) is a very wise thing to use. It allows you to revert files back to a previous state, revert the entire project back to a previous state, compare changes over time, see who last modified something that might be causing a problem, who introduced an issue and when, and more. Using a VCS also generally means that if you screw things up or lose files, you can easily recover. In addition, you get all this for very little overhead.
+1.1.1. Local Version Control Systems
+Many people's version-control method of choice is to copy files into another directory (perhaps a time-stamped directory, if they're clever). This approach is very common because it is so simple, but it is also incredibly error prone. It is easy to forget which directory you're in and accidentally write to the wrong file or copy over files you don't mean to.
+
+Git successfully and succinctly tells us that we added the string "Testing: 1, 2, 3.", which is correct.
+It's not perfect – formatting changes wouldn't show up here – but it certainly works.
+
+Another interesting problem you can solve this way involves diffing image files.
+One way to do this is to run image files through a filter that extracts their EXIF information – metadata that is recorded with most image formats.
+If you download and install the exiftool program, you can use it to convert your images into text about the metadata, so at least the diff will show you a textual representation of any changes that happened.
+Put the following line in your .gitattributes file:
+
+*.png diff=exif
+
+Configure Git to use this tool:
+
+$ git config diff.exif.textconv exiftool
+
+If you replace an image in your project and run git diff, you see something like this:
+
+diff --git a/image.png b/image.png
+index 88839c4..4afcb7c 100644
+--- a/image.png
++++ b/image.png
+@@ -1,12 +1,12 @@
+ExifTool Version Number : 7.74
+-File Size : 70 kB
+-File Modification Date/Time : 2009:04:21 07:02:45-07:00
++File Size : 94 kB
++File Modification Date/Time : 2009:04:21 07:02:43-07:00
+File Type : PNG
+MIME Type : image/png
+-Image Width : 1058
+-Image Height : 889
++Image Width : 1056
++Image Height : 827
+Bit Depth : 8
+Color Type : RGB with Alpha
+
+You can easily see that the file size and image dimensions have both changed.

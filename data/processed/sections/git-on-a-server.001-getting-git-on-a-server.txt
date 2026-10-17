@@ -1,0 +1,25 @@
+[git-on-a-server.001-getting-git-on-a-server] Getting Git on a Server
+
+
+Now we'll cover setting up a Git service running these protocols on your own server.
+
+Here we'll be demonstrating the commands and steps needed to do basic, simplified installations on a Linux-based server, though it's also possible to run these services on macOS or Windows servers.
+Actually setting up a production server within your infrastructure will certainly entail differences in security measures or operating system tools, but hopefully this will give you the general idea of what's involved.
+
+In order to initially set up any Git server, you have to export an existing repository into a new bare repository -- a repository that doesn't contain a working directory.
+This is generally straightforward to do.
+In order to clone your repository to create a new bare repository, you run the clone command with the --bare option.(((git commands, clone, bare)))
+By convention, bare repository directory names end with the suffix .git, like so:
+
+$ git clone --bare myproject myproject.git
+Cloning into bare repository 'my_project.git'...
+done.
+
+You should now have a copy of the Git directory data in your my_project.git directory.
+
+This is roughly equivalent to something like:
+
+$ cp -Rf myproject/.git myproject.git
+
+There are a couple of minor differences in the configuration file but, for your purpose, this is close to the same thing.
+It takes the Git repository by itself, without a working directory, and creates a directory specifically for it alone.

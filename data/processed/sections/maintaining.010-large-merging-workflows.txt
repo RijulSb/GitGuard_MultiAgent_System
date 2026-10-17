@@ -1,0 +1,23 @@
+[maintaining.010-large-merging-workflows] Large-Merging Workflows
+
+
+(((workflows, "merging (large)")))
+The Git project has four long-running branches: master, next, and seen (formerly 'pu' -- proposed updates) for new work, and maint for maintenance backports.
+When new work is introduced by contributors, it's collected into topic branches in the maintainer's repository in a manner similar to what we've described (see <<merwf_f>>).
+At this point, the topics are evaluated to determine whether they're safe and ready for consumption or whether they need more work.
+If they're safe, they're merged into next, and that branch is pushed up so everyone can try the topics integrated together.
+
+.Managing a complex series of parallel contributed topic branches
+
+If the topics still need work, they're merged into seen instead.
+When it's determined that they're totally stable, the topics are re-merged into master.
+The next and seen branches are then rebuilt from the master.
+This means master almost always moves forward, next is rebased occasionally, and seen is rebased even more often:
+
+.Merging contributed topic branches into long-term integration branches
+
+When a topic branch has finally been merged into master, it's removed from the repository.
+The Git project also has a maint branch that is forked off from the last release to provide backported patches in case a maintenance release is required.
+Thus, when you clone the Git repository, you have four branches that you can check out to evaluate the project in different stages of development, depending on how cutting edge you want to be or how you want to contribute; and the maintainer has a structured workflow to help them vet new contributions.
+The Git project's workflow is specialized.
+To clearly understand this you could check out the https://github.com/git/git/blob/master/Documentation/howto/maintain-git.txt[Git Maintainer's guide^].

@@ -1,0 +1,6 @@
+[git-on-a-server.003-small-setups] Small Setups
+
+
+If you're a small outfit or are just trying out Git in your organization and have only a few developers, things can be simple for you.
+One of the most complicated aspects of setting up a Git server is user management.
+If you want some repositories to be read-only for certain users and read/write for others, access and permissions can be a bit more difficult to arrange.

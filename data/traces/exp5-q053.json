@@ -1,0 +1,125 @@
+{
+  "request_id": "exp5-q053",
+  "question": "What are the two possible states of a file in the working directory, and how are tracked files defined?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 0.7143,
+  "context_score": 1.0,
+  "tokens_used": 4206,
+  "total_duration_ms": 41514.24,
+  "final_response": "Not found in the book.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.11,
+      "status": "success",
+      "details": {
+        "clean_length": 103
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 992.29,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "tracked files definition Pro Git",
+          "untracked files working directory Pro Git",
+          "tracked vs untracked files Pro Git"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 209.82,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 16.65,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.12,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 1.0
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 2015.71,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 605
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 9852.94,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 441
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 4833.07,
+      "status": "success",
+      "details": {
+        "claims_a": 4,
+        "supported_a": 1,
+        "claims_b": 3,
+        "supported_b": 1
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "abstain",
+      "duration_ms": 25610.96,
+      "status": "abstained",
+      "details": {
+        "reason": "low_claim_ratio",
+        "context_score": 1.0,
+        "supported_claim_ratio": 0.7143,
+        "revision_rounds": 2
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

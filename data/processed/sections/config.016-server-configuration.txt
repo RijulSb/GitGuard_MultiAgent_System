@@ -1,0 +1,4 @@
+[config.016-server-configuration] Server Configuration
+
+
+Not nearly as many configuration options are available for the server side of Git, but there are a few interesting ones you may want to take note of.

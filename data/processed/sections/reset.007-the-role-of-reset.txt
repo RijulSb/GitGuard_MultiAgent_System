@@ -1,0 +1,13 @@
+[reset.007-the-role-of-reset] The Role of Reset
+
+
+The reset command makes more sense when viewed in this context.
+
+For the purposes of these examples, let's say that we've modified file.txt again and committed it a third time.
+So now our history looks like this:
+
+.Git repository with three commits
+
+Let's now walk through exactly what reset does when you call it.
+It directly manipulates these three trees in a simple and predictable way.
+It does up to three basic operations.

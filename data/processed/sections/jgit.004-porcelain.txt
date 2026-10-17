@@ -1,0 +1,28 @@
+[jgit.004-porcelain] Porcelain
+
+
+The plumbing APIs are rather complete, but it can be cumbersome to string them together to achieve common goals, like adding a file to the index, or making a new commit.
+JGit provides a higher-level set of APIs to help out with this, and the entry point to these APIs is the Git class:
+
+Repository repo;
+Git git = new Git(repo);
+
+The Git class has a nice set of high-level builder-style methods that can be used to construct some pretty complex behavior.
+Let's take a look at an example -- doing something like git ls-remote:
+
+CredentialsProvider cp = new UsernamePasswordCredentialsProvider("username", "p4ssw0rd");
+Collection<Ref> remoteRefs = git.lsRemote()
+.setCredentialsProvider(cp)
+.setRemote("origin")
+.setTags(true)
+.setHeads(false)
+.call();
+for (Ref ref : remoteRefs) {
+System.out.println(ref.getName() + " -> " + ref.getObjectId().name());
+}
+
+This is a common pattern with the Git class; the methods return a command object that lets you chain method calls to set parameters, which are executed when you call .call().
+In this case, we're asking the origin remote for tags, but not heads.
+Also notice the use of a CredentialsProvider object for authentication.
+
+Many other commands are available through the Git class, including but not limited to add, blame, commit, clean, push, rebase, revert, and reset.

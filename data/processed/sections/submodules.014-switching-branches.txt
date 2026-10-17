@@ -1,0 +1,92 @@
+[submodules.014-switching-branches] Switching branches
+
+
+For instance, switching branches with submodules in them can also be tricky with Git versions older than Git 2.13.
+If you create a new branch, add a submodule there, and then switch back to a branch without that submodule, you still have the submodule directory as an untracked directory:
+
+$ git --version
+git version 2.12.2
+
+$ git checkout -b add-crypto
+Switched to a new branch 'add-crypto'
+
+$ git submodule add https://github.com/chaconinc/CryptoLibrary
+Cloning into 'CryptoLibrary'...
+...
+
+$ git commit -am 'Add crypto library'
+[add-crypto 4445836] Add crypto library
+2 files changed, 4 insertions(+)
+create mode 160000 CryptoLibrary
+
+$ git checkout master
+warning: unable to rmdir CryptoLibrary: Directory not empty
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Untracked files:
+(use "git add <file>..." to include in what will be committed)
+
+CryptoLibrary/
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+Removing the directory isn't difficult, but it can be a bit confusing to have that in there.
+If you do remove it and then switch back to the branch that has that submodule, you will need to run submodule update --init to repopulate it.
+
+$ git clean -ffdx
+Removing CryptoLibrary/
+
+$ git checkout add-crypto
+Switched to branch 'add-crypto'
+
+$ ls CryptoLibrary/
+
+$ git submodule update --init
+Submodule path 'CryptoLibrary': checked out 'b8dda6aa182ea4464f3f3264b11e0268545172af'
+
+$ ls CryptoLibrary/
+Makefile includes scripts src
+
+Again, not really very difficult, but it can be a little confusing.
+
+Newer Git versions (Git >= 2.13) simplify all this by adding the --recurse-submodules flag to the git checkout command, which takes care of placing the submodules in the right state for the branch we are switching to.
+
+$ git --version
+git version 2.13.3
+
+$ git checkout -b add-crypto
+Switched to a new branch 'add-crypto'
+
+$ git submodule add https://github.com/chaconinc/CryptoLibrary
+Cloning into 'CryptoLibrary'...
+...
+
+$ git commit -am 'Add crypto library'
+[add-crypto 4445836] Add crypto library
+2 files changed, 4 insertions(+)
+create mode 160000 CryptoLibrary
+
+$ git checkout --recurse-submodules master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+Using the --recurse-submodules flag of git checkout can also be useful when you work on several branches in the superproject, each having your submodule pointing at different commits.
+Indeed, if you switch between branches that record the submodule at different commits, upon executing git status the submodule will appear as "modified", and indicate "new commits".
+That is because the submodule state is by default not carried over when switching branches.
+
+This can be really confusing, so it's a good idea to always git checkout --recurse-submodules when your project has submodules.
+For older Git versions that do not have the --recurse-submodules flag, after the checkout you can use git submodule update --init --recursive to put the submodules in the right state.
+
+Luckily, you can tell Git (>=2.14) to always use the --recurse-submodules flag by setting the configuration option submodule.recurse: git config submodule.recurse true.
+As noted above, this will also make Git recurse into submodules for every command that has a --recurse-submodules option (except git clone).

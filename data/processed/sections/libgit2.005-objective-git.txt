@@ -1,0 +1,13 @@
+[libgit2.005-objective-git] objective-git
+
+
+(((Apple)))(((Objective-C)))(((Cocoa)))
+If your application is running on an Apple platform, you're likely using Objective-C as your implementation language.
+Objective-Git (https://github.com/libgit2/objective-git[^]) is the name of the Libgit2 bindings for that environment.
+The example program looks like this:
+
+GTRepository *repo =
+[[GTRepository alloc] initWithURL:[NSURL fileURLWithPath: @"/path/to/repo"] error:NULL];
+NSString *msg = [[[repo headReferenceWithError:NULL] resolvedTarget] message];
+
+Objective-git is fully interoperable with Swift, so don't fear if you've left Objective-C behind.

@@ -1,0 +1,19 @@
+[rewriting-history.011-changing-email-addresses-globally] Changing Email Addresses Globally
+
+
+Another common case is that you forgot to run git config to set your name and email address before you started working, or perhaps you want to open-source a project at work and change all your work email addresses to your personal address.
+In any case, you can change email addresses in multiple commits in a batch with filter-branch as well.
+You need to be careful to change only the email addresses that are yours, so you use --commit-filter:
+
+$ git filter-branch --commit-filter '
+if [ "$GITAUTHOREMAIL" = "schacon@localhost" ];
+then
+GITAUTHORNAME="Scott Chacon";
+GITAUTHOREMAIL="schacon@example.com";
+git commit-tree "$@";
+else
+git commit-tree "$@";
+fi' HEAD
+
+This goes through and rewrites every commit to have your new address.
+Because commits contain the SHA-1 values of their parents, this command changes every commit SHA-1 in your history, not just those that have the matching email address.

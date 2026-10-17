@@ -1,0 +1,126 @@
+{
+  "request_id": "exp5-q012",
+  "question": "What is the primary function of Git submodules?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 1.0,
+  "context_score": 0.64,
+  "tokens_used": 5824,
+  "total_duration_ms": 25087.92,
+  "final_response": "Not found in the book.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.08,
+      "status": "success",
+      "details": {
+        "clean_length": 47
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 1.66,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "Git submodules",
+          "Git submodule command",
+          "Pro Git submodule"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 170.6,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 8.01,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.1,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.64
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 2.45,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 22
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 1.87,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 22
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 24052.23,
+      "status": "success",
+      "details": {
+        "claims_a": 0,
+        "supported_a": 0,
+        "claims_b": 0,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "abstain",
+      "duration_ms": 848.06,
+      "status": "abstained",
+      "details": {
+        "supported_claim_ratio": 1.0,
+        "revision_rounds": 0,
+        "context_score": 0.64,
+        "verified_length": 22,
+        "abstained": true
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

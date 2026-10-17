@@ -1,0 +1,123 @@
+{
+  "request_id": "exp5-q018",
+  "question": "What specific metadata and security features are stored in annotated tags but not in lightweight tags?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": 1.0,
+  "tokens_used": 3728,
+  "total_duration_ms": 29199.12,
+  "final_response": "Request timed out or exceeded token budget.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.15,
+      "status": "success",
+      "details": {
+        "clean_length": 102
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 716.03,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "annotated tags metadata Pro Git",
+          "annotated tags security features Pro Git",
+          "lightweight tags differences Pro Git"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 211.0,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 15.4,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.11,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 1.0
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 994.13,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 859
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 1301.57,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 515
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 26955.81,
+      "status": "success",
+      "details": {
+        "claims_a": 6,
+        "supported_a": 6,
+        "claims_b": 4,
+        "supported_b": 4
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 29197.71,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_arbiter",
+        "tokens_used": 3728
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

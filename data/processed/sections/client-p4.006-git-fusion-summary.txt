@@ -1,0 +1,10 @@
+[client-p4.006-git-fusion-summary] Git-Fusion Summary
+
+
+If you have (or can get) access to your Perforce server, Git Fusion is a great way to make Git and Perforce talk to each other.
+There's a bit of configuration involved, but the learning curve isn't very steep.
+This is one of the few sections in this chapter where cautions about using Git's full power will not appear.
+That's not to say that Perforce will be happy with everything you throw at it – if you try to rewrite history that's already been pushed, Git Fusion will reject it – but Git Fusion tries very hard to feel native.
+You can even use Git submodules (though they'll look strange to Perforce users), and merge branches (this will be recorded as an integration on the Perforce side).
+
+If you can't convince the administrator of your server to set up Git Fusion, there is still a way to use these tools together.

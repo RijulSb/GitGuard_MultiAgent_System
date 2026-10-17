@@ -1,0 +1,71 @@
+[client-svn.004-getting-started] Getting Started
+
+
+Now that you have a Subversion repository to which you have write access, you can go through a typical workflow.
+You'll start with the git svn clone command, which imports an entire Subversion repository into a local Git repository.
+Remember that if you're importing from a real hosted Subversion repository, you should replace the \file:///tmp/test-svn here with the URL of your Subversion repository:
+
+$ git svn clone file:///tmp/test-svn -T trunk -b branches -t tags
+Initialized empty Git repository in /private/tmp/progit/test-svn/.git/
+r1 = dcbfb5891860124cc2e8cc616cded42624897125 (refs/remotes/origin/trunk)
+A m4/acx_pthread.m4
+A m4/stl_hash.m4
+A java/src/test/java/com/google/protobuf/UnknownFieldSetTest.java
+A java/src/test/java/com/google/protobuf/WireFormatTest.java
+…
+r75 = 556a3e1e7ad1fde0a32823fc7e4d046bcfd86dae (refs/remotes/origin/trunk)
+Found possible branch point: file:///tmp/test-svn/trunk => file:///tmp/test-svn/branches/my-calc-branch, 75
+Found branch parent: (refs/remotes/origin/my-calc-branch) 556a3e1e7ad1fde0a32823fc7e4d046bcfd86dae
+Following parent with do_switch
+Successfully followed parent
+r76 = 0fb585761df569eaecd8146c71e58d70147460a2 (refs/remotes/origin/my-calc-branch)
+Checked out HEAD:
+file:///tmp/test-svn/trunk r75
+
+This runs the equivalent of two commands – git svn init followed by git svn fetch – on the URL you provide.
+This can take a while.
+If, for example, the test project has only about 75 commits and the codebase isn't that big, Git nevertheless must check out each version, one at a time, and commit it individually.
+For a project with hundreds or thousands of commits, this can literally take hours or even days to finish.
+
+The -T trunk -b branches -t tags part tells Git that this Subversion repository follows the basic branching and tagging conventions.
+If you name your trunk, branches, or tags differently, you can change these options.
+Because this is so common, you can replace this entire part with -s, which means standard layout and implies all those options.
+The following command is equivalent:
+
+$ git svn clone file:///tmp/test-svn -s
+
+At this point, you should have a valid Git repository that has imported your branches and tags:
+
+$ git branch -a
+* master
+remotes/origin/my-calc-branch
+remotes/origin/tags/2.0.2
+remotes/origin/tags/release-2.0.1
+remotes/origin/tags/release-2.0.2
+remotes/origin/tags/release-2.0.2rc1
+remotes/origin/trunk
+
+Note how this tool manages Subversion tags as remote refs.
+(((git commands, show-ref)))
+Let's take a closer look with the Git plumbing command show-ref:
+
+$ git show-ref
+556a3e1e7ad1fde0a32823fc7e4d046bcfd86dae refs/heads/master
+0fb585761df569eaecd8146c71e58d70147460a2 refs/remotes/origin/my-calc-branch
+bfd2d79303166789fc73af4046651a4b35c12f0b refs/remotes/origin/tags/2.0.2
+285c2b2e36e467dd4d91c8e3c0c0e1750b3fe8ca refs/remotes/origin/tags/release-2.0.1
+cbda99cb45d9abcb9793db1d4f70ae562a969f1e refs/remotes/origin/tags/release-2.0.2
+a9f074aa89e826d6f9d30808ce5ae3ffe711feda refs/remotes/origin/tags/release-2.0.2rc1
+556a3e1e7ad1fde0a32823fc7e4d046bcfd86dae refs/remotes/origin/trunk
+
+Git doesn't do this when it clones from a Git server; here's what a repository with tags looks like after a fresh clone:
+
+$ git show-ref
+c3dcbe8488c6240392e8a5d7553bbffcb0f94ef0 refs/remotes/origin/master
+32ef1d1c7cc8c603ab78416262cc421b80a8c2df refs/remotes/origin/branch-1
+75f703a3580a9b81ead89fe1138e6da858c5ba18 refs/remotes/origin/branch-2
+23f8588dde934e8f33c263c6d8359b2ae095f863 refs/tags/v0.1.0
+7064938bd5e7ef47bfd79a685a62c1e2649e2ce7 refs/tags/v0.2.0
+6dcb09b5b57875f334f61aebed695e2e4193db5e refs/tags/v1.0.0
+
+Git fetches the tags directly into refs/tags, rather than treating them as remote branches.

@@ -1,0 +1,10 @@
+[5-scripting.005-the-github-api] The GitHub API
+
+
+(((GitHub, API)))
+Services and hooks give you a way to receive push notifications about events that happen on your repositories, but what if you need more information about these events?
+What if you need to automate something like adding collaborators or labeling issues?
+
+This is where the GitHub API comes in handy.
+GitHub has tons of API endpoints for doing nearly anything you can do on the website in an automated fashion.
+In this section we'll learn how to authenticate and connect to the API, how to comment on an issue and how to change the status of a Pull Request through the API.

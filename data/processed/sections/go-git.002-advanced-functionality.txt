@@ -1,0 +1,31 @@
+[go-git.002-advanced-functionality] Advanced Functionality
+
+
+go-git has few notable advanced features, one of which is a pluggable storage system, which is similar to Libgit2 backends.
+The default implementation is in-memory storage, which is very fast.
+
+r, err := git.Clone(memory.NewStorage(), nil, &git.CloneOptions{
+URL: "https://github.com/go-git/go-git",
+})
+
+Pluggable storage provides many interesting options.
+For instance, https://github.com/go-git/go-git/tree/master/_examples/storage[^] allows you to store references, objects, and configuration in an Aerospike database.
+
+Another feature is a flexible filesystem abstraction.
+Using https://pkg.go.dev/github.com/go-git/go-billy/v5?tab=doc#Filesystem[^] it is easy to store all the files in different way i.e by packing all of them to a single archive on disk or by keeping them all in-memory.
+
+Another advanced use-case includes a fine-tunable HTTP client, such as the one found at https://github.com/go-git/go-git/blob/master/examples/customhttp/main.go[^].
+
+customClient := &http.Client{
+Transport: &http.Transport{ // accept any certificate (might be useful for testing)
+TLSClientConfig: &tls.Config,
+},
+Timeout: 15 * time.Second, // 15 second timeout
+CheckRedirect: func(req http.Request, via []http.Request) error {
+return http.ErrUseLastResponse // don't follow redirect
+},
+}
+
+client.InstallProtocol("https", githttp.NewClient(customClient))
+
+r, err := git.Clone(memory.NewStorage(), nil, &git.CloneOptions)

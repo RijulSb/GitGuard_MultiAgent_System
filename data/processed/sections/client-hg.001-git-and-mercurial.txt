@@ -1,0 +1,12 @@
+[client-hg.001-git-and-mercurial] Git and Mercurial
+
+
+(((Interoperation with other VCSs, Mercurial)))
+(((Mercurial)))
+The DVCS universe is larger than just Git.
+In fact, there are many other systems in this space, each with their own angle on how to do distributed version control correctly.
+Apart from Git, the most popular is Mercurial, and the two are very similar in many respects.
+
+The good news, if you prefer Git's client-side behavior but are working with a project whose source code is controlled with Mercurial, is that there's a way to use Git as a client for a Mercurial-hosted repository.
+Since the way Git talks to server repositories is through remotes, it should come as no surprise that this bridge is implemented as a remote helper.
+The project's name is git-remote-hg, and it can be found at https://github.com/felipec/git-remote-hg[^].

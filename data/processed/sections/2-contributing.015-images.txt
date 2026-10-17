@@ -1,0 +1,10 @@
+[2-contributing.015-images] Images
+
+
+This isn't technically GitHub Flavored Markdown, but it is incredibly useful.
+In addition to adding Markdown image links to comments, which can be difficult to find and embed URLs for, GitHub allows you to drag and drop images into text areas to embed them.
+
+.Drag and drop images to upload them and auto-embed them
+
+If you look at <<mddrag>>, you can see a small "Parsed as Markdown" hint above the text area.
+Clicking on that will give you a full cheat sheet of everything you can do with Markdown on GitHub.

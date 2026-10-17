@@ -1,0 +1,121 @@
+{
+  "request_id": "exp5-q055",
+  "question": "Which git log option is used to find commits that changed the number of occurrences of a specific string, and what is its colloquial name?",
+  "classification": "concept",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": 0.8,
+  "tokens_used": 4768,
+  "total_duration_ms": 70017.67,
+  "final_response": "Request timed out or exceeded token budget.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.19,
+      "status": "success",
+      "details": {
+        "clean_length": 138
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 14531.57,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "concept",
+        "is_out_of_scope": false,
+        "queries": [
+          "Which git log option is used to find commits that changed the number of occurrences of a specific string, and what is its colloquial name?"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 109.77,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 1,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 24.37,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.12,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.8
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 1274.62,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 228
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 4609.35,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 128
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 50747.39,
+      "status": "success",
+      "details": {
+        "claims_a": 2,
+        "supported_a": 2,
+        "claims_b": 0,
+        "supported_b": 0
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 70016.45,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_arbiter",
+        "tokens_used": 4768
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.0,
+      "status": "pass_through",
+      "details": {
+        "risk_level": "LOW",
+        "abstained": true
+      }
+    }
+  ]
+}

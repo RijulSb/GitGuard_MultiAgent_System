@@ -1,0 +1,4 @@
+[2-contributing.006-advanced-pull-requests] Advanced Pull Requests
+
+
+Now that we've covered the basics of contributing to a project on GitHub, let's cover a few interesting tips and tricks about Pull Requests so you can be more effective in using them.

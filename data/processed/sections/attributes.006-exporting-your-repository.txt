@@ -1,0 +1,5 @@
+[attributes.006-exporting-your-repository] Exporting Your Repository
+
+
+(((archiving)))
+Git attribute data also allows you to do some interesting things when exporting an archive of your project.

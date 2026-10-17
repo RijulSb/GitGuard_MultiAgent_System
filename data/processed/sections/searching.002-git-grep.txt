@@ -1,0 +1,73 @@
+[searching.002-git-grep] Git Grep
+
+
+Git ships with a command called grep that allows you to easily search through any committed tree, the working directory, or even the index for a string or regular expression.
+For the examples that follow, we'll search through the source code for Git itself.
+
+By default, git grep will look through the files in your working directory.
+As a first variation, you can use either of the -n or --line-number options to print out the line numbers where Git has found matches:
+
+$ git grep -n gmtime_r
+compat/gmtime.c:3:#undef gmtime_r
+compat/gmtime.c:8: return gitgmtimer(timep, &result);
+compat/gmtime.c:11:struct tm gitgmtimer(const time_t timep, struct tm *result)
+compat/gmtime.c:16: ret = gmtime_r(timep, result);
+compat/mingw.c:826:struct tm gmtimer(const timet timep, struct tm *result)
+compat/mingw.h:206:struct tm gmtimer(const timet timep, struct tm *result);
+date.c:482: if (gmtimer(&now, &nowtm))
+date.c:545: if (gmtime_r(&time, tm)) {
+date.c:758: / gmtimer() in matchdigit() may have clobbered it /
+git-compat-util.h:1138:struct tm gitgmtimer(const time_t , struct tm *);
+git-compat-util.h:1140:#define gmtimer gitgmtime_r
+
+In addition to the basic search shown above, git grep supports a plethora of other interesting options.
+
+For instance, instead of printing all of the matches, you can ask git grep to summarize the output by showing you only which files contained the search string and how many matches there were in each file with the -c or --count option:
+
+$ git grep --count gmtime_r
+compat/gmtime.c:4
+compat/mingw.c:1
+compat/mingw.h:1
+date.c:3
+git-compat-util.h:2
+
+If you're interested in the context of a search string, you can display the enclosing method or function for each matching string with either of the -p or --show-function options:
+
+$ git grep -p gmtime_r *.c
+date.c=static int matchmultinumber(timestamp_t num, char c, const char *date,
+date.c: if (gmtimer(&now, &nowtm))
+date.c=static int matchdigit(const char date, struct tm tm, int offset, int tmgmt)
+date.c: if (gmtime_r(&time, tm)) {
+date.c=int parsedatebasic(const char date, timestamp_t timestamp, int *offset)
+date.c: / gmtimer() in matchdigit() may have clobbered it /
+
+As you can see, the gmtimer routine is called from both the matchmultinumber and matchdigit functions in the date.c file (the third match displayed represents just the string appearing in a comment).
+
+You can also search for complex combinations of strings with the --and flag, which ensures that multiple matches must occur in the same line of text.
+For instance, let's look for any lines that define a constant whose name contains either of the substrings "LINK" or "BUF_MAX", specifically in an older version of the Git codebase represented by the tag v1.8.0 (we'll throw in the --break and --heading options which help split up the output into a more readable format):
+
+$ git grep --break --heading \
+-n -e '#define' --and \( -e LINK -e BUF_MAX \) v1.8.0
+v1.8.0:builtin/index-pack.c
+62:#define FLAG_LINK (1u<<20)
+
+v1.8.0:cache.h
+73:#define S_IFGITLINK 0160000
+74:#define SISGITLINK(m) (((m) & SIFMT) == S_IFGITLINK)
+
+v1.8.0:environment.c
+54:#define OBJECTCREATIONMODE OBJECTCREATIONUSES_HARDLINKS
+
+v1.8.0:strbuf.c
+326:#define STRBUFMAXLINK (2*PATHMAX)
+
+v1.8.0:symlinks.c
+53:#define FL_SYMLINK (1 << 2)
+
+v1.8.0:zlib.c
+30:/ #define ZLIBBUFMAX ((uInt)-1) /
+31:#define ZLIBBUFMAX ((uInt) 1024 1024 1024) / 1GB /
+
+The git grep command has a few advantages over normal searching commands like grep and ack.
+The first is that it's really fast, the second is that you can search through any tree in Git, not just the working directory.
+As we saw in the above example, we looked for terms in an older version of the Git source code, not the version that was currently checked out.

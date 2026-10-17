@@ -1,0 +1,11 @@
+[3-maintaining.018-transferring-a-project] Transferring a Project
+
+
+If you would like to transfer a project to another user or an organization in GitHub, there is a "Transfer ownership" option at the bottom of the same "Options" tab of your repository settings page that allows you to do this.
+
+.Transfer a project to another GitHub user or Organization
+
+This is helpful if you are abandoning a project and someone wants to take it over, or if your project is getting bigger and want to move it into an organization.
+
+Not only does this move the repository along with all its watchers and stars to another place, it also sets up a redirect from your URL to the new place.
+It will also redirect clones and fetches from Git, not just web requests.

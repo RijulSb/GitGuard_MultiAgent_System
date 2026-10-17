@@ -1,0 +1,16 @@
+[gitlab.004-users] Users
+
+
+Everybody using your GitLab server must have a user account.
+User accounts are quite simple, they mainly contain personal information attached to login data.
+Each user account has a namespace, which is a logical grouping of projects that belong to that user.
+If the user +jane+ had a project named +project+, that project's URL would be http://server/jane/project.
+
+.The GitLab user administration screen
+
+You can remove a user account in two ways:
+"Blocking" a user prevents them from logging into the GitLab instance, but all of the data under that user's namespace will be preserved, and commits signed with that user's email address will still link back to their profile.
+
+"Destroying" a user, on the other hand, completely removes them from the database and filesystem.
+All projects and data in their namespace is removed, and any groups they own will also be removed.
+This is obviously a much more permanent and destructive action, and you will rarely need it.

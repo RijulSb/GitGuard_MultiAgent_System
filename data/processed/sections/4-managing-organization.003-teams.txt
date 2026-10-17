@@ -1,0 +1,27 @@
+[4-managing-organization.003-teams] Teams
+
+
+Organizations are associated with individual people by way of teams, which are simply a grouping of individual user accounts and repositories within the organization and what kind of access those people have in those repositories.
+
+For example, say your company has three repositories: frontend, backend, and deployscripts.
+You'd want your HTML/CSS/JavaScript developers to have access to frontend and maybe backend, and your Operations people to have access to backend and deployscripts.
+Teams make this easy, without having to manage the collaborators for every individual repository.
+
+The Organization page shows you a simple dashboard of all the repositories, users and teams that are under this organization.
+
+.The Organization page
+
+To manage your Teams, you can click on the Teams sidebar on the right hand side of the page in <<orgpage>>.
+This will bring you to a page you can use to add members to the team, add repositories to the team or manage the settings and access control levels for the team.
+Each team can have read only, read/write or administrative access to the repositories.
+You can change that level by clicking the "Settings" button in <<teampage>>.
+
+.The Team page
+
+When you invite someone to a team, they will get an email letting them know they've been invited.
+
+Additionally, team @mentions (such as @acmecorp/frontend) work much the same as they do with individual users, except that all members of the team are then subscribed to the thread.
+This is useful if you want the attention from someone on a team, but you don't know exactly who to ask.
+
+A user can belong to any number of teams, so don't limit yourself to only access-control teams.
+Special-interest teams like ux, css, or refactoring are useful for certain kinds of questions, and others like legal and colorblind for an entirely different kind.

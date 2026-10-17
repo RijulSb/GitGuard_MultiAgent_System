@@ -1,0 +1,25 @@
+[revision-selection.010-triple-dot] Triple Dot
+
+
+The last major range-selection syntax is the triple-dot syntax, which specifies all the commits that are reachable by either of two references but not by both of them.
+Look back at the example commit history in <<double_dot>>.
+If you want to see what is in master or experiment but not any common references, you can run:
+
+$ git log master...experiment
+F
+E
+D
+C
+
+Again, this gives you normal log output but shows you only the commit information for those four commits, appearing in the traditional commit date ordering.
+
+A common switch to use with the log command in this case is --left-right, which shows you which side of the range each commit is in.
+This helps make the output more useful:
+
+$ git log --left-right master...experiment
+< F
+< E
+> D
+> C
+
+With these tools, you can much more easily let Git know what commit or commits you want to inspect.

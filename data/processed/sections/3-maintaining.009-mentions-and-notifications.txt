@@ -1,0 +1,20 @@
+[3-maintaining.009-mentions-and-notifications] Mentions and Notifications
+
+
+GitHub also has a pretty nice notifications system built in that can come in handy when you have questions or need feedback from specific individuals or teams.
+
+In any comment you can start typing a @ character and it will begin to autocomplete with the names and usernames of people who are collaborators or contributors in the project.
+
+.Start typing @ to mention someone
+
+You can also mention a user who is not in that dropdown, but often the autocompleter can make it faster.
+
+Once you post a comment with a user mention, that user will be notified.
+This means that this can be a really effective way of pulling people into conversations rather than making them poll.
+Very often in Pull Requests on GitHub people will pull in other people on their teams or in their company to review an Issue or Pull Request.
+
+If someone gets mentioned on a Pull Request or Issue, they will be "subscribed" to it and will continue getting notifications any time some activity occurs on it.
+You will also be subscribed to something if you opened it, if you're watching the repository or if you comment on something.
+If you no longer wish to receive notifications, there is an "Unsubscribe" button on the page you can click to stop receiving updates on it.
+
+.Unsubscribe from an Issue or Pull Request

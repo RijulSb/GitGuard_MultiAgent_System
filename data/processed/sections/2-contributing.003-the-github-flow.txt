@@ -1,0 +1,26 @@
+[2-contributing.003-the-github-flow] The GitHub Flow
+
+
+(((GitHub, Flow)))
+GitHub is designed around a particular collaboration workflow, centered on Pull Requests.
+This flow works whether you're collaborating with a tightly-knit team in a single shared repository, or a globally-distributed company or network of strangers contributing to a project through dozens of forks.
+It is centered on the <<ch03-git-branching#topicbranch>> workflow covered in <<ch03-git-branching#ch03-git-branching>>.
+
+Here's how it generally works:
+
+1. Fork the project.
+2. Create a topic branch from master.
+3. Make some commits to improve the project.
+4. Push this branch to your GitHub project.
+5. Open a Pull Request on GitHub.
+6. Discuss, and optionally continue committing.
+7. The project owner merges or closes the Pull Request.
+8. Sync the updated master back to your fork.
+
+This is basically the Integration Manager workflow covered in <<ch05-distributed-git#integrationmanager>>, but instead of using email to communicate and review changes, teams use GitHub's web based tools.
+
+Let's walk through an example of proposing a change to an open source project hosted on GitHub using this flow.
+
+You can use the official GitHub CLI tool instead of the GitHub web interface for most things.
+The tool can be used on Windows, macOS, and Linux systems.
+Go to the https://cli.github.com/[GitHub CLI homepage^] for installation instructions and the manual.

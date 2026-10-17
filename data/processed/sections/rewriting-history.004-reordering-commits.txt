@@ -1,0 +1,17 @@
+[rewriting-history.004-reordering-commits] Reordering Commits
+
+
+You can also use interactive rebases to reorder or remove commits entirely.
+If you want to remove the "Add cat-file" commit and change the order in which the other two commits are introduced, you can change the rebase script from this:
+
+pick f7f3f6d Change my name a bit
+pick 310154e Update README formatting and add blame
+pick a5f4a0d Add cat-file
+
+to this:
+
+pick 310154e Update README formatting and add blame
+pick f7f3f6d Change my name a bit
+
+When you save and exit the editor, Git rewinds your branch to the parent of these commits, applies 310154e and then f7f3f6d, and then stops.
+You effectively change the order of those commits and remove the "Add cat-file" commit completely.

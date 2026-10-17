@@ -1,0 +1,27 @@
+[transfer-protocols.008-ssh] SSH
+
+
+If you're doing the fetch over SSH, fetch-pack runs something like this:
+
+$ ssh -x git@server "git-upload-pack 'simplegit-progit.git'"
+
+After fetch-pack connects, upload-pack sends back something like this:
+
+00dfca82a6dff817ec66f44342007202690a93763949 HEAD□multi_ack thin-pack \
+side-band side-band-64k ofs-delta shallow no-progress include-tag \
+multiackdetailed symref=HEAD:refs/heads/master \
+agent=git/2:2.1.1+github-607-gfba4028
+003fe2409a098dc3e53539a9028a94b6224db9d6a6b6 refs/heads/master
+0000
+
+This is very similar to what receive-pack responds with, but the capabilities are different.
+In addition, it sends back what HEAD points to (symref=HEAD:refs/heads/master) so the client knows what to check out if this is a clone.
+
+At this point, the fetch-pack process looks at what objects it has and responds with the objects that it needs by sending "want" and then the SHA-1 it wants.
+It sends all the objects it already has with "have" and then the SHA-1.
+At the end of this list, it writes "done" to initiate the upload-pack process to begin sending the packfile of the data it needs:
+
+003cwant ca82a6dff817ec66f44342007202690a93763949 ofs-delta
+0032have 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+0009done
+0000

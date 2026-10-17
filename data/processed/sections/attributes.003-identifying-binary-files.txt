@@ -1,0 +1,14 @@
+[attributes.003-identifying-binary-files] Identifying Binary Files
+
+
+Some files look like text files but for all intents and purposes are to be treated as binary data.
+For instance, Xcode projects on macOS contain a file that ends in .pbxproj, which is basically a JSON (plain-text JavaScript data format) dataset written out to disk by the IDE, which records your build settings and so on.
+Although it's technically a text file (because it's all UTF-8), you don't want to treat it as such because it's really a lightweight database – you can't merge the contents if two people change it, and diffs generally aren't helpful.
+The file is meant to be consumed by a machine.
+In essence, you want to treat it like a binary file.
+
+To tell Git to treat all pbxproj files as binary data, add the following line to your .gitattributes file:
+
+*.pbxproj binary
+
+Now, Git won't try to convert or fix CRLF issues; nor will it try to compute or print a diff for changes in this file when you run git show or git diff on your project.

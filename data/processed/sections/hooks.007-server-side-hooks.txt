@@ -1,0 +1,6 @@
+[hooks.007-server-side-hooks] Server-Side Hooks
+
+
+In addition to the client-side hooks, you can use a couple of important server-side hooks as a system administrator to enforce nearly any kind of policy for your project.
+These scripts run before and after pushes to the server.
+The pre hooks can exit non-zero at any time to reject the push as well as print an error message back to the client; you can set up a push policy that's as complex as you wish.

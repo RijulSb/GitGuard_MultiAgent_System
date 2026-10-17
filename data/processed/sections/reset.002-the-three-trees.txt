@@ -1,0 +1,16 @@
+[reset.002-the-three-trees] The Three Trees
+
+
+An easier way to think about reset and checkout is through the mental frame of Git being a content manager of three different trees.
+By "tree" here, we really mean "collection of files", not specifically the data structure.
+There are a few cases where the index doesn't exactly act like a tree, but for our purposes it is easier to think about it this way for now.
+
+Git as a system manages and manipulates three trees in its normal operation:
+
+[cols="1,2",options="header"]
+|================================
+| Tree | Role
+| HEAD | Last commit snapshot, next parent
+| Index | Proposed next commit snapshot
+| Working Directory | Sandbox
+|================================

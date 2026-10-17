@@ -1,0 +1,20 @@
+[maintaining.012-rerere] Rerere
+
+
+(((git commands, rerere)))(((rerere)))
+If you're doing lots of merging and rebasing, or you're maintaining a long-lived topic branch, Git has a feature called "rerere" that can help.
+
+Rerere stands for "reuse recorded resolution" -- it's a way of shortcutting manual conflict resolution.
+When rerere is enabled, Git will keep a set of pre- and post-images from successful merges, and if it notices that there's a conflict that looks exactly like one you've already fixed, it'll just use the fix from last time, without bothering you with it.
+
+This feature comes in two parts: a configuration setting and a command.
+The configuration setting is rerere.enabled, and it's handy enough to put in your global config:
+
+$ git config --global rerere.enabled true
+
+Now, whenever you do a merge that resolves conflicts, the resolution will be recorded in the cache in case you need it in the future.
+
+If you need to, you can interact with the rerere cache using the git rerere command.
+When it's invoked alone, Git checks its database of resolutions and tries to find a match with any current merge conflicts and resolve them (although this is done automatically if rerere.enabled is set to true).
+There are also subcommands to see what will be recorded, to erase specific resolution from the cache, and to clear the entire cache.
+We will cover rerere in more detail in <<ch07-git-tools#ref_rerere>>.

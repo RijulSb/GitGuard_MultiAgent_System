@@ -1,0 +1,17 @@
+[2-contributing.013-quoting] Quoting
+
+
+If you're responding to a small part of a long comment, you can selectively quote out of the other comment by preceding the lines with the > character.
+In fact, this is so common and so useful that there is a keyboard shortcut for it.
+If you highlight text in a comment that you want to directly reply to and hit the r key, it will quote that text in the comment box for you.
+
+The quotes look something like this:
+
+> Whether 'tis Nobler in the mind to suffer
+> The Slings and Arrows of outrageous Fortune,
+
+How big are these slings and in particular, these arrows?
+
+Once rendered, the comment will look like <<mdquote>>.
+
+.Rendered quoting example

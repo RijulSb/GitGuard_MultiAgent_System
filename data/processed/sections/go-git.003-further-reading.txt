@@ -1,0 +1,5 @@
+[go-git.003-further-reading] Further Reading
+
+
+A full treatment of go-git's capabilities is outside the scope of this book.
+If you want more information on go-git, there's API documentation at https://pkg.go.dev/github.com/go-git/go-git/v5[^], and a set of usage examples at https://github.com/go-git/go-git/tree/master/_examples[^].

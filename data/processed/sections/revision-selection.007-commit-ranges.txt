@@ -1,0 +1,5 @@
+[revision-selection.007-commit-ranges] Commit Ranges
+
+
+Now that you can specify individual commits, let's see how to specify ranges of commits.
+This is particularly useful for managing your branches -- if you have a lot of branches, you can use range specifications to answer questions such as, "What work is on this branch that I haven't yet merged into my main branch?"

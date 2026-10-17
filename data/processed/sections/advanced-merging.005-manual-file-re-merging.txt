@@ -1,0 +1,125 @@
+[advanced-merging.005-manual-file-re-merging] Manual File Re-merging
+
+
+Though Git handles whitespace pre-processing pretty well, there are other types of changes that perhaps Git can't handle automatically, but are scriptable fixes.
+As an example, let's pretend that Git could not handle the whitespace change and we needed to do it by hand.
+
+What we really need to do is run the file we're trying to merge in through a dos2unix program before trying the actual file merge.
+So how would we do that?
+
+First, we get into the merge conflict state.
+Then we want to get copies of our version of the file, their version (from the branch we're merging in) and the common version (from where both sides branched off).
+Then we want to fix up either their side or our side and re-try the merge again for just this single file.
+
+Getting the three file versions is actually pretty easy.
+Git stores all of these versions in the index under "stages" which each have numbers associated with them.
+Stage 1 is the common ancestor, stage 2 is your version and stage 3 is from the MERGE_HEAD, the version you're merging in ("theirs").
+
+You can extract a copy of each of these versions of the conflicted file with the git show command and a special syntax.
+
+$ git show :1:hello.rb > hello.common.rb
+$ git show :2:hello.rb > hello.ours.rb
+$ git show :3:hello.rb > hello.theirs.rb
+
+If you want to get a little more hard core, you can also use the ls-files -u plumbing command to get the actual SHA-1s of the Git blobs for each of these files.
+
+$ git ls-files -u
+100755 ac51efdc3df4f4fd328d1a02ad05331d8e2c9111 1 hello.rb
+100755 36c06c8752c78d2aff89571132f3bf7841a7b5c3 2 hello.rb
+100755 e85207e04dfdd5eb0a1e9febbc67fd837c44a1cd 3 hello.rb
+
+The :1:hello.rb is just a shorthand for looking up that blob SHA-1.
+
+Now that we have the content of all three stages in our working directory, we can manually fix up theirs to fix the whitespace issue and re-merge the file with the little-known git merge-file command which does just that.
+
+$ dos2unix hello.theirs.rb
+dos2unix: converting file hello.theirs.rb to Unix format ...
+
+$ git merge-file -p \
+hello.ours.rb hello.common.rb hello.theirs.rb > hello.rb
+
+$ git diff -b
+diff --cc hello.rb
+index 36c06c8,e85207e..0000000
+--- a/hello.rb
++++ b/hello.rb
+@@@ -1,8 -1,7 +1,8 @@@
+#! /usr/bin/env ruby
+
++# prints out a greeting
+def hello
+- puts 'hello world'
++ puts 'hello mundo'
+end
+
+hello()
+
+At this point we have nicely merged the file.
+In fact, this actually works better than the ignore-space-change option because this actually fixes the whitespace changes before merge instead of simply ignoring them.
+In the ignore-space-change merge, we actually ended up with a few lines with DOS line endings, making things mixed.
+
+If you want to get an idea before finalizing this commit about what was actually changed between one side or the other, you can ask git diff to compare what is in your working directory that you're about to commit as the result of the merge to any of these stages.
+Let's go through them all.
+
+To compare your result to what you had in your branch before the merge, in other words, to see what the merge introduced, you can run git diff --ours:
+
+$ git diff --ours
+* Unmerged path hello.rb
+diff --git a/hello.rb b/hello.rb
+index 36c06c8..44d0a25 100755
+--- a/hello.rb
++++ b/hello.rb
+@@ -2,7 +2,7 @@
+
+# prints out a greeting
+def hello
+- puts 'hello world'
++ puts 'hello mundo'
+end
+
+hello()
+
+So here we can easily see that what happened in our branch, what we're actually introducing to this file with this merge, is changing that single line.
+
+If we want to see how the result of the merge differed from what was on their side, you can run git diff --theirs.
+In this and the following example, we have to use -b to strip out the whitespace because we're comparing it to what is in Git, not our cleaned up hello.theirs.rb file.
+
+$ git diff --theirs -b
+* Unmerged path hello.rb
+diff --git a/hello.rb b/hello.rb
+index e85207e..44d0a25 100755
+--- a/hello.rb
++++ b/hello.rb
+@@ -1,5 +1,6 @@
+#! /usr/bin/env ruby
+
++# prints out a greeting
+def hello
+puts 'hello mundo'
+end
+
+Finally, you can see how the file has changed from both sides with git diff --base.
+
+$ git diff --base -b
+* Unmerged path hello.rb
+diff --git a/hello.rb b/hello.rb
+index ac51efd..44d0a25 100755
+--- a/hello.rb
++++ b/hello.rb
+@@ -1,7 +1,8 @@
+#! /usr/bin/env ruby
+
++# prints out a greeting
+def hello
+- puts 'hello world'
++ puts 'hello mundo'
+end
+
+hello()
+
+At this point we can use the git clean command to clear out the extra files we created to do the manual merge but no longer need.
+
+$ git clean -f
+Removing hello.common.rb
+Removing hello.ours.rb
+Removing hello.theirs.rb

@@ -1,0 +1,21 @@
+[5-scripting.003-services] Services
+
+
+First we'll take a look at Services.
+Both the Hooks and Services integrations can be found in the Settings section of your repository, where we previously looked at adding Collaborators and changing the default branch of your project.
+Under the "Webhooks and Services" tab you will see something like <<serviceshooks>>.
+
+.Services and Hooks configuration section
+
+There are dozens of services you can choose from, most of them integrations into other commercial and open source systems.
+Most of them are for Continuous Integration services, bug and issue trackers, chat room systems and documentation systems.
+We'll walk through setting up a very simple one, the Email hook.
+If you choose "email" from the "Add Service" dropdown, you'll get a configuration screen like <<serviceconfig>>.
+
+.Email service configuration
+
+In this case, if we hit the "Add service" button, the email address we specified will get an email every time someone pushes to the repository.
+Services can listen for lots of different types of events, but most only listen for push events and then do something with that data.
+
+If there is a system you are using that you would like to integrate with GitHub, you should check here to see if there is an existing service integration available.
+For example, if you're using Jenkins to run tests on your codebase, you can enable the Jenkins builtin service integration to kick off a test run every time someone pushes to your repository.

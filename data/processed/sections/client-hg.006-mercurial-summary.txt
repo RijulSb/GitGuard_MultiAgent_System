@@ -1,0 +1,5 @@
+[client-hg.006-mercurial-summary] Mercurial Summary
+
+
+Git and Mercurial are similar enough that working across the boundary is fairly painless.
+If you avoid changing history that's left your machine (as is generally recommended), you may not even be aware that the other end is Mercurial.
