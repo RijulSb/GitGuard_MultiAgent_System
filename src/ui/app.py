@@ -96,37 +96,70 @@ if app_mode == "🛡️ Live Assistant":
     st.title("🛡️ GitGuard: Pro Git Assistant")
     st.caption("Answers Git questions strictly grounded in the Pro Git book with automated safety enforcement.")
 
-    # Preset Questions
+    # Session state initialization
+    if "current_q" not in st.session_state:
+        st.session_state["current_q"] = ""
+    if "should_run" not in st.session_state:
+        st.session_state["should_run"] = False
+    if "cached_result" not in st.session_state:
+        st.session_state["cached_result"] = None
+    if "cached_latency" not in st.session_state:
+        st.session_state["cached_latency"] = None
+
+    def select_preset(text: str):
+        st.session_state["current_q"] = text
+        st.session_state["should_run"] = True
+
+    # Preset Questions (Single-click immediate execution)
     col_pre1, col_pre2, col_pre3 = st.columns(3)
-    preset_q = None
-    if col_pre1.button("📘 Normal: Post-Rewrite Hook"):
-        preset_q = "Which Git command triggers the post-rewrite hook, but git filter-branch does not?"
-    if col_pre2.button("⚠️ Risky: Force Push"):
-        preset_q = "How do I force push my branch to the remote repository?"
-    if col_pre3.button("🚫 Out-of-Scope: Copilot"):
-        preset_q = "What is the GitHub Copilot monthly price?"
+    col_pre1.button(
+        "📘 Normal: Post-Rewrite Hook",
+        on_click=select_preset,
+        args=("Which Git command triggers the post-rewrite hook, but git filter-branch does not?",),
+    )
+    col_pre2.button(
+        "⚠️ Risky: Force Push",
+        on_click=select_preset,
+        args=("How do I force push my branch to the remote repository?",),
+    )
+    col_pre3.button(
+        "🚫 Out-of-Scope: Copilot",
+        on_click=select_preset,
+        args=("What is the GitHub Copilot monthly price?",),
+    )
 
-    # Input Form
-    with st.form("query_form"):
-        user_question = st.text_input(
-            "Ask a Git question:",
-            value=preset_q or "",
-            placeholder="e.g. How does git restore differ from git reset?",
-        )
-        submitted = st.form_submit_button("Ask GitGuard", type="primary")
+    # Input Box and Submit Button
+    user_question = st.text_input(
+        "Ask a Git question:",
+        value=st.session_state["current_q"],
+        placeholder="e.g. How does git restore differ from git reset?",
+        key="git_query_input",
+    )
 
-    if submitted and user_question.strip():
-        q_text = user_question.strip()
+    col_btn, _ = st.columns([1, 4])
+    if col_btn.button("Ask GitGuard", type="primary"):
+        st.session_state["current_q"] = user_question
+        st.session_state["should_run"] = True
 
-        # Security pre-check
+    # Run pipeline if requested
+    if st.session_state.get("should_run") and st.session_state["current_q"].strip():
+        st.session_state["should_run"] = False
+        q_text = st.session_state["current_q"].strip()
+
         if detect_prompt_injection(q_text):
             st.error("🚨 Potential prompt injection detected. Request blocked by GitGuard security policy.")
-            st.stop()
+        else:
+            with st.spinner("Executing 10-agent reasoning & retrieval pipeline (Manager → Retrieval → Drafters → Critic → Arbiter → Safety Guard)..."):
+                t0 = time.time()
+                state = run_pipeline(q_text)
+                latency_ms = round((time.time() - t0) * 1000, 2)
+                st.session_state["cached_result"] = state
+                st.session_state["cached_latency"] = latency_ms
 
-        with st.spinner("Executing 10-agent reasoning & retrieval pipeline..."):
-            t0 = time.time()
-            state = run_pipeline(q_text)
-            latency_ms = round((time.time() - t0) * 1000, 2)
+    # Render result if available
+    if st.session_state.get("cached_result") is not None:
+        state = st.session_state["cached_result"]
+        latency_ms = st.session_state.get("cached_latency", 0)
 
         ans_text = state.get("final_response") or state.get("verified_answer") or ""
         risk_level = state.get("risk_level", "LOW")
