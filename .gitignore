@@ -55,3 +55,10 @@ data/cache/
 # Logs
 *.log
 logs/
+
+# Reproducible datasets and generated runtime artifacts
+data/raw/
+data/processed/indexes/chroma/
+data/processed/indexes/*.bm25.pkl
+data/traces/
+data/eval/*.html
