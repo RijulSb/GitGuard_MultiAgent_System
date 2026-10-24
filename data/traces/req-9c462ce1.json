@@ -1,0 +1,50 @@
+{
+  "request_id": "req-9c462ce1",
+  "question": "How do I commit changes to Git?",
+  "classification": "how-to",
+  "is_out_of_scope": false,
+  "abstained": true,
+  "risk_level": "LOW",
+  "supported_claim_ratio": null,
+  "context_score": null,
+  "tokens_used": 412,
+  "total_duration_ms": 77186.58,
+  "final_response": "Request timed out or exceeded token budget. Please try a simpler question.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.07,
+      "status": "success",
+      "details": {
+        "clean_length": 31
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 77182.19,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "how-to",
+        "is_out_of_scope": false,
+        "queries": [
+          "git commit",
+          "committing changes in Git",
+          "Pro Git commit"
+        ]
+      }
+    },
+    {
+      "agent": "manager",
+      "action": "budget_exceeded",
+      "duration_ms": 77185.13,
+      "status": "aborted",
+      "details": {
+        "reason": "budget_before_retrievers",
+        "tokens_used": 412
+      }
+    }
+  ]
+}

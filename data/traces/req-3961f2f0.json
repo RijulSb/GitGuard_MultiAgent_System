@@ -1,0 +1,128 @@
+{
+  "request_id": "req-3961f2f0",
+  "question": "How do I stage and commit modified files?",
+  "classification": "how-to",
+  "is_out_of_scope": false,
+  "abstained": false,
+  "risk_level": "LOW",
+  "supported_claim_ratio": 1.0,
+  "context_score": 0.6211,
+  "tokens_used": 5319,
+  "total_duration_ms": 362.72,
+  "final_response": "1. Run `git status` to see modified files under **“Changes not staged for commit.”** [recording-changes.004-stagin]  \n2. Stage a modified tracked file: `git add <filename>` – this moves the file into the staging area.  \n3. Run `git status` again to confirm the file now appears under **“Changes to be committed.”**  \n4. Create a commit that records the staged snapshot: `git commit -m \"commit message\"` .  \n   - As a shortcut for tracked files, you can combine staging and committing with `git commit -am \"commit message\"`.  \n5. For partial or selective staging, start interactive mode with `git add -i`.",
+  "traces": [
+    {
+      "agent": "manager",
+      "action": "intake_initialized",
+      "duration_ms": 0.14,
+      "status": "success",
+      "details": {
+        "clean_length": 41
+      }
+    },
+    {
+      "agent": "query_analyst",
+      "action": "classified_query",
+      "duration_ms": 1.79,
+      "model_id": "openai/gpt-oss-20b",
+      "status": "success",
+      "details": {
+        "classification": "how-to",
+        "is_out_of_scope": false,
+        "queries": [
+          "git add modified files",
+          "git commit staged changes",
+          "git add and commit"
+        ]
+      }
+    },
+    {
+      "agent": "dense_retriever",
+      "action": "multi_query_dense_search",
+      "duration_ms": 338.84,
+      "fallback_used": false,
+      "status": "success",
+      "details": {
+        "queries_used": 3,
+        "chunks_retrieved": 20,
+        "source": "chromadb"
+      }
+    },
+    {
+      "agent": "keyword_retriever",
+      "action": "bm25_search",
+      "duration_ms": 23.66,
+      "status": "success",
+      "details": {
+        "chunks_retrieved": 20
+      }
+    },
+    {
+      "agent": "reranker",
+      "action": "fusion_rerank",
+      "duration_ms": 0.12,
+      "status": "success",
+      "details": {
+        "context_count": 5,
+        "top_score": 0.6211
+      }
+    },
+    {
+      "agent": "drafter_a",
+      "action": "draft_practical",
+      "duration_ms": 2.27,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 707
+      }
+    },
+    {
+      "agent": "drafter_b",
+      "action": "draft_strict",
+      "duration_ms": 1.54,
+      "status": "success",
+      "details": {
+        "tool_calls_count": 0,
+        "draft_len": 426
+      }
+    },
+    {
+      "agent": "critic",
+      "action": "critique_drafts",
+      "duration_ms": 3.38,
+      "status": "success",
+      "details": {
+        "claims_a": 6,
+        "supported_a": 6,
+        "claims_b": 4,
+        "supported_b": 4
+      }
+    },
+    {
+      "agent": "arbiter",
+      "action": "merge_and_verify",
+      "duration_ms": 2.18,
+      "status": "success",
+      "details": {
+        "supported_claim_ratio": 1.0,
+        "revision_rounds": 0,
+        "context_score": 0.6211,
+        "verified_length": 604,
+        "abstained": false
+      }
+    },
+    {
+      "agent": "safety_guard",
+      "action": "risk_classify",
+      "duration_ms": 0.23,
+      "status": "success",
+      "details": {
+        "risk_level": "LOW",
+        "high_risk_found": [],
+        "medium_risk_found": [],
+        "safer_alternative_generated": false
+      }
+    }
+  ]
+}

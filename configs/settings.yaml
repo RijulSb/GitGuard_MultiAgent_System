@@ -23,7 +23,7 @@ paths:
 models:
   provider: groq
   query_router:
-    id: openai/gpt-oss-20b
+    id: qwen/qwen3.8-27b
     temperature: 0.0
     max_tokens: 512
   drafter_a:
@@ -31,7 +31,7 @@ models:
     temperature: 0.2
     max_tokens: 2048
   drafter_b:
-    id: openai/gpt-oss-20b
+    id: openai/gpt-oss-120b
     temperature: 0.1
     max_tokens: 1536
   critic_and_judge:
@@ -39,7 +39,7 @@ models:
     temperature: 0.0
     max_tokens: 2048
   fallback:
-    id: openai/gpt-oss-20b
+    id: qwen/qwen3.8-27b
     temperature: 0.0
     max_tokens: 1024
   embeddings:
@@ -84,7 +84,7 @@ retrieval:
     keyword_weight: 0.4
   index_dir: data/processed/indexes
 agents:
-  max_total_seconds: 25
+  max_total_seconds: 90
   max_tokens_per_request: 12000
   max_tool_calls_per_drafter: 3
   max_revision_rounds: 2
@@ -182,7 +182,7 @@ tools:
     timeout_seconds: 5
 mcp:
   enabled: true
-  primary_first: true
+  primary_first: false
   failure_policy: fallback_and_log
   filesystem_server_command: npx
   filesystem_server_package: '@modelcontextprotocol/server-filesystem'
@@ -220,7 +220,7 @@ service:
   api_prefix: /api/v1
   health_path: /health
   streamlit_port: 8501
-  request_timeout_seconds: 25
+  request_timeout_seconds: 90
 secrets:
   env_file: .env
   groq_api_key_env: GROQ_API_KEY

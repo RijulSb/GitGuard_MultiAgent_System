@@ -149,7 +149,7 @@ STRICT RULES:
                     fallback_used = res.source == "fallback"
                 elif tool_name in ("check_git_command", "check_git"):
                     res = check_git_command(tool_arg, timeout_seconds=3.0)
-                    observation = f"Command valid: {res.success}. Details: {res.data[:400]}"
+                    observation = f"Command valid: {res.success}. Details: {str(res.data)[:400]}"
                     fallback_used = res.source == "fallback"
                 else:
                     observation = f"Unknown tool '{tool_name}'. Available: fetch_section, check_git_command."

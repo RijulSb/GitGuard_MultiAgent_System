@@ -46,12 +46,21 @@ def _try_mcp_read(section_id: str) -> str:
     return asyncio.run(_mcp_read_section_async(section_id))
 
 
+try:
+    with open("configs/settings.yaml", encoding="utf-8") as _f:
+        import yaml
+        _CFG = yaml.safe_load(_f)
+        _MCP_PRIMARY_FIRST = bool(_CFG.get("mcp", {}).get("primary_first", False))
+except Exception:
+    _MCP_PRIMARY_FIRST = False
+
+
 def fetch_section(section_id: str, timeout_seconds: float = 3.0, force_fallback: bool = False) -> ToolResult:
-    """Fetch section content. Tries MCP filesystem server first; falls back to local reader."""
+    """Fetch section content. Uses fast local reader when primary_first is false, or tries MCP with fallback."""
     t0 = time.time()
     clean_id = sanitize_input(section_id).strip()
 
-    if not force_fallback:
+    if _MCP_PRIMARY_FIRST and not force_fallback:
         try:
             content = execute_with_timeout(
                 _try_mcp_read,
